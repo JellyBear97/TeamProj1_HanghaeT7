@@ -86,13 +86,6 @@
         .mybtns>button {
             margin-right: 10px;
         }
-
-        .input-group-text {
-            margin-top: 20px;
-        }
-        .form-select {
-            margin-top: 20px;
-        }
     </style>
     <script>
         $(document).ready(function () {
@@ -130,12 +123,12 @@
         }
 
         function posting() {
-            let title = $('#title').val()
+            let url = $('#url').val()
             let comment = $('#comment').val()
             let star = $('#star').val()
 
             let formData = new FormData();
-            formData.append("title_give", url);
+            formData.append("url_give", url);
             formData.append("comment_give", comment);
             formData.append("star_give", star);
 
@@ -160,17 +153,9 @@
         <button onclick="open_box()">영화 기록하기</button>
     </div>
     <div class="mypost" id="post-box">
-        <div class="mb-3">
-            <label for="formFile" class="form-label">첨부파일</label>
-            <input class="form-control" type="file" id="formFile">
-          </div>
         <div class="form-floating mb-3">
-            <input id="title" type="text" class="form-control" placeholder="name@example.com">
-            <label>글 제목</label>
-        </div>
-        <div class="form-floating">
-            <textarea id="comment" class="form-control" placeholder="Leave a comment here"></textarea>
-            <label for="floatingTextarea2">글 내용</label>
+            <input id="url" type="email" class="form-control" placeholder="name@example.com">
+            <label>영화URL</label>
         </div>
         <div class="input-group mb-3">
             <label class="input-group-text" for="inputGroupSelect01">별점</label>
@@ -182,6 +167,10 @@
                 <option value="4">⭐⭐⭐⭐</option>
                 <option value="5">⭐⭐⭐⭐⭐</option>
             </select>
+        </div>
+        <div class="form-floating">
+            <textarea id="comment" class="form-control" placeholder="Leave a comment here"></textarea>
+            <label for="floatingTextarea2">코멘트</label>
         </div>
         <div class="mybtns">
             <button onclick="posting()" type="button" class="btn btn-dark">기록하기</button>
