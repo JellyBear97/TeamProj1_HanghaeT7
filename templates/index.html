@@ -241,31 +241,29 @@
               let p_id = a['_id'];
 
               let temp_html = `<div class="col">
-                <div class="card h-100">
-                  <img
-                    src="${image}"
-                    class="card-img-top"
-                    onclick="newPage()"
-                  />
-                  <div class="card-body">
-                    <h5 class="card-title">${title}</h5>
-                    <p class="card-text">${desc}</p>
-                    <p>${writer}</p>
-                    <p class="mycomment">${comment}</p>
-                    <button id="${p_id}" onclick="deletepost(this)">삭제</button>
-                  </div>
-                </div>
-              </div>`;
+                      <div class="card h-100">
+                        <img
+                          src="${image}"
+                          class="card-img-top"
+                          onclick="newPage(this)"
+                          id="${p_id}"
+                        />
+                        <div class="card-body">
+                          <h5 class="card-title">${title}</h5>
+                          <p class="card-text">${desc}</p>
+                          <p>${writer}</p>
+                          <p class="mycomment">${comment}</p>
+                          <button class="${p_id}" onclick="deletepost(this)">삭제</button>
+                        </div>
+                      </div>
+                    </div>`;
 
               $('#cards-box').append(temp_html);
             });
           });
       }
       function deletepost(e) {
-        let p_id = $(e).attr('id');
-
-        // let formData = new FormData();
-        // formData.append('p_id', del);
+        let p_id = $(e).attr('class');
 
         fetch(`/posts/${p_id}`, { method: 'DELETE' })
           .then((res) => res.json())
@@ -273,6 +271,13 @@
             alert(data['msg']);
             window.location.reload();
           });
+      }
+
+      function newPage(e) {
+        let p_id = $(e).attr('id');
+        fetch(`/posts/${p_id}`);
+
+        // window.location.href = `/posts/${p_id}`;
       }
     </script>
   </head>
@@ -379,17 +384,17 @@
           </div>
           <div class="left-navbar-content">
             <div>
-              <a id="movie" href="#" onclick="listing(this)">영화 🎬</a>
+              <a id="movie" onclick="listing(this)">영화 🎬</a>
             </div>
             <div>
-              <a id="music" href="#" onclick="listing(this)">음악 🎧</a>
+              <a id="music" onclick="listing(this)">음악 🎧</a>
             </div>
-            <div><a id="ani" href="#" onclick="listing(this)">애니 📺</a></div>
+            <div><a id="ani" onclick="listing(this)">애니 📺</a></div>
             <div>
-              <a id="health" href="#" onclick="listing(this)">운동 ⚽</a>
+              <a id="health" onclick="listing(this)">운동 ⚽</a>
             </div>
             <div>
-              <a id="book" href="#" onclick="listing(this)">책 📚</a>
+              <a id="book" onclick="listing(this)">책 📚</a>
             </div>
           </div>
           <button class="write">내 취향 공유하기</button>
