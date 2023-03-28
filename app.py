@@ -86,6 +86,11 @@ def list_comments():
 def insert_comments():
     return ""
 
+# 댓글 작성
+@app.route("/posts/<category>/<p_id>/comments/<r_id>", methods=["PUT"])
+def modify_comments():
+    return ""
+
 # 댓글 삭제
 @app.route("/posts/<category>/<p_id>/comments/<r_id>", methods=["DELETE"])
 def delete_comments():
