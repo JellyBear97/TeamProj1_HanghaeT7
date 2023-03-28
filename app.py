@@ -93,9 +93,14 @@ def delete_posts(p_id):
     return jsonify({'msg':'삭제완료!'}) 
 
 # 게시글에 해당하는 댓글 목록 조회
-@app.route("/posts/<category>/<p_id>/comments", methods=["GET"])
-def list_comments():
-    return ""
+@app.route("/posts/<p_id>/comments", methods=["GET"])
+def list_comments(p_id):
+    results = []
+    all_comments = list(db.posts.find({'p_id':p_id}))
+    for comment in all_comments:
+        comment['_id'] = str(comment['_id'])    ## object_id -> string으로 변환
+        results.append(comment)
+    return jsonify({'result':results}) 
 
 # 댓글 작성
 @app.route("/posts/<category>/<p_id>/comments", methods=["POST"])
