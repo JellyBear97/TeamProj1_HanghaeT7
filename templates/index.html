@@ -275,9 +275,8 @@
 
       function newPage(e) {
         let p_id = $(e).attr('id');
-        fetch(`/posts/${p_id}`);
-
-        // window.location.href = `/posts/${p_id}`;
+        fetch(`/detail/move/${p_id}`);
+        window.location.href = `/posts/move/${p_id}`;
       }
     </script>
   </head>

@@ -24,10 +24,45 @@ def list_category(category):
     return jsonify({'result':results})  
 
 # 게시글 상세페이지로 이동
-@app.route("/posts/<p_id>", methods=["GET"])
-def view_posts(p_id):           
-    return render_template('detail.html',p_id=p_id) 
- 
+# @app.route("/detail/<p_id>", methods=["GET"])
+# def view_posts(p_id):    
+    
+#     return render_template('detail.html',p_id=p_id)
+
+@app.route("/posts/move/<p_id>", methods=["GET"])
+def move_posts(p_id):
+    return render_template("detail.html", p_id = p_id)
+
+@app.route("/posts/detail/<p_id>", methods=["GET"])
+def view_posts(p_id):
+    findone = db.board.find_one({'_id': ObjectId(p_id)})
+    doc = {
+       'title' : findone['title'],
+        'comment' : findone['comment'],
+        'url' : findone['url'],
+        'reg_date' : findone['reg_date'],
+        'mod_date' : findone['mod_date'],
+        'category' : findone['category'],
+        'nickname' : findone['nickname'],
+        'image':findone['image']   
+         }     
+    return jsonify({'result':doc}) 
+
+# @app.route("/detail/get/<p_id>", methods=["GET"])
+# def views_posts(p_id):   
+#     findone = db.board.find_one({'_id':ObjectId(p_id)}) 
+#     doc = {
+#        'title' : findone['title'],
+#         'comment' : findone['comment'],
+#         'url' : findone['url'],
+#         'reg_date' : findone['reg_date'],
+#         'mod_date' : findone['mod_date'],
+#         'category' : findone['category'],
+#         'nickname' : findone['nickname'],
+#         'image':findone['image']   
+#          }         
+#     return jsonify({'result':doc})     
+
    
 
 #카테고리별 등록
