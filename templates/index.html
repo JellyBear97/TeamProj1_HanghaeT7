@@ -202,25 +202,27 @@
         });
 
         function listing() {
-            fetch('/music').then((res) => res.json()).then((data) => {
+            fetch('/posts').then((res) => res.json()).then((data) => {
                 let rows = data['result']
                 $('#cards-box').empty()
                 rows.forEach((a) => {
-                    let comment = a['comment']
+
+                    let p_id = a['_id']
                     let title = a['title']
-                    let artist = a['artist']
-                    let image = a['image']
-                    let name = a['name']
+                    let comment = a['comment']
+                    let image = a['url']
+                    let reg_date = a['reg_date']
+                    let writer = a['u_id']
 
                     let temp_html = `<div class="col">
                                         <div class="card h-100">
                                             <img src="${image}"
-                                                class="card-img-top" onclick="location.href='/detail'">
+                                                class="card-img-top">
                                             <div class="card-body">
                                                 <h5 class="card-title">${title}</h5>
-                                                <p class="card-text">${artist}</p>
+                                                <p class="card-text">${writer}</p>
                                                 <p>🎵</p>
-                                                <p>${name}</p>
+                                                <p>${reg_date}</p>
                                                 <p class="mycomment text-flow">${comment}</p>
                                             </div>
                                         </div>
@@ -231,16 +233,20 @@
         }
 
         function posting() {
-            let url = $('#url').val()
-            let comment = $('#comment').val()
-            let name = $('#name').val()
+            let category = "movie";// 임시 ('#category').val();
+            let title = $('#title').val();
+            let url = $('#urlBox').val();
+            let name = $('#writerBox').val();
+            let comment = $('#commentBox').val();
 
             let formData = new FormData();
+            formData.append("name_give", name);
+            formData.append("title_give", title);
             formData.append("url_give", url);
             formData.append("comment_give", comment);
-            formData.append("name_give", name);
+            formData.append("category_give", category);
 
-            fetch('/music', { method: "POST", body: formData }).then((res) => res.json()).then((data) => {
+            fetch('/posts', { method: "POST", body: formData }).then((res) => res.json()).then((data) => {
                 alert(data['msg'])
                 window.location.reload()
             })
@@ -256,6 +262,16 @@
             window.location.href = 'detail1.html'
         }
 
+        // 특수문자 입력 방지
+        function characterCheck(obj){
+        var regExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi; 
+        // 허용할 특수문자는 여기서 삭제하면 됨
+        // 지금은 띄어쓰기도 특수문자 처리됨 
+        if( regExp.test(obj.value) ){
+            alert("특수문자는 입력할 수 없습니다.");
+            obj.value = obj.value.substring( 0 , obj.value.length - 1 ); // 입력한 특수문자 한자리 지움
+            }
+        }
     </script>
   </head>
 
@@ -274,6 +290,7 @@
                 <input
                   type="text"
                   class="text-box"
+                  id="title"
                   placeholder="제목을 입력해주세요"
                 />
               </form>
@@ -374,48 +391,6 @@
                     src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
                     class="card-img-top"
                     onclick="newPage()"
-                  />
-                  <div class="card-body">
-                    <h5 class="card-title">노래 제목이 들어갑니다</h5>
-                    <p class="card-text">여기에 아티스트가 들어갑니다</p>
-                    <p>작성자</p>
-                    <p class="mycomment">나의 한줄 평을 씁니다</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card h-100">
-                  <img
-                    src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
-                    class="card-img-top"
-                  />
-                  <div class="card-body">
-                    <h5 class="card-title">노래 제목이 들어갑니다</h5>
-                    <p class="card-text">여기에 아티스트가 들어갑니다</p>
-                    <p>작성자</p>
-                    <p class="mycomment">나의 한줄 평을 씁니다</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card h-100">
-                  <img
-                    src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
-                    class="card-img-top"
-                  />
-                  <div class="card-body">
-                    <h5 class="card-title">노래 제목이 들어갑니다</h5>
-                    <p class="card-text">여기에 아티스트가 들어갑니다</p>
-                    <p>작성자</p>
-                    <p class="mycomment">나의 한줄 평을 씁니다</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card h-100">
-                  <img
-                    src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
-                    class="card-img-top"
                   />
                   <div class="card-body">
                     <h5 class="card-title">노래 제목이 들어갑니다</h5>

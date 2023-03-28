@@ -19,19 +19,19 @@ db = client.diary
 def home():
     return render_template('index.html')
 
-# 게시판 조회
-@app.route("/posts", methods=["GET"])
-def list_posts():
-    return render_template('')
+# # 게시판 조회
+# @app.route("/posts", methods=["GET"])
+# def list_posts():
+#     return render_template('')
 
 # 카테고리별 조회
-@app.route("/posts/<category>", methods=["GET"])
+@app.route("/posts", methods=["GET"])
 def list_category():
     results = []
-    all_movies = list(db.movies.find({}))
-    for movie in all_movies:
-        movie['_id'] = str(movie['_id'])    ## object_id -> string으로 변환
-        results.append(movie)
+    all_posts = list(db.posts.find({}))
+    for post in all_posts:
+        post['_id'] = str(post['_id'])    ## object_id -> string으로 변환
+        results.append(post)
     return jsonify({'result':results})
 
 # 게시글 상세조회
@@ -42,28 +42,27 @@ def view_posts():
     return jsonify({'result':'success', 'msg': '이 요청은 GET!'})
 
 # 게시글 작성
-@app.route("/posts/<category>", methods=["POST"] )
+@app.route("/posts", methods=["POST"] )
 def insert_posts():
+    name_receive = request.form['name_give']
     title_receive = request.form['title_give']
-    desc_receive = request.form['desc_give']
+    comment_receive = request.form['comment_give']
     url_receive = request.form['url_give']
     category_receive = request.form['category_give']
-    nickname_receive = request.form['nickname_give']
     reg_date = datetime.datetime.utcnow()
     mod_date = datetime.datetime.utcnow()
-    ## file_upload
 
     doc = {
         'title' : title_receive,
-        'desc' : desc_receive,
+        'comment' : comment_receive,
         'url' : url_receive,
         'reg_date' : reg_date,
         'mod_date' : mod_date,
         'category' : category_receive,
-        'nickname' : nickname_receive
+        'u_id' : name_receive
     }
 
-    db.movies.insert_one(doc)
+    db.posts.insert_one(doc)
 
     return jsonify({'msg':'저장완료!'})
 
