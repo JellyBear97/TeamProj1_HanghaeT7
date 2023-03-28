@@ -384,32 +384,38 @@
         });
 
         function listing() {
-            fetch('/music').then((res) => res.json()).then((data) => {
-                let rows = data['result']
-                $('#cards-box').empty()
-                rows.forEach((a) => {
-                    let comment = a['comment']
-                    let title = a['title']
-                    let artist = a['artist']
-                    let image = a['image']
-                    let name = a['name']
+        
+            $('#cards-box').empty();
+            let rows = data['result'];
+            rowFilter = rows.filter((value) => value['category'] === category);
+            rowFilter.forEach((a) => {
+              let title = a['title'];
+              let image = a['image'];
+              let comment = a['comment'];
+              let writer = a['user_id'];
+              let catgegory = a['category'];
+              let p_id = a['_id'];
 
-                    let temp_html = `<div class="col">
-                                        <div class="card h-100">
-                                            <img src="${image}"
-                                                class="card-img-top" onclick="location.href='/detail'">
-                                            <div class="card-body">
-                                                <h5 class="card-title">${title}</h5>
-                                                <p class="card-text">${artist}</p>
-                                                <p>🎵</p>
-                                                <p>${name}</p>
-                                                <p class="mycomment text-flow">${comment}</p>
-                                            </div>
-                                        </div>
-                                    </div>`
-                    $('#cards-box').append(temp_html)
-                })
-            })
+              let temp_html = `<div class="col">
+                <div class="card h-100">
+                  <img
+                    src="${image}"
+                    class="card-img-top"
+                    onclick="newPage(this)"
+                    id="${p_id}"
+                  />
+                  <div class="card-body">
+                    <h5 class="card-title">${title}</h5>
+                    <p>${writer}</p>
+                    <p class="mycomment">${comment}</p>
+                    <button id="${p_id}" onclick="deletepost(this)">삭제</button>
+                  </div>
+                </div>
+              </div>`;
+
+              $('#cards-box').append(temp_html);
+            });
+
         }
 
         function posting() {
@@ -567,7 +573,8 @@
                       말해봐 yeah
                       느껴봐 mm mm
                       Take him to the sky
-                      You know I hype you boy</p>
+                      You know I hype you boy
+                    </p>
                 </div>
             </div>
             <div style="float:none; clear:both;"></div>
@@ -581,27 +588,6 @@
                 <input type="text" class="reply-name" placeholder="작성자"><br>
                 <input type="text" class="reply-text" placeholder="댓글을 남겨주세요!">
                 <button class="reply-btn">댓글 남기기<br>💬</button>
-              </div>
-              <div class="reply-data">
-                <p style="font-weight: bolder;">신샘 💬</p>
-                <p>취향존중 해드릴게요!</p>
-                <p style="color: gray;">(2023.03.28)</p>
-                <button class="reply-edit-btn">수정</button>
-                <button class="reply-del-btn">삭제</button>
-              </div>
-              <div class="reply-data">
-                <p style="font-weight: bolder;">신샘 💬</p>
-                <p>취향존중 해드릴게요!</p>
-                <p style="color: gray;">(2023.03.28)</p>
-                <button class="reply-edit-btn">수정</button>
-                <button class="reply-del-btn">삭제</button>
-              </div>
-              <div class="reply-data">
-                <p style="font-weight: bolder;">신샘 💬</p>
-                <p>취향존중 해드릴게요!</p>
-                <p style="color: gray;">(2023.03.28)</p>
-                <button class="reply-edit-btn">수정</button>
-                <button class="reply-del-btn">삭제</button>
               </div>
             </div>
         </div>
