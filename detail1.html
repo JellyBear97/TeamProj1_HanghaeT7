@@ -28,7 +28,7 @@
         font-weight: 400;
         font-style: normal;
       }
-      .body {
+      body {
         box-sizing: border-box;
       }
       .logo {
@@ -59,6 +59,7 @@
         border: none;
         background-color: transparent;
         font-size: 20px;
+        font-family: 'Pretendard-Regular';
       }
       .memberBtn > button:hover {
         color: goldenrod;
@@ -68,7 +69,6 @@
         text-shadow: -2px 0px black, 0px 2px black, 2px 0px black,
           0px -2px black;
       }
-
       .left-navbar-content > div > a:link {
         color: black;
       }
@@ -138,72 +138,18 @@
         background-color: goldenrod;
         color: white;
       }
-     
-      .black-bg {
-        width: 100%;
-        height: 100%;
-        position: fixed;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 5;
-        padding: 30px;
-        visibility: hidden;
-        opacity: 1;
-      }
-      .show-modal {
-        visibility: visible;
-        opacity: 1;
-      }
-      .white-bg {
-        margin: 0 auto;
-        width: 800px;
-        background: white;
-        border-radius: 5px;
-        padding: 30px;
-      }
-
-      .write-box {
-        padding: 50px;
-        margin-left: 50px;
-        margin-right: auto;
-
-        font-family: Pretendard-Regular;
-      }
-
-      .write-box-inside {
-        line-height: 1px;
-        margin-bottom: 20px;
-        position: relative;
-      }
-
-      .write-btn {
-        width: 180px;
-        height: 40px;
-        border: none;
-        font-size: 24px;
-        font-family: PyeongChangPeace-Bold;
-      }
-      .send-btn {
-        background-color: goldenrod;
-      }
-      .close-btn {
-        background-color: black;
-        color: white;
-      }
-
-      .text-box {
-        width: 500px;
-        padding: 5px;
-      }
       .body {
         width: 800px;
         float: left;
-        margin-top: 50px;
         font-family: Pretendard-Regular;
         padding: 30px;
       }
       .body-title {
         text-align: center;
         margin-bottom: 30px;
+      }
+      .body-title > p {
+        font-size: 20px;
       }
       .body-img {
         float: left;
@@ -241,7 +187,7 @@
       }
       .body-title-head {
         position: relative;
-        margin-bottom: 60px;
+        margin-bottom: 50px;
       }
       .underline {
         width: 700px;
@@ -269,11 +215,17 @@
         border-style: solid;
         border-color: white white gray;
       }
+      .reply-name:focus {
+        outline: none;
+      }
       .reply-text {
         border-radius: 10px;
         width: 500px;
         height: 100px;
         border: 2px solid gray;
+      }
+      .reply-text:focus {
+        outline: none;
       }
       .reply-btn {
         margin-left: 10px;
@@ -374,76 +326,6 @@
   </head>
 
   <body>
-    <div class="black-bg">
-      <div class="white-bg">
-        <h1 style="text-align: center; font-family: PyeongChangPeace-Bold">
-          '취향'을 공유하세요!
-        </h1>
-
-        <form action="#">
-          <div class="write-box">
-            <div class="write-box-inside">
-              <p>지니뮤직URL</p>
-              <form>
-                <input
-                  type="text"
-                  class="text-box"
-                  placeholder="URL을 입력해주세요"
-                />
-              </form>
-            </div>
-            <div class="write-box-inside">
-              <p>이미지URL</p>
-              <form>
-                <input
-                  type="text"
-                  class="text-box"
-                  id="urlBox"
-                  placeholder="URL을 입력해주세요"
-                />
-              </form>
-            </div>
-            <div class="write-box-inside">
-              <p>작성자</p>
-              <form>
-                <input
-                  type="text"
-                  id="writerBox"
-                  class="text-box"
-                  placeholder="작성자 이름을 입력해주세요"
-                />
-              </form>
-            </div>
-            <div class="write-box-inside">
-              <p>코멘트</p>
-              <form>
-                <input
-                  type="text"
-                  id="commentBox"
-                  class="text-box"
-                  style="height: 200px"
-                  placeholder="취향에 대한 코멘트를 남겨주세요"
-                />
-              </form>
-            </div>
-            <div style="clear: both"></div>
-          </div>
-          <div style="text-align: center">
-            <button
-              type="submit"
-              class="write-btn send-btn"
-              id="send"
-              onclick="posting()"
-            >
-              전송
-            </button>
-            <button type="button" class="write-btn close-btn" id="close">
-              닫기
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
 
     <div class="contentContainer">
       <div class="headerWrap">
@@ -565,7 +447,7 @@
                       You know I hype you boy</p>
                 </div>
             </div>
-            <div style="clear:both;"></div>
+            <div style="float:none; clear:both;"></div>
             <div class="body-btn">
                 <button class="list-btn">목록</button>
                 <button class="edit-btn">수정</button>

@@ -28,7 +28,12 @@
         font-weight: 400;
         font-style: normal;
       }
-
+      body {
+        box-sizing: border-box;
+      }
+      .logo {
+        width: 150px;
+      }
       .headerWrap {
         height: 100px;
         width: 100%;
@@ -38,10 +43,6 @@
         border-bottom: 1px solid black;
         font-family: 'PyeongChangPeace-Bold';
       }
-      .headerWrap > img {
-        width: 100px;
-        height: 100px;
-      }
       .memberHeader {
         display: flex;
         flex-direction: row;
@@ -49,16 +50,16 @@
         align-items: center;
         width: 90%;
         height: 100px;
-        padding-left: 30px;
       }
       .memberHeader > p {
         font-size: 35px;
-        margin-left: 20px;
+        margin-right: 700px;
       }
       .memberBtn > button {
         border: none;
         background-color: transparent;
         font-size: 20px;
+        font-family: 'Pretendard-Regular';
       }
       .memberBtn > button:hover {
         color: goldenrod;
@@ -68,7 +69,6 @@
         text-shadow: -2px 0px black, 0px 2px black, 2px 0px black,
           0px -2px black;
       }
-
       .left-navbar-content > div > a:link {
         color: black;
       }
@@ -84,12 +84,12 @@
           0px -2px black;
       }
       .left-navbar-menu {
-        width: 230px;
+        width: 250px;
         border-radius: 10px;
         background-color: black;
         color: white;
         text-align: center;
-        font-size: 50px;
+        font-size: 40px;
       }
 
       .left-navbar-content {
@@ -150,7 +150,6 @@
         padding: 30px;
         visibility: hidden;
         opacity: 1;
-        /* transition: all 1s; */
       }
       .show-modal {
         visibility: visible;
@@ -190,7 +189,6 @@
         background-color: black;
         color: white;
       }
-
       .text-box {
         width: 500px;
         padding: 5px;
@@ -344,6 +342,7 @@
     <div class="contentContainer">
       <div class="headerWrap">
         <div class="memberHeader">
+          <img src="/logo_image(trans).png" class="logo" alt="">
           <p>음악</p>
           <div class="memberBtn">
             <button>회원가입</button>
@@ -354,7 +353,7 @@
       <div class="background">
         <div class="left-navbar">
           <div class="left-navbar-menu">
-            <p>Menu</p>
+            <p>category</p>
           </div>
           <div class="left-navbar-content">
             <div><a href="#">영화 🎬</a></div>
