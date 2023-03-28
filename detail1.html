@@ -28,6 +28,9 @@
         font-weight: 400;
         font-style: normal;
       }
+      .body {
+        box-sizing: border-box;
+      }
 
       .headerWrap {
         height: 100px;
@@ -197,7 +200,6 @@
       }
       .body {
         width: 800px;
-        /* background-color: aquamarine; */
         float: left;
         margin-top: 50px;
         font-family: Pretendard-Regular;
@@ -215,13 +217,10 @@
         height: 300px;
         background-size: contain;
         background-position: center;
+        margin: 20px;
+        margin-top: 0px;
       }
-      .body-text {
-        float: left;
-        word-break: break-all;
-        margin-left: 30px;
-        margin-right: 30px;
-      }
+
       .body-btn {
         margin-top: 30px;
         text-align: center;
@@ -241,8 +240,50 @@
         background-color: red;
         color: white;
       }
-      .highlight {
-        text-shadow: 2px 2px 2px white;
+      .body-title-head {
+        position: relative;
+        margin-bottom: 60px;
+      }
+      .underline {
+        width: 700px;
+        position: absolute;
+        top: -30%;
+        left: 2%;
+      }
+      .title-text {
+        margin: auto;
+        text-align: center;
+      }
+      .reply {
+        margin-top: 50px;
+      }
+      .reply-box {
+        text-align: center;
+        margin: auto;
+      }
+      .reply-text {
+        border-radius: 10px;
+        width: 500px;
+        height: 100px;
+        border: 2px solid gray;
+      }
+      .reply-btn {
+        margin-left: 10px;
+        background-color: goldenrod;
+        color: white;
+        border: 2px solid gray;
+        border-radius: 10px;
+      }
+      .reply-btn:hover {
+        border: 2px solid black;
+      }
+      .reply-data {
+        width: 700px;
+        padding: 10px;
+        margin-top: 30px;
+        position: static;
+        border-style: solid;
+        border-color: gray white white;
       }
     </style>
     <script>
@@ -406,7 +447,10 @@
         </div>
         <div class="body">
           <div class="body-title">
-            <h1 class="highlight">노래이름, 영화이름 등 title 가져오기</h1>
+            <div class="body-title-head">
+              <h1 class="title-text">노래이름, 영화이름 등 title 가져오기</h1>
+              <img src="underline_black.png" class="underline" alt="">
+           </div>
             <p>📝작성자</p>
           </div>
             <div class="body-detail">
@@ -414,7 +458,15 @@
                     <img src="logo_image.png" class="image"alt="">
                 </div>
                 <div class="body-text">
-                    <p>이미지 오른쪽으로 띄우고 나머지 글이 자연스럽게 줄바꿈 되었으면 하는데 안되네요..........도와주세요...
+                    <p>여기에 내용을 가져오기!!
+                        내용 가져오기 내용 가져오기 내용 가져오기내용 가져오기내용 가져오기내용 가져오기내용 가져오기내용 가져오기내용 가져오기
+                        내용 가져오기 내용 가져오기 내용 가져오기내용 가져오기내용 가져오기내용 가져오기내용 가져오기내용 가져오기내용 가져오기
+                        내용 가져오기 내용 가져오기 내용 가져오기내용 가져오기내용 가져오기내용 가져오기내용 가져오기내용 가져오기내용 가져오기
+                        내용 가져오기 내용 가져오기 내용 가져오기내용 가져오기내용 가져오기내용 가져오기내용 가져오기내용 가져오기내용 가져오기
+                        내용 가져오기 내용 가져오기 내용 가져오기내용 가져오기내용 가져오기내용 가져오기내용 가져오기내용 가져오기내용 가져오기
+                        내용 가져오기 내용 가져오기 내용 가져오기내용 가져오기내용 가져오기내용 가져오기내용 가져오기내용 가져오기내용 가져오기
+                        내용 가져오기 내용 가져오기 내용 가져오기내용 가져오기내용 가져오기내용 가져오기내용 가져오기내용 가져오기내용 가져오기
+                        내용 가져오기 내용 가져오기 내용 가져오기내용 가져오기내용 가져오기내용 가져오기내용 가져오기내용 가져오기내용 가져오기
                         내용 가져오기 내용 가져오기 내용 가져오기내용 가져오기내용 가져오기내용 가져오기내용 가져오기내용 가져오기내용 가져오기
                         내용 가져오기 내용 가져오기 내용 가져오기내용 가져오기내용 가져오기내용 가져오기내용 가져오기내용 가져오기내용 가져오기</p>
                 </div>
@@ -425,7 +477,24 @@
                 <button class="edit-btn">수정</button>
                 <button class="del-btn">삭제</button>
             </div>
-          
+            <div class="reply">
+              <div class="reply-box">
+                <input type="text" class="reply-text" placeholder="댓글을 남겨주세요!">
+                <button class="reply-btn">댓글 남기기<br>💬</button>
+              </div>
+              <div class="reply-data">
+                <p>신샘 💬</p>
+                <p>취향존중 해드릴게요!</p>
+              </div>
+              <div class="reply-data">
+                <p>신샘 💬</p>
+                <p>취향존중 해드릴게요!</p>
+              </div>
+              <div class="reply-data">
+                <p>신샘 💬</p>
+                <p>취향존중 해드릴게요!</p>
+              </div>
+            </div>
         </div>
       </div>
     </div>
