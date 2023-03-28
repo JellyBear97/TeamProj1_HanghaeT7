@@ -30,11 +30,9 @@ def list_category(category):
     return jsonify({'result':results})  
 
 # 게시글 상세조회
-@app.route("/posts/<category>/<p_id>", methods=["GET"])
-def view_posts():
-    # p_id 값 가져오기
-    p_id_receive = request.args.get('p_id')
-    return jsonify({'result':'success', 'msg': '이 요청은 GET!'})
+@app.route("/posts/<p_id>", methods=["GET"])
+def view_posts(p_id):
+    return render_template('detail.html', p_id = p_id)
 
 # 게시글 작성
 @app.route("/posts/<category>", methods=["POST"] )
