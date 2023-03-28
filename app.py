@@ -81,8 +81,8 @@ def insert_posts(category):
 
 # 게시글 수정
 @app.route("/posts/<category>/<p_id>", methods=["PUT"] )
-def modify_posts():
-    return ""
+def modify_posts(p_id):
+    return jsonify({'msg':'수정완료!'})
 
 # 게시글 삭제
 @app.route("/posts/<p_id>", methods=["DELETE"])
@@ -115,14 +115,14 @@ def insert_comments(p_id):
         'reg_date' : reg_date,
         'mod_date' : mod_date
     }
-    db.animes.insert_one(doc)
+    db.comments.insert_one(doc)
 
     return jsonify({'msg':'저장완료!'})
 
 # 댓글 수정
 @app.route("/posts/comments/<r_id>", methods=["PUT"])
-def modify_comments():
-    return ""
+def modify_comments(r_id):
+    return jsonify({'msg':'수정완료!'})
 
 # 댓글 삭제
 @app.route("/posts/comments/<r_id>", methods=["DELETE"])
