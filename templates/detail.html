@@ -374,7 +374,7 @@
 
             $('#detailImg').attr('src', image);
           });
-          
+
           // 댓글 보여주기
           fetch(`/posts/${id}/comments`)
             .then((res) => res.json())
@@ -392,45 +392,49 @@
                                       <p style="font-weight: bolder;">${user_id} 💬</p>
                                       <p>${comment}</p>
                                       <p style="color: gray;">(${reg_date})</p>
-                                      <button onclick="modifying(${r_id})" class="reply-edit-btn">수정</button>
-                                      <button onclick="deleting(${r_id})" class="reply-del-btn">삭제</button>
+                                      <button id="${r_id}" onclick="modifycomment(this)" class="reply-edit-btn">수정</button>
+                                      <button id="${r_id}" onclick="deletecomment(this)" class="reply-del-btn">삭제</button>
                                   </div>`;
                 $('#replyBox').append(temp_html);
               });
-            });
-
-          function modifying() {
-            let comment = $('#comment').val(); // 📌 이거 되는지 봐야함
-
-            // {key : value} 형태로 FormData에 태워서 보내기
-            let formData = new FormData();
-            formData.append('comment', comment);
-            fetch('/posts/comments/<r_id>', {
-              method: 'PUT',
-              body: formData,
-            })
-              .then((res) => res.json())
-              .then((data) => {
-                alert(data['msg']);
-
-                // ⭐️ 페이지 재로딩
-                window.location.reload();
-              });
-          }
-
-          function deleting() {
-            fetch('/posts/comments/<r_id>', {
-              method: 'DELETE',
-            })
-              .then((res) => res.json())
-              .then((data) => {
-                alert(data['msg']);
-
-                // ⭐️ 페이지 재로딩
-                window.location.reload();
-              });
-          }
+            });   
       }
+
+      function modifycomment(e) {
+
+        let r_id = $(e).attr('id'); 
+        let comment = $('#comment').val(); 
+
+        // {key : value} 형태로 FormData에 태워서 보내기
+        let formData = new FormData();
+        formData.append('comment', comment);
+        fetch('/posts/comments/<r_id>', {
+          method: 'PUT',
+          body: formData,
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            alert(data['msg']);
+
+            // ⭐️ 페이지 재로딩
+            window.location.reload();
+          });
+        }
+
+        function deletecomment(e) {
+          let r_id = $(e).attr('id'); 
+
+          fetch('/posts/comments/<r_id>', {
+            method: 'DELETE',
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              alert(data['msg']);
+
+              // ⭐️ 페이지 재로딩
+              window.location.reload();
+            });
+          }   
 
     </script>
   </head>
@@ -601,8 +605,8 @@
               <p style="font-weight: bolder">신샘 💬</p>
               <p>취향존중 해드릴게요!</p>
               <p style="color: gray">(2023.03.28)</p>
-              <button class="reply-edit-btn">수정</button>
-              <button class="reply-del-btn">삭제</button>
+              <button class="reply-edit-btn" onclick="modifycomment(this)">수정</button>
+              <button class="reply-del-btn" onclick="deletecomment(this)">삭제</button>
             </div>
           </div>
         </div>
