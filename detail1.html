@@ -31,7 +31,9 @@
       .body {
         box-sizing: border-box;
       }
-
+      .logo {
+        width: 150px;
+      }
       .headerWrap {
         height: 100px;
         width: 100%;
@@ -41,10 +43,6 @@
         border-bottom: 1px solid black;
         font-family: 'PyeongChangPeace-Bold';
       }
-      .headerWrap > img {
-        width: 100px;
-        height: 100px;
-      }
       .memberHeader {
         display: flex;
         flex-direction: row;
@@ -52,11 +50,10 @@
         align-items: center;
         width: 90%;
         height: 100px;
-        padding-left: 30px;
       }
       .memberHeader > p {
         font-size: 35px;
-        margin-left: 20px;
+        margin-right: 700px;
       }
       .memberBtn > button {
         border: none;
@@ -97,7 +94,7 @@
 
       .left-navbar-content {
         text-align: center;
-        font-size: 36px;
+        font-size: 42px;
       }
       .left-navbar-content > div > a {
         text-decoration: none;
@@ -239,6 +236,9 @@
         background-color: red;
         color: white;
       }
+      .body-btn > button:hover {
+        background-color: gray;
+      }
       .body-title-head {
         position: relative;
         margin-bottom: 60px;
@@ -247,7 +247,9 @@
         width: 700px;
         position: absolute;
         top: -30%;
-        left: 2%;
+        left: 0;
+        right: 0;
+        margin: auto;
       }
       .title-text {
         margin: auto;
@@ -275,13 +277,16 @@
       }
       .reply-btn {
         margin-left: 10px;
-        background-color: goldenrod;
+        background-color: black;
         color: white;
         border: 2px solid gray;
-        border-radius: 10px;
+        border-radius: 8px;
       }
       .reply-btn:hover {
-        border: 2px solid black;
+        background-color: goldenrod;
+      }
+      .reply-btn:active {
+        background-color: gray;
       }
       .reply-data {
         width: 700px;
@@ -290,6 +295,19 @@
         position: static;
         border-style: solid;
         border-color: gray white white;
+      }
+      .reply-data > button {
+        border: 1px solid gray;
+        color: gray;
+      }
+      .reply-edit-btn:hover {
+        color: rgb(3, 66, 95);
+      }
+      .reply-del-btn:hover {
+        color: red;
+      }
+      .reply-data > button:active {
+        border: 1px solid black;
       }
     </style>
     <script>
@@ -430,6 +448,7 @@
     <div class="contentContainer">
       <div class="headerWrap">
         <div class="memberHeader">
+          <img src="/logo_image(trans).png" class="logo" alt="">
           <p>음악</p>
           <div class="memberBtn">
             <button>회원가입</button>
@@ -561,14 +580,20 @@
               <div class="reply-data">
                 <p>신샘 💬</p>
                 <p>취향존중 해드릴게요!</p>
+                <button class="reply-edit-btn">수정</button>
+                <button class="reply-del-btn">삭제</button>
               </div>
               <div class="reply-data">
                 <p>신샘 💬</p>
                 <p>취향존중 해드릴게요!</p>
+                <button class="reply-edit-btn">수정</button>
+                <button class="reply-del-btn">삭제</button>
               </div>
               <div class="reply-data">
                 <p>신샘 💬</p>
                 <p>취향존중 해드릴게요!</p>
+                <button class="reply-edit-btn">수정</button>
+                <button class="reply-del-btn">삭제</button>
               </div>
             </div>
         </div>
