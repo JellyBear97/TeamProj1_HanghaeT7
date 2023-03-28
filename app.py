@@ -34,11 +34,20 @@ def list_category(category):
 def move_posts(p_id):
     return render_template("detail.html", p_id = p_id)
 
-# 게시글 상세조회
+# 게시글 상세조회 가져오기
 @app.route("/posts/detail/<p_id>", methods=["GET"])
 def view_posts(p_id):
-    post = db.posts.find_one({'_id': ObjectId(p_id)})
-    return jsonify({'result':post}) 
+    findone = db.posts.find_one({'_id': ObjectId(p_id)})
+    doc = {
+       'title' : findone['title'],
+        'comment' : findone['comment'],
+        'reg_date' : findone['reg_date'],
+        'mod_date' : findone['mod_date'],
+        'category' : findone['category'],
+        'user_id' : findone['user_id'],
+        'image':findone['image']   
+         }     
+    return jsonify({'result':doc}) 
 
 # 게시글 작성
 @app.route("/posts/<category>", methods=["POST"] )
@@ -105,9 +114,9 @@ def list_comments(p_id):
     return jsonify({'result':results}) 
 
 # 댓글 작성
-@app.route("/posts/<p_id>", methods=["POST"])
+@app.route("/posts/<p_id>/comments", methods=["POST"])
 def insert_comments(p_id):
-    name_receive = request.form['nickname_give']
+    name_receive = request.form['name_give']
     comment_receive = request.form['comment_give']
     reg_date = datetime.datetime.utcnow()
     mod_date = datetime.datetime.utcnow()

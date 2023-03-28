@@ -66,18 +66,23 @@
       }
       .memberBtn > button:active {
         color: goldenrod;
+        text-shadow: -2px 0px black, 0px 2px black, 2px 0px black,
+          0px -2px black;
       }
-      .category>a:link {
-      color: black;
-    }
-
-    .category>a:visited {
-      color: black;
-    }
-
-    .category>a:active {
-      color: gray;
-    }
+      .left-navbar-content > div > a:link {
+        color: black;
+      }
+      .left-navbar-content > div > a:visited {
+        color: black;
+      }
+      .left-navbar-content > div > a:hover {
+        color: goldenrod;
+      }
+      .left-navbar-content > div > a:active {
+        color: goldenrod;
+        text-shadow: -2px 0px black, 0px 2px black, 2px 0px black,
+          0px -2px black;
+      }
       .left-navbar-menu {
         width: 250px;
         border-radius: 10px;
@@ -96,114 +101,62 @@
         text-decoration-color: none;
       }
       .black-bg {
-      width: 100%;
-      height: 100%;
-      position: fixed;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 5;
-      padding: 30px;
-      visibility: hidden;
-      opacity: 1;
-    }
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 5;
+        padding: 30px;
+        visibility: hidden;
+        opacity: 1;
+      }
 
-    .show-modal {
-      visibility: visible;
-      opacity: 1;
-    }
+      .show-modal {
+        visibility: visible;
+        opacity: 1;
+      }
 
-    .white-bg {
-      margin: 0 auto;
-      width: 800px;
-      background: white;
-      border-radius: 5px;
-      padding: 30px;
-    }
+      .white-bg {
+        margin: 0 auto;
+        width: 800px;
+        background: white;
+        border-radius: 5px;
+        padding: 30px;
+      }
 
-    .write-box {
-      padding: 20px;
-      margin-left: 100px;
-      font-family: Pretendard-Regular;
-    }
+      .write-box {
+        padding: 20px;
+        margin-left: 100px;
+        font-family: Pretendard-Regular;
+      }
 
-    .write-box-inside {
-      line-height: 1px;
-      margin-bottom: 20px;
-      position: relative;
-    }
+      .write-box-inside {
+        line-height: 1px;
+        margin-bottom: 20px;
+        position: relative;
+      }
 
-    .write-btn {
-      width: 180px;
-      height: 40px;
-      border: none;
-      font-size: 24px;
-      font-family: PyeongChangPeace-Bold;
-    }
+      .write-btn {
+        width: 180px;
+        height: 40px;
+        border: none;
+        font-size: 24px;
+        font-family: PyeongChangPeace-Bold;
+      }
 
-    .send-btn {
-      background-color: goldenrod;
-    }
+      .send-btn {
+        background-color: goldenrod;
+      }
 
-    .close-btn {
-      background-color: black;
-      color: white;
-    }
-    .category {
-      position: relative;
-    }
+      .close-btn {
+        background-color: black;
+        color: white;
+      }
 
-    .circle1 {
-      position: absolute;
-      width: 150px;
-      left: 40px;
-      top: -10px;
-      opacity: 1;
-      visibility: hidden;
-    }
-
-    .circle2 {
-      position: absolute;
-      width: 150px;
-      left: 40px;
-      top: -10px;
-      opacity: 1;
-      visibility: hidden;
-    }
-
-    .circle3 {
-      position: absolute;
-      width: 150px;
-      left: 40px;
-      top: -10px;
-      opacity: 1;
-      visibility: hidden;
-    }
-
-    .circle4 {
-      position: absolute;
-      width: 150px;
-      left: 40px;
-      top: -10px;
-      opacity: 1;
-      visibility: hidden;
-    }
-
-    .circle5 {
-      position: absolute;
-      width: 150px;
-      left: 40px;
-      top: -10px;
-      opacity: 1;
-      visibility: hidden;
-    }
-
-    .circle-show {
-      opacity: 1;
-      visibility: visible;
-    }
-    .text-box {
-      width: 500px;
-      padding: 5px;
-    }
+      .text-box {
+        width: 500px;
+        padding: 5px;
+      }
       .header-title {
         padding: 20px;
         text-align: center;
@@ -216,7 +169,7 @@
         float: left;
         margin: 0px 50px 0px 10px;
         padding-right: 10px;
-        padding-top: 24px;
+        padding-top: 20px;
       }
       .col {
         width: 23%;
@@ -377,72 +330,107 @@
       .write-date-time {
         float: right;
       }
+      .underline {
+      }
     </style>
     <script>
-        $(document).ready(function () {
-            listing();
-        });
+      let id = `{{ p_id }}`;
+      console.log(id);
+      $(document).ready(function () {
+        getData();
+      });
 
-        function listing() {
-        
-            $('#cards-box').empty();
-            let rows = data['result'];
-            rowFilter = rows.filter((value) => value['category'] === category);
-            rowFilter.forEach((a) => {
-              let title = a['title'];
-              let image = a['image'];
-              let comment = a['comment'];
-              let writer = a['user_id'];
-              let catgegory = a['category'];
-              let p_id = a['_id'];
+      // console.log(id);
+      function posting() {
 
-              let temp_html = `<div class="col">
-                <div class="card h-100">
-                  <img
-                    src="${image}"
-                    class="card-img-top"
-                    onclick="newPage(this)"
-                    id="${p_id}"
-                  />
-                  <div class="card-body">
-                    <h5 class="card-title">${title}</h5>
-                    <p>${writer}</p>
-                    <p class="mycomment">${comment}</p>
-                    <button id="${p_id}" onclick="deletepost(this)">삭제</button>
-                  </div>
-                </div>
-              </div>`;
+        let writer = $('#writer').val();
+        let comment = $('#comment').val();
 
-              $('#cards-box').append(temp_html);
+        let formData = new FormData();
+
+        formData.append('name_give', writer);
+        formData.append('comment_give', comment);
+
+        fetch(`/posts/${id}/comments`, { method: 'POST', body: formData })
+          .then((res) => res.json())
+          .then((data) => {
+            alert(data['msg']);
+            window.location.reload();
+          });
+      }
+
+      function getData() {
+        // 게시글 부분
+        fetch(`/posts/detail/${id}`)
+          .then((res) => res.json())
+          .then((data) => {
+            let a = data['result'];
+            let title = a['title'];
+            let desc = a['comment'];
+            let image = a['image'];
+            let comment = a['comment'];
+            let writer = a['nickname'];
+            let catgegory = a['category'];
+
+            $('#detailImg').attr('src', image);
+          });
+          
+          // 댓글 보여주기
+          fetch(`/posts/${id}/comments`)
+            .then((res) => res.json())
+            .then((data) => {
+              console.log(data);
+              $('#replyBox').empty();
+              let rows = data['result'];
+              rows.forEach((a) => {
+                let r_id = a['_id'];
+                let user_id = a['user_id'];
+                let comment = a['comment'];
+                let reg_date = a['reg_date'];
+
+                let temp_html = `<div class="reply-data">
+                                      <p style="font-weight: bolder;">${user_id} 💬</p>
+                                      <p>${comment}</p>
+                                      <p style="color: gray;">(${reg_date})</p>
+                                      <button onclick="modifying(${r_id})" class="reply-edit-btn">수정</button>
+                                      <button onclick="deleting(${r_id})" class="reply-del-btn">삭제</button>
+                                  </div>`;
+                $('#replyBox').append(temp_html);
+              });
             });
 
-        }
+          function modifying() {
+            let comment = $('#comment').val(); // 📌 이거 되는지 봐야함
 
-        function posting() {
-            let url = $('#url').val()
-            let comment = $('#comment').val()
-            let name = $('#name').val()
-
+            // {key : value} 형태로 FormData에 태워서 보내기
             let formData = new FormData();
-            formData.append("url_give", url);
-            formData.append("comment_give", comment);
-            formData.append("name_give", name);
-
-            fetch('/music', { method: "POST", body: formData }).then((res) => res.json()).then((data) => {
-                alert(data['msg'])
-                window.location.reload()
+            formData.append('comment', comment);
+            fetch('/posts/comments/<r_id>', {
+              method: 'PUT',
+              body: formData,
             })
-        }
+              .then((res) => res.json())
+              .then((data) => {
+                alert(data['msg']);
 
-        function open_box() {
-            $('#post-box').show()
-        }
-        function close_box() {
-            $('#post-box').hide()
-        }
-        function newPage() {
-            window.location.href = 'detail1.html'
-        }
+                // ⭐️ 페이지 재로딩
+                window.location.reload();
+              });
+          }
+
+          function deleting() {
+            fetch('/posts/comments/<r_id>', {
+              method: 'DELETE',
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                alert(data['msg']);
+
+                // ⭐️ 페이지 재로딩
+                window.location.reload();
+              });
+          }
+      }
 
     </script>
   </head>
@@ -453,44 +441,72 @@
         <h1 style="text-align: center; font-family: PyeongChangPeace-Bold">
           '취향'은 언제든 변하죠!
         </h1>
-  
+
         <form action="#">
           <div class="write-box">
             <div class="write-box-inside">
               <p>타이틀</p>
               <form>
-                <input type="text" class="text-box" placeholder="제목을 입력해주세요" />
+                <input
+                  type="text"
+                  class="text-box"
+                  placeholder="제목을 입력해주세요"
+                />
               </form>
             </div>
             <div class="write-box-inside">
               <p>지니뮤직URL</p>
               <form>
-                <input type="text" class="text-box" placeholder="URL을 입력해주세요" />
+                <input
+                  type="text"
+                  class="text-box"
+                  placeholder="URL을 입력해주세요"
+                />
               </form>
             </div>
             <div class="write-box-inside">
               <p>이미지URL</p>
               <form>
-                <input type="text" class="text-box" id="urlBox" placeholder="URL을 입력해주세요" />
+                <input
+                  type="text"
+                  class="text-box"
+                  id="urlBox"
+                  placeholder="URL을 입력해주세요"
+                />
               </form>
             </div>
             <div class="write-box-inside">
               <p>작성자</p>
               <form>
-                <input type="text" id="writerBox" class="text-box" placeholder="작성자 이름을 입력해주세요" />
+                <input
+                  type="text"
+                  id="writerBox"
+                  class="text-box"
+                  placeholder="작성자 이름을 입력해주세요"
+                />
               </form>
             </div>
             <div class="write-box-inside">
               <p>코멘트</p>
               <form>
-                <input type="text" id="commentBox" class="text-box" style="height: 200px"
-                  placeholder="취향에 대한 코멘트를 남겨주세요" />
+                <input
+                  type="text"
+                  id="commentBox"
+                  class="text-box"
+                  style="height: 200px"
+                  placeholder="취향에 대한 코멘트를 남겨주세요"
+                />
               </form>
             </div>
             <div style="clear: both"></div>
           </div>
           <div style="text-align: center">
-            <button type="submit" class="write-btn send-btn" id="send" onclick="posting()">
+            <button
+              type="submit"
+              class="write-btn send-btn"
+              id="send"
+              onclick="posting()"
+            >
               수정완료
             </button>
             <button type="button" class="write-btn close-btn" id="close">
@@ -504,7 +520,7 @@
     <div class="contentContainer">
       <div class="headerWrap">
         <div class="memberHeader">
-          <img src="/static/src/img/logo_image.png" class="logo" alt="">
+          <img src="" class="logo" alt="" />
           <p>음악</p>
           <div class="memberBtn">
             <button>회원가입</button>
@@ -518,78 +534,77 @@
             <p>category</p>
           </div>
           <div class="left-navbar-content">
-            <div class="left-navbar-content">
-              <div class="category"><a href="#" id="category-1">
-                  <img src="/static/src/img/circle.png" class="circle1" alt="">
-                  <div>영화 🎬</div>
-                </a>
-              </div>
-              <div class="category"><a href="#" id="category-2">
-                  <img src="/static/src/img/circle.png" class="circle2" alt="">
-                  <div>음악 🎧</div>
-                </a>
-              </div>
-              <div class="category"><a href="#" id="category-3">
-                  <img src="/static/src/img/circle.png" class="circle3" alt="">
-                  <div>애니 📺</div>
-                </a>
-              </div>
-              <div class="category"><a href="#" id="category-4">
-                  <img src="/static/src/img/circle.png" class="circle4" alt="">
-                  <div>운동 ⚽</div>
-                </a>
-              </div>
-              <div class="category"><a href="#" id="category-5">
-                  <img src="/static/src/img/circle.png" class="circle5" alt="">
-                  <div>책 📚</div>
-                </a>
-              </div>
-            </div>
+            <div><a href="#">영화 🎬</a></div>
+            <div><a href="#">음악 🎧</a></div>
+            <div><a href="#">애니 📺</a></div>
+            <div><a href="#">운동 ⚽</a></div>
+            <div><a href="#">책 📚</a></div>
           </div>
         </div>
         <div class="body">
           <div class="body-title">
             <div class="body-title-head">
               <h1 class="title-text">뉴진스의 하입보이요</h1>
-              <img src="/static/src/img/underline_black.png" class="underline" alt="">
-           </div>
-           <div class="body-write">
-           <div class="write-er">
-            <p>📝신샘</p>
-          </div>
-          <div class="write-date-time">
-            <p>📅2023.03.28 21:30</p>
-          </div>
-        </div>
-        <div style="float: none; clear: both;"></div>
-          </div>
-            <div class="body-detail">
-                <div class="body-img">
-                    <img src="https://img1.daumcdn.net/thumb/R1280x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/epXm/image/WTEOnfO6X44JawwreKjDtHTO7EI.jfif" class="image"alt="">
-                </div>
-                <div class="body-text">
-                    <p>
-                      눈을 감아
-                      말해봐 yeah
-                      느껴봐 mm mm
-                      Take him to the sky
-                      You know I hype you boy
-                    </p>
-                </div>
+              <img src="" class="underline" alt="" id="detailImg" style="width:100px; height:100px;" />
             </div>
-            <div style="float:none; clear:both;"></div>
-            <div class="body-btn">
-                <button class="list-btn">목록</button>
-                <button class="edit-btn">수정</button>
-                <button class="del-btn">삭제</button>
-            </div>
-            <div class="reply">
-              <div class="reply-box">
-                <input type="text" class="reply-name" placeholder="작성자"><br>
-                <input type="text" class="reply-text" placeholder="댓글을 남겨주세요!">
-                <button class="reply-btn">댓글 남기기<br>💬</button>
+            <div class="body-write">
+              <div class="write-er">
+                <p>📝신샘</p>
+              </div>
+              <div class="write-date-time">
+                <p>📅2023.03.28 21:30</p>
               </div>
             </div>
+            <div style="float: none; clear: both"></div>
+          </div>
+          <div class="body-detail">
+            <div class="body-img">
+              <img
+                src="https://img1.daumcdn.net/thumb/R1280x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/epXm/image/WTEOnfO6X44JawwreKjDtHTO7EI.jfif"
+                class="image"
+                alt=""
+              />
+            </div>
+            <div class="body-text">
+              <p>
+                (1,2,3,4) Baby, got me looking so crazy 빠져버리는 daydream Got
+                me feeling you 너도 말해줄래 누가 내게 뭐라든 남들과는 달라 넌
+                Maybe you could be the one 날 믿어봐 한번 I’m not looking for
+                just fun Maybe I could be the one Oh baby 예민하대 나 lately 너
+                없이는 매일 매일이 yeah 재미없어 어쩌지 I just want you Call m
+              </p>
+            </div>
+          </div>
+          <div style="float: none; clear: both"></div>
+          <div class="body-btn">
+            <button class="list-btn">목록</button>
+            <button class="edit-btn">수정</button>
+            <button class="del-btn">삭제</button>
+          </div>
+          <div class="reply">
+            <div class="reply-box">
+              <input
+                type="text"
+                class="reply-name"
+                placeholder="작성자"
+                id="writer"
+              /><br />
+              <input
+                type="text"
+                class="reply-text"
+                placeholder="댓글을 남겨주세요!"
+                id="comment"
+              />
+              <button class="reply-btn" onclick="posting()">댓글 남기기<br />💬</button>
+            </div>
+            <div class="reply-data" id="replyBox">
+              <p style="font-weight: bolder">신샘 💬</p>
+              <p>취향존중 해드릴게요!</p>
+              <p style="color: gray">(2023.03.28)</p>
+              <button class="reply-edit-btn">수정</button>
+              <button class="reply-del-btn">삭제</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -600,36 +615,6 @@
       $('#close').on('click', function () {
         $('.black-bg').removeClass('show-modal');
       });
-
-      $('#category-1').hover(function () {
-      $('.circle1').addClass('circle-show');
-    }, function () {
-      $('.circle1').removeClass('circle-show')
-    });
-
-    $('#category-2').hover(function () {
-      $('.circle2').addClass('circle-show');
-    }, function () {
-      $('.circle2').removeClass('circle-show')
-    });
-
-    $('#category-3').hover(function () {
-      $('.circle3').addClass('circle-show');
-    }, function () {
-      $('.circle3').removeClass('circle-show')
-    });
-
-    $('#category-4').hover(function () {
-      $('.circle4').addClass('circle-show');
-    }, function () {
-      $('.circle4').removeClass('circle-show')
-    });
-
-    $('#category-5').hover(function () {
-      $('.circle5').addClass('circle-show');
-    }, function () {
-      $('.circle5').removeClass('circle-show')
-    });
     </script>
   </body>
 </html>
