@@ -101,12 +101,26 @@ def list_comments(p_id):
     return jsonify({'result':results}) 
 
 # 댓글 작성
-@app.route("/posts/<category>/<p_id>/comments", methods=["POST"])
-def insert_comments():
-    return ""
+@app.route("/posts/<p_id>", methods=["POST"])
+def insert_comments(p_id):
+    name_receive = request.form['nickname_give']
+    comment_receive = request.form['comment_give']
+    reg_date = datetime.datetime.utcnow()
+    mod_date = datetime.datetime.utcnow()
+
+    doc = {
+        'p_id' : p_id,
+        'user_id' : name_receive,
+        'comment' : comment_receive,
+        'reg_date' : reg_date,
+        'mod_date' : mod_date
+    }
+    db.animes.insert_one(doc)
+
+    return jsonify({'msg':'저장완료!'})
 
 # 댓글 수정
-@app.route("/posts/<category>/<p_id>/comments/<r_id>", methods=["PUT"])
+@app.route("/posts/comments/<r_id>", methods=["PUT"])
 def modify_comments():
     return ""
 
