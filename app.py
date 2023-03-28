@@ -87,16 +87,14 @@ def modify_posts():
 # 게시글 삭제
 @app.route("/posts/<p_id>", methods=["DELETE"])
 def delete_posts(p_id):        
-    
     db.posts.delete_one({'_id':ObjectId(p_id)})
-  
     return jsonify({'msg':'삭제완료!'}) 
 
 # 게시글에 해당하는 댓글 목록 조회
 @app.route("/posts/<p_id>/comments", methods=["GET"])
 def list_comments(p_id):
     results = []
-    all_comments = list(db.posts.find({'p_id':p_id}))
+    all_comments = list(db.comments.find({'p_id':p_id}))
     for comment in all_comments:
         comment['_id'] = str(comment['_id'])    ## object_id -> string으로 변환
         results.append(comment)
@@ -113,9 +111,10 @@ def modify_comments():
     return ""
 
 # 댓글 삭제
-@app.route("/posts/<category>/<p_id>/comments/<r_id>", methods=["DELETE"])
-def delete_comments():
-    return ""
+@app.route("/posts/comments/<r_id>", methods=["DELETE"])
+def delete_comments(r_id):
+    db.comments.delete_one({'_id':ObjectId(r_id)})
+    return jsonify({'msg':'삭제완료!'}) 
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5001, debug=True)
