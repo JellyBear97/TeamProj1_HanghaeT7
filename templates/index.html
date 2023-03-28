@@ -198,7 +198,83 @@
         padding: 5px;
       }
     </style>
-    <script></script>
+    <script>
+      function posting() {
+        let url = $('#urlBox').val();
+        let comment = $('#commentBox').val();
+        let writer = $('#writerBox').val();
+        let category = $('#cateBox').val();
+        let title = $('#titleBox').val();
+
+        let formData = new FormData();
+        formData.append('url_give', url);
+        formData.append('comment_give', comment);
+        formData.append('nickname_give', writer);
+        formData.append('category_give', category);
+        formData.append('title_give', title);
+
+        fetch(`/posts/${category}`, { method: 'POST', body: formData })
+          .then((res) => res.json())
+          .then((data) => {
+            alert(data['msg']);
+            window.location.reload();
+          });
+      }
+      $(document).ready(function () {
+        listing();
+      });
+      function listing(e) {
+        let category = $(e).attr('id');
+        fetch(`/posts/${category}`)
+          .then((res) => res.json())
+          .then((data) => {
+            $('#cards-box').empty();
+            let rows = data['result'];
+            rowFilter = rows.filter((value) => value['category'] === category);
+            rowFilter.forEach((a) => {
+              let title = a['title'];
+              let desc = a['comment'];
+              let image = a['image'];
+              let comment = a['comment'];
+              let writer = a['nickname'];
+              let catgegory = a['category'];
+              let p_id = a['_id'];
+
+              let temp_html = `<div class="col">
+                <div class="card h-100">
+                  <img
+                    src="${image}"
+                    class="card-img-top"
+                    onclick="newPage()"
+                  />
+                  <div class="card-body">
+                    <h5 class="card-title">${title}</h5>
+                    <p class="card-text">${desc}</p>
+                    <p>${writer}</p>
+                    <p class="mycomment">${comment}</p>
+                    <button id="${p_id}" onclick="deletepost(this)">삭제</button>
+                  </div>
+                </div>
+              </div>`;
+
+              $('#cards-box').append(temp_html);
+            });
+          });
+      }
+      function deletepost(e) {
+        let p_id = $(e).attr('id');
+
+        // let formData = new FormData();
+        // formData.append('p_id', del);
+
+        fetch(`/posts/${p_id}`, { method: 'DELETE' })
+          .then((res) => res.json())
+          .then((data) => {
+            alert(data['msg']);
+            window.location.reload();
+          });
+      }
+    </script>
   </head>
 
   <body>
@@ -211,17 +287,30 @@
         <form action="#">
           <div class="write-box">
             <div class="write-box-inside">
-              <p>지니뮤직URL</p>
+              <p>카테고리</p>
+              <form>
+                <select id="cateBox" size="1">
+                  <option value="movie">영화</option>
+                  <option value="music">음악</option>
+                  <option value="ani">애니</option>
+                  <option value="health">운동</option>
+                  <option value="book">책</option>
+                </select>
+              </form>
+            </div>
+            <div class="write-box-inside">
+              <p>타이틀</p>
               <form>
                 <input
                   type="text"
                   class="text-box"
-                  placeholder="URL을 입력해주세요"
+                  placeholder="타이틀을 입력해주세요"
+                  id="titleBox"
                 />
               </form>
             </div>
             <div class="write-box-inside">
-              <p>이미지URL</p>
+              <p>URL</p>
               <form>
                 <input
                   type="text"
@@ -289,11 +378,19 @@
             <p>Menu</p>
           </div>
           <div class="left-navbar-content">
-            <div><a href="#">영화 🎬</a></div>
-            <div><a href="#">음악 🎧</a></div>
-            <div><a href="#">애니 📺</a></div>
-            <div><a href="#">운동 ⚽</a></div>
-            <div><a href="#">책 📚</a></div>
+            <div>
+              <a id="movie" href="#" onclick="listing(this)">영화 🎬</a>
+            </div>
+            <div>
+              <a id="music" href="#" onclick="listing(this)">음악 🎧</a>
+            </div>
+            <div><a id="ani" href="#" onclick="listing(this)">애니 📺</a></div>
+            <div>
+              <a id="health" href="#" onclick="listing(this)">운동 ⚽</a>
+            </div>
+            <div>
+              <a id="book" href="#" onclick="listing(this)">책 📚</a>
+            </div>
           </div>
           <button class="write">내 취향 공유하기</button>
         </div>
@@ -312,48 +409,7 @@
                     <p class="card-text">여기에 아티스트가 들어갑니다</p>
                     <p>작성자</p>
                     <p class="mycomment">나의 한줄 평을 씁니다</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card h-100">
-                  <img
-                    src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
-                    class="card-img-top"
-                  />
-                  <div class="card-body">
-                    <h5 class="card-title">노래 제목이 들어갑니다</h5>
-                    <p class="card-text">여기에 아티스트가 들어갑니다</p>
-                    <p>작성자</p>
-                    <p class="mycomment">나의 한줄 평을 씁니다</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card h-100">
-                  <img
-                    src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
-                    class="card-img-top"
-                  />
-                  <div class="card-body">
-                    <h5 class="card-title">노래 제목이 들어갑니다</h5>
-                    <p class="card-text">여기에 아티스트가 들어갑니다</p>
-                    <p>작성자</p>
-                    <p class="mycomment">나의 한줄 평을 씁니다</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card h-100">
-                  <img
-                    src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
-                    class="card-img-top"
-                  />
-                  <div class="card-body">
-                    <h5 class="card-title">노래 제목이 들어갑니다</h5>
-                    <p class="card-text">여기에 아티스트가 들어갑니다</p>
-                    <p>작성자</p>
-                    <p class="mycomment">나의 한줄 평을 씁니다</p>
+                    <button onclick="deletepost(this)">삭제</button>
                   </div>
                 </div>
               </div>
