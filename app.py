@@ -30,9 +30,9 @@ def list_category(category):
     return jsonify({'result':results})  
 
 # 게시글 상세조회
-@app.route("/posts/<p_id>", methods=["GET"])
+@app.route("/posts/detail/<p_id>", methods=["GET"])
 def view_posts(p_id):
-    return render_template('detail.html', p_id = p_id)
+    return render_template("detail.html", p_id = p_id)
 
 # 게시글 작성
 @app.route("/posts/<category>", methods=["POST"] )

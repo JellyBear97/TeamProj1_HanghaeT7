@@ -244,7 +244,8 @@
                   <img
                     src="${image}"
                     class="card-img-top"
-                    onclick="newPage('${p_id}')"
+                    onclick="newPage(this)"
+                    id="${p_id}"
                   />
                   <div class="card-body">
                     <h5 class="card-title">${title}</h5>
@@ -273,12 +274,12 @@
           });
       }
 
-      function newPage(p_id){
-        fetch(`/posts/${p_id}`, { method: 'GET' })
-          .then((res) => res.json())
-          .then((data) => {
-          });
+      function newPage(e) {
+        let p_id = $(e).attr('id');
+        fetch(`/posts/${p_id}`);
+        window.location.href = `/posts/detail/${p_id}`;
       }
+      
     </script>
   </head>
 
@@ -407,7 +408,7 @@
                   <img
                     src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
                     class="card-img-top"
-                    onclick="newPage()"
+                    onclick="newPage(this)"
                   />
                   <div class="card-body">
                     <h5 class="card-title">노래 제목이 들어갑니다</h5>
