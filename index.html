@@ -70,31 +70,22 @@
 
     .memberBtn>button:active {
       color: goldenrod;
-      text-shadow: -2px 0px black, 0px 2px black, 2px 0px black,
-        0px -2px black;
     }
 
-    .category > a:link {
+    .category>a:link {
       color: black;
     }
 
-    .category > a:visited {
+    .category>a:visited {
       color: black;
     }
 
-    /* .category > a:hover {
-      color: goldenrod;
-    } */
-
-    .category > a:active {
-      color: goldenrod;
-      text-shadow: -2px 0px black, 0px 2px black, 2px 0px black,
-        0px -2px black;
+    .category>a:active {
+      color: gray;
     }
 
     .left-navbar-menu {
       width: 250px;
-      border-radius: 10px;
       background-color: black;
       color: white;
       text-align: center;
@@ -123,7 +114,6 @@
       float: left;
       margin: 24px 50px 0px 10px;
       padding-right: 10px;
-      padding-top: 20px;
     }
 
     .col {
@@ -150,7 +140,7 @@
       width: 230px;
       text-align: center;
       margin-top: 50px;
-      border: 2px solid black;
+      border: none;
       border-radius: 10px;
       font-size: 25px;
     }
@@ -221,10 +211,12 @@
       width: 500px;
       padding: 5px;
     }
+
     .category {
       position: relative;
     }
-    .circle {
+
+    .circle1 {
       position: absolute;
       width: 150px;
       left: 40px;
@@ -232,6 +224,43 @@
       opacity: 1;
       visibility: hidden;
     }
+
+    .circle2 {
+      position: absolute;
+      width: 150px;
+      left: 40px;
+      top: -10px;
+      opacity: 1;
+      visibility: hidden;
+    }
+
+    .circle3 {
+      position: absolute;
+      width: 150px;
+      left: 40px;
+      top: -10px;
+      opacity: 1;
+      visibility: hidden;
+    }
+
+    .circle4 {
+      position: absolute;
+      width: 150px;
+      left: 40px;
+      top: -10px;
+      opacity: 1;
+      visibility: hidden;
+    }
+
+    .circle5 {
+      position: absolute;
+      width: 150px;
+      left: 40px;
+      top: -10px;
+      opacity: 1;
+      visibility: hidden;
+    }
+
     .circle-show {
       opacity: 1;
       visibility: visible;
@@ -373,34 +402,34 @@
           <p>category</p>
         </div>
         <div class="left-navbar-content">
-          <div class="category"><a href="#" class="category-a">
-              <img src="/static/src/img/circle.png" class="circle" alt="">
+          <div class="category"><a href="#" id="category-1">
+              <img src="/static/src/img/circle.png" class="circle1" alt="">
               <div>영화 🎬</div>
             </a>
           </div>
-          <div class="category"><a href="#">
-              <img src="/static/src/img/circle.png" class="circle" alt="">
+          <div class="category"><a href="#" id="category-2">
+              <img src="/static/src/img/circle.png" class="circle2" alt="">
               <div>음악 🎧</div>
             </a>
           </div>
-          <div class="category"><a href="#">
-              <img src="/static/src/img/circle.png" class="circle" alt="">
+          <div class="category"><a href="#" id="category-3">
+              <img src="/static/src/img/circle.png" class="circle3" alt="">
               <div>애니 📺</div>
             </a>
           </div>
-          <div class="category"><a href="#">
-              <img src="/static/src/img/circle.png" class="circle" alt="">
+          <div class="category"><a href="#" id="category-4">
+              <img src="/static/src/img/circle.png" class="circle4" alt="">
               <div>운동 ⚽</div>
             </a>
           </div>
-          <div class="category"><a href="#">
-              <img src="/static/src/img/circle.png" class="circle" alt="">
+          <div class="category"><a href="#" id="category-5">
+              <img src="/static/src/img/circle.png" class="circle5" alt="">
               <div>책 📚</div>
             </a>
           </div>
         </div>
 
-        <button class="write">내 취향 공유하기</button>
+        <button class="write">내 취향 공유하기!</button>
       </div>
     </div>
   </div>
@@ -479,11 +508,37 @@
     $('#close').on('click', function () {
       $('.black-bg').removeClass('show-modal');
     });
-    $('.category-a').hover(function() {
-      $('.circle').addClass('circle-show');
-    }, function() {
-      $('.circle').removeClass('circle-show')
+
+    $('#category-1').hover(function () {
+      $('.circle1').addClass('circle-show');
+    }, function () {
+      $('.circle1').removeClass('circle-show')
     });
+
+    $('#category-2').hover(function () {
+      $('.circle2').addClass('circle-show');
+    }, function () {
+      $('.circle2').removeClass('circle-show')
+    });
+
+    $('#category-3').hover(function () {
+      $('.circle3').addClass('circle-show');
+    }, function () {
+      $('.circle3').removeClass('circle-show')
+    });
+
+    $('#category-4').hover(function () {
+      $('.circle4').addClass('circle-show');
+    }, function () {
+      $('.circle4').removeClass('circle-show')
+    });
+
+    $('#category-5').hover(function () {
+      $('.circle5').addClass('circle-show');
+    }, function () {
+      $('.circle5').removeClass('circle-show')
+    });
+
   </script>
 </body>
 
