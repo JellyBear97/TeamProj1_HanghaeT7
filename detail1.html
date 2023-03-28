@@ -100,7 +100,63 @@
         text-decoration: none;
         text-decoration-color: none;
       }
+      .black-bg {
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 5;
+      padding: 30px;
+      visibility: hidden;
+      opacity: 1;
+    }
 
+    .show-modal {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .white-bg {
+      margin: 0 auto;
+      width: 800px;
+      background: white;
+      border-radius: 5px;
+      padding: 30px;
+    }
+
+    .write-box {
+      padding: 20px;
+      margin-left: 100px;
+      font-family: Pretendard-Regular;
+    }
+
+    .write-box-inside {
+      line-height: 1px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .write-btn {
+      width: 180px;
+      height: 40px;
+      border: none;
+      font-size: 24px;
+      font-family: PyeongChangPeace-Bold;
+    }
+
+    .send-btn {
+      background-color: goldenrod;
+    }
+
+    .close-btn {
+      background-color: black;
+      color: white;
+    }
+
+    .text-box {
+      width: 500px;
+      padding: 5px;
+    }
       .header-title {
         padding: 20px;
         text-align: center;
@@ -339,6 +395,58 @@
   </head>
 
   <body>
+    <div class="black-bg">
+      <div class="white-bg">
+        <h1 style="text-align: center; font-family: PyeongChangPeace-Bold">
+          '취향'은 언제든 변하죠!
+        </h1>
+  
+        <form action="#">
+          <div class="write-box">
+            <div class="write-box-inside">
+              <p>타이틀</p>
+              <form>
+                <input type="text" class="text-box" placeholder="제목을 입력해주세요" />
+              </form>
+            </div>
+            <div class="write-box-inside">
+              <p>지니뮤직URL</p>
+              <form>
+                <input type="text" class="text-box" placeholder="URL을 입력해주세요" />
+              </form>
+            </div>
+            <div class="write-box-inside">
+              <p>이미지URL</p>
+              <form>
+                <input type="text" class="text-box" id="urlBox" placeholder="URL을 입력해주세요" />
+              </form>
+            </div>
+            <div class="write-box-inside">
+              <p>작성자</p>
+              <form>
+                <input type="text" id="writerBox" class="text-box" placeholder="작성자 이름을 입력해주세요" />
+              </form>
+            </div>
+            <div class="write-box-inside">
+              <p>코멘트</p>
+              <form>
+                <input type="text" id="commentBox" class="text-box" style="height: 200px"
+                  placeholder="취향에 대한 코멘트를 남겨주세요" />
+              </form>
+            </div>
+            <div style="clear: both"></div>
+          </div>
+          <div style="text-align: center">
+            <button type="submit" class="write-btn send-btn" id="send" onclick="posting()">
+              수정완료
+            </button>
+            <button type="button" class="write-btn close-btn" id="close">
+              취소
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
 
     <div class="contentContainer">
       <div class="headerWrap">
@@ -506,7 +614,7 @@
       </div>
     </div>
     <script>
-      $('.write').on('click', function () {
+      $('.edit-btn').on('click', function () {
         $('.black-bg').addClass('show-modal');
       });
       $('#close').on('click', function () {
