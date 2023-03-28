@@ -11,7 +11,7 @@
       crossorigin="anonymous"
     />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <title>music</title>
+    <title>Detail</title>
 
     <style>
       @font-face {
@@ -165,8 +165,10 @@
       }
 
       .write-box {
-        padding: 20px;
-        margin-left: 100px;
+        padding: 50px;
+        margin-left: 50px;
+        margin-right: auto;
+
         font-family: Pretendard-Regular;
       }
 
@@ -197,81 +199,79 @@
       }
     </style>
     <script>
-        $(document).ready(function () {
-            listing();
-        });
+      function posting() {
+        let url = $('#urlBox').val();
+        let comment = $('#commentBox').val();
+        let writer = $('#writerBox').val();
+        let category = $('#cateBox').val();
+        let title = $('#titleBox').val();
 
-        function listing() {
-            fetch('/posts').then((res) => res.json()).then((data) => {
-                let rows = data['result']
-                $('#cards-box').empty()
-                rows.forEach((a) => {
+        let formData = new FormData();
+        formData.append('url_give', url);
+        formData.append('comment_give', comment);
+        formData.append('nickname_give', writer);
+        formData.append('category_give', category);
+        formData.append('title_give', title);
 
-                    let p_id = a['_id']
-                    let title = a['title']
-                    let comment = a['comment']
-                    let image = a['url']
-                    let reg_date = a['reg_date']
-                    let writer = a['u_id']
+        fetch(`/posts/${category}`, { method: 'POST', body: formData })
+          .then((res) => res.json())
+          .then((data) => {
+            alert(data['msg']);
+            window.location.reload();
+          });
+      }
+      $(document).ready(function () {
+        listing();
+      });
+      function listing(e) {
+        let category = $(e).attr('id');
+        fetch(`/posts/${category}`)
+          .then((res) => res.json())
+          .then((data) => {
+            $('#cards-box').empty();
+            let rows = data['result'];
+            rowFilter = rows.filter((value) => value['category'] === category);
+            rowFilter.forEach((a) => {
+              let title = a['title'];
+              let image = a['image'];
+              let comment = a['comment'];
+              let writer = a['user_id'];
+              let catgegory = a['category'];
+              let p_id = a['_id'];
 
-                    let temp_html = `<div class="col">
-                                        <div class="card h-100">
-                                            <img src="${image}"
-                                                class="card-img-top">
-                                            <div class="card-body">
-                                                <h5 class="card-title">${title}</h5>
-                                                <p class="card-text">${writer}</p>
-                                                <p>🎵</p>
-                                                <p>${reg_date}</p>
-                                                <p class="mycomment text-flow">${comment}</p>
-                                            </div>
-                                        </div>
-                                    </div>`
-                    $('#cards-box').append(temp_html)
-                })
-            })
-        }
+              let temp_html = `<div class="col">
+                <div class="card h-100">
+                  <img
+                    src="${image}"
+                    class="card-img-top"
+                    onclick="newPage()"
+                  />
+                  <div class="card-body">
+                    <h5 class="card-title">${title}</h5>
+                    <p>${writer}</p>
+                    <p class="mycomment">${comment}</p>
+                    <button id="${p_id}" onclick="deletepost(this)">삭제</button>
+                  </div>
+                </div>
+              </div>`;
 
-        function posting() {
-            let category = "movie";// 임시 ('#category').val();
-            let title = $('#title').val();
-            let url = $('#urlBox').val();
-            let name = $('#writerBox').val();
-            let comment = $('#commentBox').val();
+              $('#cards-box').append(temp_html);
+            });
+          });
+      }
+      function deletepost(e) {
+        let p_id = $(e).attr('id');
 
-            let formData = new FormData();
-            formData.append("name_give", name);
-            formData.append("title_give", title);
-            formData.append("url_give", url);
-            formData.append("comment_give", comment);
-            formData.append("category_give", category);
+        // let formData = new FormData();
+        // formData.append('p_id', del);
 
-            fetch('/posts', { method: "POST", body: formData }).then((res) => res.json()).then((data) => {
-                alert(data['msg'])
-                window.location.reload()
-            })
-        }
-
-        function open_box() {
-            $('#post-box').show()
-        }
-        function close_box() {
-            $('#post-box').hide()
-        }
-        function newPage() {
-            window.location.href = 'detail1.html'
-        }
-
-        // 특수문자 입력 방지
-        function characterCheck(obj){
-        var regExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi; 
-        // 허용할 특수문자는 여기서 삭제하면 됨
-        // 지금은 띄어쓰기도 특수문자 처리됨 
-        if( regExp.test(obj.value) ){
-            alert("특수문자는 입력할 수 없습니다.");
-            obj.value = obj.value.substring( 0 , obj.value.length - 1 ); // 입력한 특수문자 한자리 지움
-            }
-        }
+        fetch(`/posts/${p_id}`, { method: 'DELETE' })
+          .then((res) => res.json())
+          .then((data) => {
+            alert(data['msg']);
+            window.location.reload();
+          });
+      }
     </script>
   </head>
 
@@ -285,28 +285,30 @@
         <form action="#">
           <div class="write-box">
             <div class="write-box-inside">
+              <p>카테고리</p>
+              <form>
+                <select id="cateBox" size="1">
+                  <option value="movie">영화</option>
+                  <option value="music">음악</option>
+                  <option value="ani">애니</option>
+                  <option value="health">운동</option>
+                  <option value="book">책</option>
+                </select>
+              </form>
+            </div>
+            <div class="write-box-inside">
               <p>타이틀</p>
               <form>
                 <input
                   type="text"
                   class="text-box"
-                  id="title"
-                  placeholder="제목을 입력해주세요"
+                  placeholder="타이틀을 입력해주세요"
+                  id="titleBox"
                 />
               </form>
             </div>
             <div class="write-box-inside">
-              <p>지니뮤직URL</p>
-              <form>
-                <input
-                  type="text"
-                  class="text-box"
-                  placeholder="URL을 입력해주세요"
-                />
-              </form>
-            </div>
-            <div class="write-box-inside">
-              <p>이미지URL</p>
+              <p>URL</p>
               <form>
                 <input
                   type="text"
@@ -374,11 +376,19 @@
             <p>Menu</p>
           </div>
           <div class="left-navbar-content">
-            <div><a href="#">영화 🎬</a></div>
-            <div><a href="#">음악 🎧</a></div>
-            <div><a href="#">애니 📺</a></div>
-            <div><a href="#">운동 ⚽</a></div>
-            <div><a href="#">책 📚</a></div>
+            <div>
+              <a id="movie" href="#" onclick="listing(this)">영화 🎬</a>
+            </div>
+            <div>
+              <a id="music" href="#" onclick="listing(this)">음악 🎧</a>
+            </div>
+            <div><a id="ani" href="#" onclick="listing(this)">애니 📺</a></div>
+            <div>
+              <a id="health" href="#" onclick="listing(this)">운동 ⚽</a>
+            </div>
+            <div>
+              <a id="book" href="#" onclick="listing(this)">책 📚</a>
+            </div>
           </div>
           <button class="write">내 취향 공유하기</button>
         </div>
@@ -397,6 +407,7 @@
                     <p class="card-text">여기에 아티스트가 들어갑니다</p>
                     <p>작성자</p>
                     <p class="mycomment">나의 한줄 평을 씁니다</p>
+                    <button onclick="deletepost(this)">삭제</button>
                   </div>
                 </div>
               </div>
