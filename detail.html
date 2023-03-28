@@ -349,7 +349,11 @@
       border-style: solid;
       border-color: white white gray;
     }
-
+    .reply-edit {
+      margin-top: 30px;
+      text-align: center;
+      margin: auto;
+    }
     .reply-name:focus {
       outline: none;
     }
@@ -392,7 +396,17 @@
       border-style: solid;
       border-color: gray white white;
     }
-
+    .reply-edit>button {
+      margin-left: 6px;
+      border: 1px solid gray;
+      color: gray;
+    }
+    .reply-edit--btn:hover {
+      color: rgb(3, 66, 95);
+    }
+    .reply-cancle--btn:hover {
+      color: red;
+    }
     .reply-data>button {
       border: 1px solid gray;
       color: gray;
@@ -424,6 +438,7 @@
     }
   </style>
   <script>
+
     let id = `{{ p_id }}`;
       console.log(id);
       $(document).ready(function () {
@@ -548,29 +563,29 @@
         </div>
         <div class="left-navbar-content">
           <div class="category" id="category-1"><a id="movie" onclick="window.location.href='/'">
-              <img src="/static/src/img/circle.png" class="circle1" alt="">
-              <div>영화 🎬</div>
-            </a>
-          </div>
-          <div class="category" id="category-2"><a id="music" onclick="window.location.href='/'">
-              <img src="/static/src/img/circle.png" class="circle2" alt="">
-              <div>음악 🎧</div>
-            </a>
-          </div>
-          <div class="category" id="category-3"><a id="ani" onclick="window.location.href='/'">
-              <img src="/static/src/img/circle.png" class="circle3" alt="">
-              <div>애니 📺</div>
-            </a>
-          </div>
-          <div class="category" id="category-4"><a id="health" onclick="window.location.href='/'">
-              <img src="/static/src/img/circle.png" class="circle4" alt="">
-              <div>운동 ⚽</div>
-            </a>
-          </div>
-          <div class="category" id="category-5"><a id="book" onclick="window.location.href='/'">
-              <img src="/static/src/img/circle.png" class="circle5" alt="">
-              <div>책 📚</div>
-            </a>
+            <img src="/static/src/img/circle.png" class="circle1" alt="">
+            <div>영화 🎬</div>
+          </a>
+        </div>
+        <div class="category" id="category-2"><a id="music" onclick="window.location.href='/'">
+            <img src="/static/src/img/circle.png" class="circle2" alt="">
+            <div>음악 🎧</div>
+          </a>
+        </div>
+        <div class="category" id="category-3"><a id="ani" onclick="window.location.href='/'">
+            <img src="/static/src/img/circle.png" class="circle3" alt="">
+            <div>애니 📺</div>
+          </a>
+        </div>
+        <div class="category" id="category-4"><a id="health" onclick="window.location.href='/'">
+            <img src="/static/src/img/circle.png" class="circle4" alt="">
+            <div>운동 ⚽</div>
+          </a>
+        </div>
+        <div class="category" id="category-5"><a id="book" onclick="window.location.href='/'">
+            <img src="/static/src/img/circle.png" class="circle5" alt="">
+            <div>책 📚</div>
+          </a>
           </div>
         </div>
       </div>
@@ -687,11 +702,20 @@
           <button class="del-btn">삭제</button>
         </div>
         <div class="reply">
+          <!-- ===댓글작성===================== -->
           <div class="reply-box">
             <input type="text" class="reply-name" placeholder="작성자"><br>
             <input type="text" class="reply-text" placeholder="댓글을 남겨주세요!">
             <button class="reply-btn">댓글 남기기<br>💬</button>
           </div>
+          <!-- ===댓글수정========= -->
+          <div class="reply-edit">
+            <input type="text" class="reply-name" placeholder="작성자"><br>
+            <input type="text" class="reply-text" placeholder="댓글을 수정 해주세요!">
+            <button class="reply-edit--btn">수정</button>
+            <button class="reply-cancle--btn">취소</button>
+          </div>
+          <!-- ===댓글============= -->
           <div class="reply-data">
             <p style="font-weight: bolder;">신샘 💬</p>
             <p>취향존중 해드릴게요!</p>
