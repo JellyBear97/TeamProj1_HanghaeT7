@@ -23,12 +23,6 @@ def list_category(category):
         results.append(movie)
     return jsonify({'result':results})  
 
-# 게시글 상세페이지로 이동
-# @app.route("/detail/<p_id>", methods=["GET"])
-# def view_posts(p_id):    
-    
-#     return render_template('detail.html',p_id=p_id)
-
 @app.route("/posts/move/<p_id>", methods=["GET"])
 def move_posts(p_id):
     return render_template("detail.html", p_id = p_id)
@@ -48,22 +42,6 @@ def view_posts(p_id):
          }     
     return jsonify({'result':doc}) 
 
-# @app.route("/detail/get/<p_id>", methods=["GET"])
-# def views_posts(p_id):   
-#     findone = db.board.find_one({'_id':ObjectId(p_id)}) 
-#     doc = {
-#        'title' : findone['title'],
-#         'comment' : findone['comment'],
-#         'url' : findone['url'],
-#         'reg_date' : findone['reg_date'],
-#         'mod_date' : findone['mod_date'],
-#         'category' : findone['category'],
-#         'nickname' : findone['nickname'],
-#         'image':findone['image']   
-#          }         
-#     return jsonify({'result':doc})     
-
-   
 
 #카테고리별 등록
 @app.route("/posts/<category>", methods=["POST"] )
@@ -99,18 +77,60 @@ def insert_posts(category):
     }
 
     db.board.insert_one(doc)
-
     return jsonify({'msg':'저장완료!'})         
 
 
 #카테고리별 삭제
 @app.route("/posts/<p_id>", methods=["DELETE"])
-def delete_posts(p_id):        
-    
-    db.board.delete_one({'_id':ObjectId(p_id)})
-  
+def delete_posts(p_id):          
+    db.board.delete_one({'_id':ObjectId(p_id)})  
     return jsonify({'msg':'삭제완료!'}) 
 
+# 게시글 수정
+@app.route("/posts/<category>/<p_id>", methods=["PUT"] )
+def modify_posts(p_id):
+    return jsonify({'msg':'수정완료!'})
+
+
+# 게시글에 해당하는 댓글 목록 조회
+@app.route("/posts/<p_id>/comments", methods=["GET"])
+def list_comments(p_id):
+    results = []
+    all_comments = list(db.comments.find({'p_id':p_id}))
+    for comment in all_comments:
+        comment['_id'] = str(comment['_id'])    ## object_id -> string으로 변환
+        results.append(comment)
+    return jsonify({'result':results}) 
+
+# 댓글 작성
+@app.route("/posts/<p_id>", methods=["POST"])
+def insert_comments(p_id):
+    name_receive = request.form['nickname_give']
+    comment_receive = request.form['comment_give']
+    reg_date = datetime.datetime.utcnow()
+    mod_date = datetime.datetime.utcnow()
+
+    doc = {
+        'p_id' : p_id,
+        'user_id' : name_receive,
+        'comment' : comment_receive,
+        'reg_date' : reg_date,
+        'mod_date' : mod_date
+    }
+    db.comments.insert_one(doc)
+
+    return jsonify({'msg':'저장완료!'})
+
+# 댓글 수정
+@app.route("/posts/comments/<r_id>", methods=["PUT"])
+def modify_comments(r_id):    
+    return jsonify({'msg':'수정완료!'})
+
+# 댓글 삭제
+@app.route("/posts/comments/<r_id>", methods=["DELETE"])
+def delete_comments(r_id):
+    db.comments.delete_one({'_id':ObjectId(r_id)})
+    return jsonify({'msg':'삭제완료!'}) 
 
 
 if __name__ == '__main__':

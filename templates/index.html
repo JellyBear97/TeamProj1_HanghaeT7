@@ -225,6 +225,11 @@
       });
       function listing(e) {
         let category = $(e).attr('id');
+        let cateTitle = $(e).text();
+        // sliceText = cateTitle.substring(0, cateTitle.length - 3);
+
+        $('#cetetitle').text(cateTitle);
+
         fetch(`/posts/${category}`)
           .then((res) => res.json())
           .then((data) => {
@@ -369,7 +374,7 @@
     <div class="contentContainer">
       <div class="headerWrap">
         <div class="memberHeader">
-          <p>음악</p>
+          <p id="cetetitle">음악</p>
           <div class="memberBtn">
             <button>회원가입</button>
             <button>로그인</button>
