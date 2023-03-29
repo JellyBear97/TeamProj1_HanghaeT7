@@ -551,37 +551,33 @@
     border-style: solid;
     border-color: gray white white;
   }
-  .reply-edit>button {
-    margin-left: 6px;
-    border: 1px solid gray;
-    color: gray;
-  }
+ 
   .reply-edit--btn:hover {
     color: rgb(3, 66, 95);
   }
   .reply-cancle--btn:hover {
     color: red;
   }
-  .reply-data>button {
+  .reply-data>div>button {
     border: 1px solid gray;
     color: gray;
+    float: left;
+    margin-left: 5px;
   }
 
   .reply-edit-btn:hover {
     color: rgb(3, 66, 95);
   }
-  .reply-edited-btn {
-    opacity: 1;
-  }
-  .show {
-    opacity: 1;
+
+  .reply-edited-btn:hover {
+    color: black;
   }
 
   .reply-del-btn:hover {
     color: red;
   }
 
-  .reply-data>button:active {
+  .reply-data>div>button:active {
     border: 1px solid black;
   }
 
