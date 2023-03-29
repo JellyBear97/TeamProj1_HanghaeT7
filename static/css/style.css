@@ -572,6 +572,9 @@
   .reply-edited-btn:hover {
     color: black;
   }
+  .reply-editedFin-btn:hover {
+    color: green;
+  }
 
   .reply-del-btn:hover {
     color: red;
