@@ -23,11 +23,12 @@
     <title>Detail</title>
     <script>
       let id = `{{ p_id }}`;
-
+      console.log(id);
       $(document).ready(function () {
         getData();
       });
 
+      // console.log(id);
       function postingcomment() {
         let writer = $('#writer').val();
         let comment = $('#comment').val();
@@ -132,11 +133,12 @@
 
               let temp_html = `<div class="reply-data" id="reply${r_id}">
                                       <input id="replyName${r_id}" value="${user_id}" style="font-weight: bolder;" disabled/> 
-                                      <textarea readonly id="replyComment${r_id}"> ${comment} </textarea>
+                                      <input id="replyComment${r_id}" value="${comment}" disabled/>
                                       <p style="color: gray;">(${reg_date})</p>
-                                      <button class="${r_id}" onclick="modifycomment(this)" class="reply-edit-btn">수정</button>
-                                      <button onclick="deletecomment('${r_id}')" class="reply-del-btn">삭제</button>
-                                      <button id="${r_id}" onclick="modifyReply(this)" class="reply-edit-btn">수정완료</button>
+                                      <div id="reply-edit-btn${r_id}"><button id="${r_id}" onclick="modifycomment(this)" >수정</button></div>
+                                      <div id="reply-del-btn"><button onclick="deletecomment('${r_id}')" class="reply-del-btn${r_id}">삭제</button></div>
+                                      <div id="reply-edited-btn${r_id}" style="display: none"><button id="${r_id}" onclick="modifyReply(this)" class="reply-edited-btn">수정완료</button></div>
+                                      <div id="reply-editFin-btn${r_id}"><button onclick="replyRe()" style="display: none" class="reply-editedFin-btn">취소</button></div>
                                   </div>`;
               $('#replyBox').append(temp_html);
             });
@@ -200,12 +202,18 @@
 
       //댓글 수정 가능상태로 변경
       function modifycomment(e) {
-        let r_id = $(e).attr('class');
-        $(`#replyName${r_id}`).removeAttr('disabled');
-        $(`#replyComment${r_id}`).removeAttr('readonly');
-        $(`#replyName${r_id}`).focus();
-        $(`#replyComment${r_id}`).focus();
+        let id = $(e).attr('id');
+        $(`#reply-edit-btn${id}`).empty();
+        $(`#reply-edited-btn${id}`).show();
+        $(`#replyName${id}`).removeAttr('disabled');
+        $(`#replyComment${id}`).removeAttr('disabled');
+        $(`#replyName${id}`).focus();
+        $(`#replyComment${id}`).focus();
+
+        let editFin = `<button onclick="replyRe()" class="reply-editedFin-btn">취소</button>`;
+        $(`#reply-editFin-btn${id}`).append(editFin);
       }
+
       //댓글 수정완료
       function modifyReply(e) {
         let r_id = $(e).attr('id');
@@ -222,6 +230,7 @@
           .then((res) => res.json())
           .then((data) => {
             alert(data['msg']);
+
             window.location.reload();
           });
       }
@@ -289,6 +298,10 @@
 
             window.location.reload();
           });
+      }
+
+      function replyRe() {
+        window.location.reload();
       }
     </script>
   </head>
@@ -508,6 +521,7 @@
       });
       $('#close').on('click', function () {
         $('.black-bg').removeClass('show-modal');
+        window.location.reload();
       });
 
       $('#category-1').hover(
