@@ -65,6 +65,8 @@ def insert_posts(category):
     data = requests.get(url_receive,headers=headers)
 
     soup = BeautifulSoup(data.text, 'html.parser')
+
+    music_artist = ''
     
     if(category_receive == "book"):
          # ogtitle = soup.select_one('meta[property="og:title"]')['content'] 직접 적으면 필요X
