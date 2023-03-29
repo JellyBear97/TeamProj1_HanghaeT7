@@ -70,7 +70,8 @@ def view_posts(p_id):
         'mod_date' : findone['mod_date'],
         'category' : findone['category'],
         'user_id' : findone['user_id'],
-        'image':findone['image']   
+        'image':findone['image'],
+        'like':findone['like']  
          }     
     return jsonify({'result':doc}) 
 
@@ -112,7 +113,8 @@ def insert_posts(category):
         'category' : category_receive,
         'user_id' : name_receive,
         'image':ogimage, #이미지 썸네일로 사용,
-        'artist':music_artist
+        'artist':music_artist,
+        'like':0
     }
 
     db.posts.insert_one(doc)
@@ -164,6 +166,15 @@ def modify_posts(p_id):
 def delete_posts(p_id):        
     db.posts.delete_one({'_id':ObjectId(p_id)})
     return jsonify({'msg':'삭제완료!'}) 
+
+# 게시글 좋아요
+@app.route("/posts/like/<p_id>", methods=["PUT"])
+def like_posts(p_id):   
+    like_receive = request.form['like_give']
+
+    db.posts.update_one({'_id':ObjectId(p_id)},
+                        {'$set':{'like': like_receive}})
+    return jsonify({'msg':'좋아요 완료!'}) 
 
 # 게시글에 해당하는 댓글 목록 조회
 @app.route("/posts/<p_id>/comments", methods=["GET"])

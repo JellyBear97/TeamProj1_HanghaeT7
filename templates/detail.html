@@ -14,10 +14,6 @@
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
 />
   <title>Detail</title>
-
-  <style>
- 
-  </style>
   <script>
 
     let id = `{{ p_id }}`;
@@ -64,7 +60,8 @@
             let category = a['category'];
             let reg_date = a['reg_date'];
             let url = a['url'];
-
+            var like = a['like'];
+            
             let jsDate= new Intl.DateTimeFormat('kr').format(new Date(reg_date))
             
             var cate = ""
@@ -105,6 +102,14 @@
 
             let detail_comment = `<p>${comment}</p>`
             $('.body-text').append(detail_comment);
+
+            let tmp_html = `<div class="heart">
+                              <button class="heart-btn" onclick="addLike(${like})">
+                                <i class="far fa-heart fa-2x"></i>
+                              </button>
+                              <div class="like_count">좋아요 ${like}개</div>
+                            </div>`;
+            $('.tmp').append(tmp_html);
           });
 
           //댓글 부분
@@ -151,7 +156,7 @@
             $('#commentBox').attr('value', comment);
           });
       }
-           // 게시글 수정
+      // 게시글 수정
       function modifypost() {
         let url = $('#urlBox').val();
         let comment = $('#commentBox').val();
@@ -245,17 +250,39 @@
       window.location.href='/posts/'+category;
     }
 
-    var count = 0;
-    function countPlus(){
-      count++;
-      document.querySelector(".like_count").innerHTML="좋아요 "+count +"개";
+    //게시글 좋아요 부분
+
+    function countPlus(likeCnt){
+      likeCnt++;
+      document.querySelector(".like_count").innerHTML="좋아요 "+likeCnt +"개";
+
+      //게시글 좋아요 업데이트 호출
+      updateLike(likeCnt);
     }
 
-    function addLike(){
+    function addLike(likeCnt){
     const pushHeartBtn = document.querySelector(".heart-btn");
             pushHeartBtn.innerHTML ='<i class="fas fa-heart fa-2x"></i>';
             pushHeartBtn.style.color ='red'; 
-            pushHeartBtn.addEventListener("click",countPlus());
+            pushHeartBtn.addEventListener("click",countPlus(likeCnt));
+      }
+
+        //게시글 좋아요 업데이트
+      function updateLike(count) {
+
+        let formData = new FormData();
+        formData.append('like_give', count);
+
+        fetch(`/posts/like/`+id, {
+          method: 'PUT',
+          body: formData,
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            alert(data['msg']);
+
+            window.location.reload();
+          });
       }
 
   </script>
@@ -400,14 +427,8 @@
             </p>
           </div>
         </div>
-        <div style="float:none; clear:both;"></div>
+        <div class="tmp" style="float:none; clear:both;"></div>
         <!-- =====좋아요버튼과 개수============= -->
-        <div class="heart">
-          <button class="heart-btn" onclick="addLike()">
-            <i class="far fa-heart fa-2x"></i>
-          </button>
-          <div class="like_count">좋아요 0개</div>
-        </div>
         <!-- ======================= -->
         <div style="float:none; clear:both;"></div>
         <div class="body-btn">
