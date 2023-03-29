@@ -105,13 +105,32 @@ def modify_posts(p_id):
     name_receive = request.form['nickname_give']
     mod_date = datetime.datetime.utcnow()
 
+    headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
+    data = requests.get(url_receive,headers=headers)
+
+    soup = BeautifulSoup(data.text, 'html.parser')
+
+    music_artist = ''
+
+    if(category_receive == "book"):
+         # ogtitle = soup.select_one('meta[property="og:title"]')['content'] 직접 적으면 필요X
+        ogdesc = soup.select_one('meta[property="og:description"]')['content']
+        ogimage = soup.select_one('meta[property="og:image"]')['content']  
+    elif(category_receive == "music"):
+        title_receive = soup.select_one('#body-content > div.search_song > div.search_result_detail > div > table > tbody > tr > td.info > a.title.ellipsis')['title'].strip()
+        music_artist = soup.select_one('#body-content > div.search_song > div.search_result_detail > div > table > tbody > tr > td.info > a.artist.ellipsis').text.strip()
+        ogimage = soup.select_one('#body-content > div.search_song > div.search_result_detail > div > table > tbody > tr > td:nth-child(3) > a > img')['src']
+    else:
+        ogimage = url_receive
+
     db.posts.update_one({'_id':ObjectId(p_id)},
                         {'$set':{'title': title_receive,
                                  'comment':comment_receive,
                                  'mod_date':mod_date,
                                  'category':category_receive,
                                  'user_id':name_receive,
-                                 'image':url_receive
+                                 'image':ogimage,
+                                 'artist':music_artist
                         }})
     return jsonify({'msg':'수정완료!'})
 
