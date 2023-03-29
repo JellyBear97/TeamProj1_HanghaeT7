@@ -15,6 +15,9 @@
 
   </style>
   <script>
+
+    let category = `{{category}}`;
+
     function posting() {
       let url = $('#urlBox').val();
       let comment = $('#commentBox').val();
@@ -39,11 +42,35 @@
 
     $(document).ready(function () {
       $('#cards-box').empty();
+      getcategoryName();
+      getData();
     });
 
-    function listing(e) {
-      let category = $(e).attr('id');
-      fetch(`/posts/${category}`)
+    function getcategoryName(){
+      var cate = ""
+
+      switch(category){
+        case 'movie':
+          cate = '영화';
+          break;
+        case 'music':
+          cate = '음악';
+          break;
+        case 'health':
+          cate = '운동';
+          break;
+        case 'ani':
+          cate = '애니';
+          break;
+        case 'book':
+          cate = '책';
+          break;
+      }
+      $('#changeLogo').text(cate);
+    }
+
+    function getData() {
+      fetch(`/posts/data/`+category)
         .then((res) => res.json())
         .then((data) => {
           $('.body-home').empty()
@@ -73,6 +100,7 @@
                           id="${p_id}"
                         />
                         <div class="card-body">
+                          <input type="hidden" id="ç" value="${category}">
                           <h5 class="card-title">${title}</h5>
                           <p class="card-text text-flow">${desc}</p>
                           <p>${writer}</p>
@@ -100,8 +128,15 @@
 
     function newPage(e) {
       let p_id = $(e).attr('id');
-      fetch(`/detail/move/${p_id}`);
-      window.location.href = `/posts/move/${p_id}`;
+      let catergory = $('#ctVal').val();
+      fetch(`/detail/move/${category}/${p_id}`);
+      window.location.href = `/posts/move/${category}/${p_id}`;
+    }
+
+    function moving(e){
+      let category = $(e).attr('id');
+
+      window.location.href='/posts/'+category;
     }
   </script>
 </head>
@@ -173,7 +208,7 @@
         <a onclick="window.location.href='/'">
           <img src="/static/src/img/logo_image.png" class="logo" alt="">
         </a>
-        <p id="changeLogo">미밈</p>
+        <p id="changeLogo"></p>
         <div class="memberBtn">
           <button>회원가입</button>
           <button>로그인</button>
@@ -187,27 +222,27 @@
           <p>category</p>
         </div>
         <div class="left-navbar-content">
-          <div class="category" id="category-1"><a id="movie" onclick="listing(this)">
+          <div class="category" id="category-1"><a id="movie" onclick="moving(this)">
               <img src="/static/src/img/circle.png" class="circle1" alt="">
               <div>영화 🎬</div>
             </a>
           </div>
-          <div class="category" id="category-2"><a id="music" onclick="listing(this)">
+          <div class="category" id="category-2"><a id="music" onclick="moving(this)">
               <img src="/static/src/img/circle.png" class="circle2" alt="">
               <div>음악 🎧</div>
             </a>
           </div>
-          <div class="category" id="category-3"><a id="ani" onclick="listing(this)">
+          <div class="category" id="category-3"><a id="ani" onclick="moving(this)">
               <img src="/static/src/img/circle.png" class="circle3" alt="">
               <div>애니 📺</div>
             </a>
           </div>
-          <div class="category" id="category-4"><a id="health" onclick="listing(this)">
+          <div class="category" id="category-4"><a id="health" onclick="moving(this)">
               <img src="/static/src/img/circle.png" class="circle4" alt="">
               <div>운동 ⚽</div>
             </a>
           </div>
-          <div class="category" id="category-5"><a id="book" onclick="listing(this)">
+          <div class="category" id="category-5"><a id="book" onclick="moving(this)">
               <img src="/static/src/img/circle.png" class="circle5" alt="">
               <div>책 📚</div>
             </a>
