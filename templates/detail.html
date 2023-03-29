@@ -526,7 +526,20 @@
 
       }
 
-            function modifycomment(e) {
+      function deletepost(){
+        fetch(`/posts/${id}`, {
+          method: 'DELETE',
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            alert(data['msg']);
+
+            // ⭐️ 페이지 재로딩
+            window.location.href='/';
+          });
+      }
+
+      function modifycomment(e) {
 
             let r_id = $(e).attr('id'); 
             let comment = $('#comment').val(); 
@@ -703,7 +716,7 @@
         <div class="body-btn">
           <button class="list-btn" onclick="window.location.href='/'">목록</button>
           <button class="edit-btn">수정</button>
-          <button class="del-btn">삭제</button>
+          <button class="del-btn" onclick="deletepost()">삭제</button>
         </div>
         <div class="reply">
           <!-- ===댓글작성===================== -->
