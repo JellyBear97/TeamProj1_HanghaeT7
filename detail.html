@@ -61,6 +61,12 @@
           let catgegory = a['category'];
           let reg_date = a['reg_date'];
           let url = a['url'];
+          var like = a['like'];
+          var view = a['view'];
+
+          ++view;
+
+          updateView(view); // 조회수 업데이트
 
           let jsDate = new Intl.DateTimeFormat('kr').format(new Date(reg_date))
 
@@ -97,6 +103,7 @@
                                 </div>
                                 <div class="write-date-time">
                                   <p>📅${jsDate}</p>
+                                  <p>조회수 : ${view}</p>
                                 </div>`
           $('.body-write').append(detail_writer);
 
@@ -109,9 +116,8 @@
                               </button>
                               <div class="like_count">좋아요 ${like}개</div>
                             </div>`;
-            $('.tmp').append(tmp_html);
-          });
-        ;
+          $('.tmp').append(tmp_html);
+        });
 
       //댓글 부분
       fetch(`/posts/${id}/comments`)
@@ -269,9 +275,9 @@
 
     function addLike(likeCnt) {
       const pushHeartBtn = document.querySelector(".heart-btn");
-      pushHeartBtn.innerHTML = '<i class="fas fa-heart fa-2x"></i>';
-      pushHeartBtn.style.color = 'red';
-      pushHeartBtn.addEventListener("click", countPlus(likeCnt));
+        pushHeartBtn.innerHTML = '<i class="fas fa-heart fa-2x"></i>';
+        pushHeartBtn.style.color = 'red';
+        pushHeartBtn.addEventListener("click", countPlus(likeCnt));
     }
 
     //게시글 좋아요 업데이트
@@ -439,7 +445,7 @@
             </p>
           </div>
         </div>
-        <div class="tmp "style="float:none; clear:both;"></div>
+        <div class="tmp " style="float:none; clear:both;"></div>
         <!-- =====좋아요버튼과 개수============= -->
         <!-- ======================= -->
         <div style="float:none; clear:both;"></div>
