@@ -137,7 +137,7 @@ def insert_comments(p_id):
     name_receive = request.form['name_give']
     comment_receive = request.form['comment_give']
     reg_date = datetime.datetime.utcnow()
-    mod_date = datetime.datetime.utcnow()
+    mod_date = ''
 
     doc = {
         'p_id' : p_id,
@@ -153,6 +153,17 @@ def insert_comments(p_id):
 # 댓글 수정
 @app.route("/posts/comments/<r_id>", methods=["PUT"])
 def modify_comments(r_id):
+    name_receive = request.form['name_give']
+    comment_receive = request.form['comment_give']
+    mod_date = datetime.datetime.utcnow()
+
+
+    db.comments.update_one({'_id':ObjectId(r_id)},
+                        {'$set':{
+                                 'user_id':name_receive,
+                                 'comment':comment_receive,
+                                 'mod_date': mod_date
+                        }})
     return jsonify({'msg':'수정완료!'})
 
 # 댓글 삭제

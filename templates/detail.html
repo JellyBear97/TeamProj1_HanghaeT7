@@ -518,11 +518,11 @@
                 let comment = a['comment'];
                 let reg_date = a['reg_date'];
 
-                let temp_html = `<div class="reply-data">
+                let temp_html = `<div class="reply-data" id="reply${r_id}">
                                       <p style="font-weight: bolder;">${user_id} 💬</p>
                                       <p>${comment}</p>
                                       <p style="color: gray;">(${reg_date})</p>
-                                      <button id="${r_id}" onclick="modifycomment(this)" class="reply-edit-btn">수정</button>
+                                      <button id="${r_id}" onclick="modifyShow(this)" class="reply-edit-btn">수정</button>
                                       <button onclick="deletecomment('${r_id}')" class="reply-del-btn">삭제</button>
                                   </div>`;
                 $('#replyBox').append(temp_html);
@@ -578,16 +578,27 @@
             window.location.href='/';
           });
       }
-
+      
+      function modifyShow(e){
+        let r_id = $(e).attr('id'); 
+        let temp_html = `<div class="reply-edit" id="edit${r_id}">
+                          <input type="text" id = "modname" class="reply-name" placeholder="작성자"><br>
+                          <input type="text" id = "modcomment" class="reply-text" placeholder="댓글을 수정 해주세요!">
+                          <button id = "${r_id}" class="reply-edit--btn" onclick="modifycomment(this)">수정</button>
+                          <button class="reply-cancle--btn" onclick="">취소</button>
+                        </div>`;
+        $('#reply'+r_id).append(temp_html);
+      }
       //댓글 수정
       function modifycomment(e) {
 
             let r_id = $(e).attr('id'); 
-            let comment = $('#comment').val(); 
+            let name = $('#modname').val(); 
+            let comment = $('#modcomment').val(); 
 
-            // {key : value} 형태로 FormData에 태워서 보내기
             let formData = new FormData();
-            formData.append('comment', comment);
+            formData.append('name_give', name);
+            formData.append('comment_give', comment);
             fetch(`/posts/comments/${r_id}`, {
               method: 'PUT',
               body: formData,
@@ -596,7 +607,6 @@
               .then((data) => {
                 alert(data['msg']);
 
-                // ⭐️ 페이지 재로딩
                 window.location.reload();
               });
             }
@@ -774,7 +784,7 @@
             <button class="reply-btn" onclick="postingcomment()">댓글 남기기<br>💬</button>
           </div>
           <!-- ===댓글수정========= -->
-          <div class="reply-edit">
+          <div class="reply-edit" style="display:none;">
             <input type="text" class="reply-name" placeholder="작성자"><br>
             <input type="text" class="reply-text" placeholder="댓글을 수정 해주세요!">
             <button class="reply-edit--btn">수정</button>
