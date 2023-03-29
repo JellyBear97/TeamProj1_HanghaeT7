@@ -18,6 +18,7 @@
 
   .logo {
     width: 150px;
+    cursor: pointer;
   }
 
   .headerWrap {
@@ -178,6 +179,7 @@
     top: -10px;
     opacity: 1;
     visibility: hidden;
+    cursor: pointer;
   }
 
   .circle2 {
@@ -187,6 +189,7 @@
     top: -10px;
     opacity: 1;
     visibility: hidden;
+    cursor: pointer;
   }
 
   .circle3 {
@@ -196,6 +199,7 @@
     top: -10px;
     opacity: 1;
     visibility: hidden;
+    cursor: pointer;
   }
 
   .circle4 {
@@ -205,6 +209,7 @@
     top: -10px;
     opacity: 1;
     visibility: hidden;
+    cursor: pointer;
   }
 
   .circle5 {
@@ -214,11 +219,16 @@
     top: -10px;
     opacity: 1;
     visibility: hidden;
+    cursor: pointer;
   }
 
   .circle-show {
     opacity: 1;
     visibility: visible;
+  }
+
+  .cursor {
+    cursor: pointer;
   }
 
   .text-box {
@@ -559,6 +569,12 @@
 
   .reply-edit-btn:hover {
     color: rgb(3, 66, 95);
+  }
+  .reply-edited-btn {
+    opacity: 1;
+  }
+  .show {
+    opacity: 1;
   }
 
   .reply-del-btn:hover {
