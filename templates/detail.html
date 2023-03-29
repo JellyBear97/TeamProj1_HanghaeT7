@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+  <title>Detail</title>
+
+  <style>
+
+  </style>
+  <script>
+
+    let id = `{{ p_id }}`;
+    console.log(id);
+    $(document).ready(function () {
+      getData();
+    });
+
+    // console.log(id);
+    function postingcomment() {
+
+      let writer = $('#writer').val();
+      let comment = $('#comment').val();
+
+      let formData = new FormData();
+
+      formData.append('name_give', writer);
+      formData.append('comment_give', comment);
+
+      fetch(`/posts/${id}/comments`, { method: 'POST', body: formData })
+        .then((res) => res.json())
+        .then((data) => {
+          alert(data['msg']);
+          window.location.reload();
+        });
+    }
+
+    //게시글, 댓글 가져오기
+    function getData() {
+
+      //게시글 부분
+      fetch(`/posts/detail/${id}`)
+        .then((res) => res.json())
+        .then((data) => {
+          $('.body-title-head').empty();
+          $('.body-write').empty();
+          $('.body-text').empty();
+          let a = data['result'];
+          let title = a['title'];
+          let desc = a['comment'];
+          let image = a['image'];
+          let comment = a['comment'];
+          let writer = a['user_id'];
+          let category = a['category'];
+          let reg_date = a['reg_date'];
+          let url = a['url'];
+          var like = a['like'];
+
+          let jsDate = new Intl.DateTimeFormat('kr').format(new Date(reg_date))
+
+          var cate = ""
+
+          switch (category) {
+            case 'movie':
+              cate = '영화';
+              break;
+            case 'music':
+              cate = '음악';
+              break;
+            case 'health':
+              cate = '운동';
+              break;
+            case 'ani':
+              cate = '애니';
+              break;
+            case 'book':
+              cate = '책';
+              break;
+          }
+          $('#changeLogo').text(cate);
+
+          $('#detailImg').attr('src', image);
+
+          let detail_title = `<h1 class="title-text">${title}</h1>
+            <img src="/static/src/img/underline_black.png" class="underline" alt="">`
+          $('.body-title-head').append(detail_title);
+
+          let detail_writer = `
+                                <div class="write-er">
+                                 <p>📝${writer}</p>
+                                </div>
+                                <div class="write-date-time">
+                                  <p>📅${jsDate}</p>
+                                </div>`
+          $('.body-write').append(detail_writer);
+
+          let detail_comment = `<p>${comment}</p>`
+          $('.body-text').append(detail_comment);
+
+          let tmp_html = `<div class="heart">
+                              <button class="heart-btn" onclick="addLike(${like})">
+                                <i class="far fa-heart fa-2x"></i>
+                              </button>
+                              <div class="like_count">좋아요 ${like}개</div>
+                            </div>`;
+          $('.tmp').append(tmp_html);
+        });
+
+      //댓글 부분
+      fetch(`/posts/${id}/comments`)
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          $('#replyBox').empty();
+          let rows = data['result'];
+          rows.forEach((a) => {
+            let r_id = a['_id'];
+            let user_id = a['user_id'];
+            let comment = a['comment'];
+            let reg_date = a['reg_date'];
+
+            let temp_html = `<div class="reply-data" id="reply${r_id}">
+                                      <input id="replyName" value="${user_id}💬" style="font-weight: bolder;" disabled/> 
+                                      <input id="replyComment" value="${comment}" disabled/>
+                                      <p style="color: gray;">(${reg_date})</p>
+                                      <div id="reply-edit-btn"><button onclick="modifycomment(this)" class="reply-edit-btn">수정</button></div>
+                                      <div id="reply-del-btn"><button onclick="deletecomment('${r_id}')" class="reply-del-btn">삭제</button></div>
+                                      <div id="reply-edited-btn" style="display: none"><button id="${r_id}" onclick="modifyReply(this)" class="reply-edited-btn">수정완료</button></div>
+                                      <div id="reply-editFin-btn"><button onclick="replyRe()" style="display: none" class="reply-editedFin-btn">취소</button></div>
+                                  </div>`;
+            $('#replyBox').append(temp_html);
+          });
+        });
+    }
+    // 게시글 수정 모달 정보 집어넣기
+    function getmodifyData() {
+      fetch(`/posts/detail/${id}`)
+        .then((res) => res.json())
+        .then((data) => {
+          let row = data['result'];
+          let category = row['category'];
+          let title = row['title'];
+          let comment = row['comment'];
+          let user_id = row['user_id'];
+          let url = row['image'];
+
+          $('#cateBox').val(category).prop('selected', true);
+          $('#titleBox').attr('value', title);
+          $('#urlBox').attr('value', url);
+          $('#writerBox').attr('value', user_id);
+          $('#commentBox').attr('value', comment);
+        });
+    }
+    // 게시글 수정
+    function modifypost() {
+      let url = $('#urlBox').val();
+      let comment = $('#commentBox').val();
+      let writer = $('#writerBox').val();
+      let category = $('#cateBox').val();
+      let title = $('#titleBox').val();
+
+      let formData = new FormData();
+      formData.append('url_give', url);
+      formData.append('comment_give', comment);
+      formData.append('nickname_give', writer);
+      formData.append('category_give', category);
+      formData.append('title_give', title);
+
+      fetch(`/posts/${id}`, { method: 'PUT', body: formData })
+        .then((res) => res.json())
+        .then((data) => {
+          alert(data['msg']);
+          window.location.reload();
+        });
+    }
+
+    //게시글 삭제
+    function deletepost() {
+      fetch(`/posts/${id}`, {
+        method: 'DELETE',
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          alert(data['msg']);
+
+          // ⭐️ 페이지 재로딩
+          window.location.href = '/';
+        });
+    }
+
+    //댓글 수정 가능상태로 변경
+    function modifycomment(e) {
+      $('#reply-edit-btn').empty()
+      $('#reply-edited-btn').show()
+      $('#replyName').removeAttr('disabled');
+      $('#replyComment').removeAttr('disabled');
+
+      let editFin = `<button onclick="replyRe()" class="reply-editedFin-btn">취소</button>`
+      $('#reply-editFin-btn').append(editFin)
+    }
+    //댓글 수정완료
+    function modifyReply(e) {
+      let r_id = $(e).attr('id');
+      let name = $('#replyName').val();
+      let comment = $('#replyComment').val();
+
+      let formData = new FormData();
+      formData.append('name_give', name);
+      formData.append('comment_give', comment);
+      fetch(`/posts/comments/${r_id}`, {
+        method: 'PUT',
+        body: formData,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          alert(data['msg']);
+
+          window.location.reload();
+        });
+    }
+
+    //댓글 삭제
+    function deletecomment(r_id) {
+
+      fetch(`/posts/comments/${r_id}`, {
+        method: 'DELETE',
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          alert(data['msg']);
+
+          window.location.reload();
+        });
+    }
+
+    function open_box() {
+      $('#post-box').show()
+    }
+    function close_box() {
+      $('#post-box').hide()
+    }
+
+    function back() {
+      history.back();
+    }
+
+    function moving(e) {
+      let category = $(e).attr('id');
+
+      window.location.href = '/posts/' + category;
+    }
+
+    //게시글 좋아요 부분
+
+    function countPlus(likeCnt) {
+      likeCnt++;
+      document.querySelector(".like_count").innerHTML = "좋아요 " + likeCnt + "개";
+
+      //게시글 좋아요 업데이트 호출
+      updateLike(likeCnt);
+    }
+
+    function addLike(likeCnt) {
+      const pushHeartBtn = document.querySelector(".heart-btn");
+        pushHeartBtn.innerHTML = '<i class="fas fa-heart fa-2x"></i>';
+        pushHeartBtn.style.color = 'red';
+        pushHeartBtn.addEventListener("click", countPlus(likeCnt));
+    }
+
+    //게시글 좋아요 업데이트
+    function updateLike(count) {
+
+      let formData = new FormData();
+      formData.append('like_give', count);
+
+      fetch(`/posts/like/` + id, {
+        method: 'PUT',
+        body: formData,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          alert(data['msg']);
+
+          window.location.reload();
+        });
+    }
+
+
+    function replyRe() {
+      window.location.reload()
+    }
+
+  </script>
+</head>
+
+<body>
+  <!-- 수정 모달 폼 시작 -->
+  <div class="black-bg">
+    <div class="white-bg">
+      <h1 style="text-align: center; font-family: PyeongChangPeace-Bold">
+        '취향'은 언제든 변하죠!
+      </h1>
+
+      <form action="#">
+        <div class="write-box">
+          <div class="write-box-inside">
+            <p>카테고리</p>
+            <form>
+              <select id="cateBox" size="1">
+                <option value="movie">영화</option>
+                <option value="music">음악</option>
+                <option value="ani">애니</option>
+                <option value="health">운동</option>
+                <option value="book">책</option>
+              </select>
+            </form>
+          </div>
+          <div class="write-box-inside">
+            <p>타이틀</p>
+            <form>
+              <input type="text" id="titleBox" class="text-box" placeholder="제목을 입력해주세요" />
+            </form>
+          </div>
+          <div class="write-box-inside">
+            <p>URL</p>
+            <form>
+              <input type="text" id="urlBox" class="text-box" placeholder="URL을 입력해주세요" />
+            </form>
+          </div>
+          <div class="write-box-inside">
+            <p>작성자</p>
+            <form>
+              <input type="text" id="writerBox" class="text-box" placeholder="작성자 이름을 입력해주세요" />
+            </form>
+          </div>
+          <div class="write-box-inside">
+            <p>코멘트</p>
+            <form>
+              <input type="text" id="commentBox" class="text-box" style="height: 200px"
+                placeholder="취향에 대한 코멘트를 남겨주세요" />
+            </form>
+          </div>
+          <div style="clear: both"></div>
+        </div>
+        <div style="text-align: center">
+          <button type="submit" class="write-btn send-btn" id="send" onclick="modifyposting()">
+            수정완료
+          </button>
+          <button type="button" class="write-btn close-btn" id="close">
+            취소
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- 수정 모달 폼 끝 -->
+  <div class="contentContainer">
+    <div class="headerWrap">
+      <div class="memberHeader">
+        <a onclick="window.location.href='/'">
+          <img src="/static/src/img/logo_image.png" class="logo" alt="">
+        </a>
+        <p>음악</p>
+        <div class="memberBtn">
+          <button>회원가입</button>
+          <button>로그인</button>
+        </div>
+      </div>
+    </div>
+    <div class="background">
+      <div class="left-navbar">
+        <div class="left-navbar-menu">
+          <p>category</p>
+        </div>
+        <div class="left-navbar-content">
+          <div class="category" id="category-1"><a id="movie" onclick="moving(this)">
+              <img src="/static/src/img/circle.png" class="circle1" alt="">
+              <div>영화 🎬</div>
+            </a>
+          </div>
+          <div class="category" id="category-2"><a id="music" onclick="moving(this)">
+              <img src="/static/src/img/circle.png" class="circle2" alt="">
+              <div>음악 🎧</div>
+            </a>
+          </div>
+          <div class="category" id="category-3"><a id="ani" onclick="moving(this)">
+              <img src="/static/src/img/circle.png" class="circle3" alt="">
+              <div>애니 📺</div>
+            </a>
+          </div>
+          <div class="category" id="category-4"><a id="health" onclick="moving(this)">
+              <img src="/static/src/img/circle.png" class="circle4" alt="">
+              <div>운동 ⚽</div>
+            </a>
+          </div>
+          <div class="category" id="category-5"><a id="book" onclick="moving(this)">
+              <img src="/static/src/img/circle.png" class="circle5" alt="">
+              <div>책 📚</div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- 상세페이지 폼 -->
+      <div class="body">
+        <div class="body-title">
+          <div class="body-title-head">
+            <h1 class="title-text" id="detailtitle">뉴진스의 하입보이요</h1>
+            <img src="/static/src/img/underline_black.png" class="underline" alt="">
+          </div>
+          <div class="body-write">
+            <div class="write-er">
+              <p>📝신샘</p>
+            </div>
+            <div class="write-date-time">
+              <p>📅2023.03.28 21:30</p>
+            </div>
+          </div>
+          <div style="float: none; clear: both;"></div>
+        </div>
+        <div class="body-detail">
+          <div class="body-img">
+            <img
+              src="https://img1.daumcdn.net/thumb/R1280x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/epXm/image/WTEOnfO6X44JawwreKjDtHTO7EI.jfif"
+              class="image" alt="" id="detailImg">
+          </div>
+          <div class="body-text">
+            <p>(1,2,3,4)
+              Baby, got me looking so crazy
+              빠져버리는 daydream
+              Got me feeling you
+              너도 말해줄래
+            </p>
+          </div>
+        </div>
+        <div class="tmp " style="float:none; clear:both;"></div>
+        <!-- =====좋아요버튼과 개수============= -->
+        <!-- ======================= -->
+        <div style="float:none; clear:both;"></div>
+        <div class="body-btn">
+          <button class="list-btn" onclick="back()">목록</button>
+          <button class="edit-btn">수정</button>
+          <button class="del-btn" onclick="deletepost()">삭제</button>
+        </div>
+        <div class="reply">
+          <!-- ===댓글작성===================== -->
+          <div class="reply-box">
+            <input type="text" class="reply-name" id="writer" placeholder="작성자"><br>
+            <input type="text" class="reply-text" id="comment" placeholder="댓글을 남겨주세요!">
+            <button class="reply-btn" onclick="postingcomment()">댓글 남기기<br>💬</button>
+          </div>
+          <!-- ===댓글============= -->
+          <div id="replyBox"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    $('.edit-btn').on('click', function () {
+      $('.black-bg').addClass('show-modal');
+      getmodifyData();
+    });
+    $('#close').on('click', function () {
+      $('.black-bg').removeClass('show-modal');
+      window.location.reload();
+    });
+
+
+    $('#category-1').hover(function () {
+      $('.circle1').addClass('circle-show');
+    }, function () {
+      $('.circle1').removeClass('circle-show')
+    });
+
+    $('#category-2').hover(function () {
+      $('.circle2').addClass('circle-show');
+    }, function () {
+      $('.circle2').removeClass('circle-show')
+    });
+
+    $('#category-3').hover(function () {
+      $('.circle3').addClass('circle-show');
+    }, function () {
+      $('.circle3').removeClass('circle-show')
+    });
+
+    $('#category-4').hover(function () {
+      $('.circle4').addClass('circle-show');
+    }, function () {
+      $('.circle4').removeClass('circle-show')
+    });
+
+    $('#category-5').hover(function () {
+      $('.circle5').addClass('circle-show');
+    }, function () {
+      $('.circle5').removeClass('circle-show')
+    });
+
+  </script>
+
+  <script type='text/javascript'>
+    const delete_elements = document.getElementsByClassName("delete");
+    Array.from(delete_elements).forEach(function (element) {
+      element.addEventListener('click', function () {
+        if (confirm("정말로 삭제하시겠습니까?")) {
+          location.href = this.dataset.uri;
+        };
+      });
+    });
+  </script>
+</body>
+
+</html>

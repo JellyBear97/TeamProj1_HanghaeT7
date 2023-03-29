@@ -1,0 +1,647 @@
+@font-face {
+    font-family: 'PyeongChangPeace-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/PyeongChangPeace-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  body {
+    box-sizing: border-box;
+  }
+
+  .logo {
+    width: 150px;
+    cursor: pointer;
+  }
+
+  .headerWrap {
+    height: 100px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+    border-bottom: 1px solid black;
+  }
+
+  .memberHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    height: 100px;
+  }
+
+  .memberHeader>p {
+    font-size: 35px;
+    margin-right: 700px;
+    font-family: 'PyeongChangPeace-Bold';
+  }
+
+  .left-navbar-menu {
+    width: 250px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    font-size: 40px;
+  }
+
+  .left-navbar-content {
+    text-align: center;
+    font-size: 42px;
+  }
+
+  .left-navbar-content>div>a {
+    text-decoration: none;
+    text-decoration-color: none;
+  }
+
+  .header-title {
+    padding: 20px;
+    text-align: center;
+    font-family: PyeongChangPeace-Bold;
+    font-size: 70px;
+  }
+
+  .left-navbar {
+    font-family: PyeongChangPeace-Bold;
+    float: left;
+    margin: 15px 50px 0px 10px;
+    padding-right: 10px;
+    padding-top: 20px;
+  }
+
+  .col {
+    width: 23%;
+  }
+
+  .contentContainer {
+    width: 80%;
+    height: 100%;
+    margin: 0 auto;
+  }
+
+  .background {
+    height: 100%;
+  }
+
+  .text-flow {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .write {
+    width: 230px;
+    text-align: center;
+    margin-top: 50px;
+    border: 2px solid black;
+    border-radius: 10px;
+    font-size: 25px;
+  }
+
+  .write:hover {
+    background-color: goldenrod;
+    color: white;
+  }
+
+  .body {
+    font-family: Pretendard-Regular;
+  }
+
+  .black-bg {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 5;
+    padding: 20px;
+    visibility: hidden;
+  }
+  .sign-up-black-bg {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 5;
+    padding: 20px;
+    visibility: hidden;
+  }
+  .show-modal {
+    visibility: visible;
+  }
+
+  .sign-up-bg {
+    width: 500px;
+    margin: 0 auto;
+    border-radius: 5px;
+    background-color: white;
+    padding: 40px;
+  }
+  .sign-up-box {
+    margin-top: 30px;
+    margin-left: 115px;
+    margin-bottom: 30px;
+  }
+  .sign-up-inside {
+    margin-top: 20px;
+    line-height: 1px;
+    font-family: 'Pretendard-Regular';
+  }
+
+  .white-bg {
+    margin: 0 auto;
+    width: 800px;
+    background: white;
+    border-radius: 5px;
+    padding: 20px;
+  }
+
+  .write-box {
+    padding: 30px;
+    margin-left: 100px;
+    margin-right: auto;
+    font-family: Pretendard-Regular;
+  }
+
+  .write-box-inside {
+    line-height: 1px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .write-btn {
+    width: 180px;
+    height: 40px;
+    border: none;
+    font-size: 24px;
+    font-family: PyeongChangPeace-Bold;
+  }
+
+  .send-btn {
+    background-color: goldenrod;
+  }
+
+  .close-btn {
+    background-color: black;
+    color: white;
+  }
+
+  .category {
+    position: relative;
+  }
+
+  .circle1 {
+    position: absolute;
+    width: 150px;
+    left: 40px;
+    top: -10px;
+    opacity: 1;
+    visibility: hidden;
+    cursor: pointer;
+  }
+
+  .circle2 {
+    position: absolute;
+    width: 150px;
+    left: 40px;
+    top: -10px;
+    opacity: 1;
+    visibility: hidden;
+    cursor: pointer;
+  }
+
+  .circle3 {
+    position: absolute;
+    width: 150px;
+    left: 40px;
+    top: -10px;
+    opacity: 1;
+    visibility: hidden;
+    cursor: pointer;
+  }
+
+  .circle4 {
+    position: absolute;
+    width: 150px;
+    left: 40px;
+    top: -10px;
+    opacity: 1;
+    visibility: hidden;
+    cursor: pointer;
+  }
+
+  .circle5 {
+    position: absolute;
+    width: 150px;
+    left: 40px;
+    top: -10px;
+    opacity: 1;
+    visibility: hidden;
+    cursor: pointer;
+  }
+
+  .circle-show {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .cursor {
+    cursor: pointer;
+  }
+
+  .text-box {
+    width: 500px;
+    padding: 5px;
+  }
+
+  .body-home {
+    float: left;
+    margin-top: 50px;
+  }
+  .body-home-img {
+    width: 700px;
+    margin: auto;
+  }
+
+  .memberBtn>button {
+    border: none;
+    background-color: transparent;
+    font-size: 20px;
+    font-family: 'Pretendard-Regular';
+  }
+
+  .memberBtn>button:hover {
+    color: goldenrod;
+  }
+
+  .memberBtn>button:active {
+    color: goldenrod;
+  }
+
+  .category>a>div:link {
+    color: black;
+  }
+
+  .category>a:visited {
+    color: black;
+  }
+
+  .category>a>div:active {
+    color: gray;
+  }
+
+  .black-bg {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 5;
+    padding: 30px;
+    visibility: hidden;
+    opacity: 1;
+  }
+
+  .show-modal {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .white-bg {
+    margin: 0 auto;
+    width: 800px;
+    background: white;
+    border-radius: 5px;
+    padding: 30px;
+  }
+
+  .write-box {
+    padding: 20px;
+    margin-left: 100px;
+    font-family: Pretendard-Regular;
+  }
+
+  .write-box-inside {
+    line-height: 1px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .write-btn {
+    width: 180px;
+    height: 40px;
+    border: none;
+    font-size: 24px;
+    font-family: PyeongChangPeace-Bold;
+  }
+
+  .send-btn {
+    background-color: goldenrod;
+  }
+
+  .close-btn {
+    background-color: black;
+    color: white;
+  }
+
+  .category {
+    position: relative;
+  }
+
+  .circle1 {
+    position: absolute;
+    width: 150px;
+    left: 40px;
+    top: -10px;
+    opacity: 1;
+    visibility: hidden;
+  }
+
+  .circle2 {
+    position: absolute;
+    width: 150px;
+    left: 40px;
+    top: -10px;
+    opacity: 1;
+    visibility: hidden;
+  }
+
+  .circle3 {
+    position: absolute;
+    width: 150px;
+    left: 40px;
+    top: -10px;
+    opacity: 1;
+    visibility: hidden;
+  }
+
+  .circle4 {
+    position: absolute;
+    width: 150px;
+    left: 40px;
+    top: -10px;
+    opacity: 1;
+    visibility: hidden;
+  }
+
+  .circle5 {
+    position: absolute;
+    width: 150px;
+    left: 40px;
+    top: -10px;
+    opacity: 1;
+    visibility: hidden;
+  }
+
+  .circle-show {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .text-box {
+    width: 500px;
+    padding: 5px;
+  }
+
+  .col {
+    width: 23%;
+  }
+
+  .contentContainer {
+    width: 80%;
+    height: 100%;
+    margin: 0 auto;
+  }
+
+  .background {
+    height: 100%;
+  }
+
+  .write {
+    width: 230px;
+    text-align: center;
+    margin-top: 50px;
+    border: 2px solid black;
+    border-radius: 10px;
+    font-size: 25px;
+  }
+
+  .write:hover {
+    background-color: goldenrod;
+    color: white;
+  }
+
+  .body {
+    width: 800px;
+    float: left;
+    font-family: Pretendard-Regular;
+    padding: 30px;
+  }
+
+  .body-title {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .body-title>p {
+    font-size: 20px;
+  }
+
+  .body-img {
+    float: left;
+  }
+
+  .image {
+    width: 300px;
+    height: 300px;
+    background-size: contain;
+    background-position: center;
+    margin: 20px;
+    margin-top: 0px;
+  }
+
+  .body-btn {
+    margin-top: 30px;
+    text-align: center;
+  }
+
+  .body-btn>button {
+    width: 100px;
+  }
+
+  .list-btn {
+    background-color: black;
+    color: white;
+  }
+
+  .edit-btn {
+    background-color: rgb(3, 66, 95);
+    color: white;
+  }
+
+  .del-btn {
+    background-color: red;
+    color: white;
+  }
+
+  .body-btn>button:hover {
+    background-color: gray;
+  }
+
+  .body-title-head {
+    position: relative;
+    margin-bottom: 50px;
+  }
+
+  .underline {
+    width: 700px;
+    position: absolute;
+    top: -30%;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+
+  .title-text {
+    margin: auto;
+    text-align: center;
+  }
+
+  .reply {
+    margin-top: 50px;
+  }
+
+  .reply-box {
+    text-align: center;
+    margin: auto;
+  }
+
+  .reply-name {
+    width: 150px;
+    margin-right: 450px;
+    margin-bottom: 10px;
+    border-style: solid;
+    border-color: white white gray;
+  }
+  .reply-edit {
+    margin-top: 30px;
+    text-align: center;
+    margin: auto;
+  }
+  .reply-name:focus {
+    outline: none;
+  }
+
+  .reply-text {
+    border-radius: 10px;
+    width: 500px;
+    height: 100px;
+    border: 2px solid gray;
+    vertical-align: middle;
+  }
+
+  .reply-text:focus {
+    outline: none;
+  }
+
+  .reply-btn {
+    margin-left: 10px;
+    background-color: black;
+    color: white;
+    border: 2px solid gray;
+    border-radius: 8px;
+    vertical-align: middle;
+  }
+
+  .reply-btn:hover {
+    background-color: goldenrod;
+  }
+
+  .reply-btn:active {
+    background-color: gray;
+  }
+
+  .reply-data {
+    width: 700px;
+    margin: auto;
+    padding: 10px;
+    margin-top: 30px;
+    position: static;
+    border-style: solid;
+    border-color: gray white white;
+  }
+ 
+  .reply-edit--btn:hover {
+    color: rgb(3, 66, 95);
+  }
+  .reply-cancle--btn:hover {
+    color: red;
+  }
+  .reply-data>div>button {
+    border: 1px solid gray;
+    color: gray;
+    float: left;
+    margin-left: 5px;
+  }
+
+  .reply-edit-btn:hover {
+    color: rgb(3, 66, 95);
+  }
+
+  .reply-edited-btn:hover {
+    color: black;
+  }
+  .reply-editedFin-btn:hover {
+    color: green;
+  }
+
+  .reply-del-btn:hover {
+    color: red;
+  }
+
+  .reply-data>div>button:active {
+    border: 1px solid black;
+  }
+
+  .body-write {
+    margin: auto;
+    width: 400px;
+  }
+
+  .write-er {
+    float: left;
+  }
+
+  .write-date-time {
+    float: right;
+  }
+  .heart {
+    background-color: aqua;
+    margin-left: 280px;
+  }
+  .heart-btn i {
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    padding: 8px;
+  }
+  .heart-btn {
+    float: left;
+    text-align: center;
+    margin: auto;
+    background-color: white;
+    border: none;
+  }
+  .like_count {
+    float: left;
+    margin-top: 15px;
+    margin-left: 1px;
+    font-weight: bolder;
+  }

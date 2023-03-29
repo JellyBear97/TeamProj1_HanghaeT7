@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>index</title>
+
+    <style>
+      @font-face {
+        font-family: 'PyeongChangPeace-Bold';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/PyeongChangPeace-Bold.woff2')
+          format('woff2');
+        font-weight: 700;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: 'Pretendard-Regular';
+        src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff')
+          format('woff');
+        font-weight: 400;
+        font-style: normal;
+      }
+      body {
+        box-sizing: border-box;
+      }
+      .logo {
+        width: 150px;
+      }
+      .headerWrap {
+        height: 100px;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 10px;
+        border-bottom: 1px solid black;
+        font-family: 'PyeongChangPeace-Bold';
+      }
+      .memberHeader {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 90%;
+        height: 100px;
+      }
+      .memberHeader > p {
+        font-size: 35px;
+        margin-right: 700px;
+      }
+      .memberBtn > button {
+        border: none;
+        background-color: transparent;
+        font-size: 20px;
+        font-family: 'Pretendard-Regular';
+      }
+      .memberBtn > button:hover {
+        color: goldenrod;
+      }
+      .memberBtn > button:active {
+        color: goldenrod;
+      }
+      .category>a:link {
+      color: black;
+    }
+
+    .category>a:visited {
+      color: black;
+    }
+
+    .category>a:active {
+      color: gray;
+    }
+      .left-navbar-menu {
+        width: 250px;
+        border-radius: 10px;
+        background-color: black;
+        color: white;
+        text-align: center;
+        font-size: 40px;
+      }
+
+      .left-navbar-content {
+        text-align: center;
+        font-size: 42px;
+      }
+      .left-navbar-content > div > a {
+        text-decoration: none;
+        text-decoration-color: none;
+      }
+      .black-bg {
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 5;
+      padding: 30px;
+      visibility: hidden;
+      opacity: 1;
+    }
+
+    .show-modal {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .white-bg {
+      margin: 0 auto;
+      width: 800px;
+      background: white;
+      border-radius: 5px;
+      padding: 30px;
+    }
+
+    .write-box {
+      padding: 20px;
+      margin-left: 100px;
+      font-family: Pretendard-Regular;
+    }
+
+    .write-box-inside {
+      line-height: 1px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .write-btn {
+      width: 180px;
+      height: 40px;
+      border: none;
+      font-size: 24px;
+      font-family: PyeongChangPeace-Bold;
+    }
+
+    .send-btn {
+      background-color: goldenrod;
+    }
+
+    .close-btn {
+      background-color: black;
+      color: white;
+    }
+    .category {
+      position: relative;
+    }
+
+    .circle1 {
+      position: absolute;
+      width: 150px;
+      left: 40px;
+      top: -10px;
+      opacity: 1;
+      visibility: hidden;
+    }
+
+    .circle2 {
+      position: absolute;
+      width: 150px;
+      left: 40px;
+      top: -10px;
+      opacity: 1;
+      visibility: hidden;
+    }
+
+    .circle3 {
+      position: absolute;
+      width: 150px;
+      left: 40px;
+      top: -10px;
+      opacity: 1;
+      visibility: hidden;
+    }
+
+    .circle4 {
+      position: absolute;
+      width: 150px;
+      left: 40px;
+      top: -10px;
+      opacity: 1;
+      visibility: hidden;
+    }
+
+    .circle5 {
+      position: absolute;
+      width: 150px;
+      left: 40px;
+      top: -10px;
+      opacity: 1;
+      visibility: hidden;
+    }
+
+    .circle-show {
+      opacity: 1;
+      visibility: visible;
+    }
+    .text-box {
+      width: 500px;
+      padding: 5px;
+    }
+      .header-title {
+        padding: 20px;
+        text-align: center;
+        font-family: PyeongChangPeace-Bold;
+        font-size: 70px;
+      }
+
+      .left-navbar {
+        font-family: PyeongChangPeace-Bold;
+        float: left;
+        margin: 0px 50px 0px 10px;
+        padding-right: 10px;
+        padding-top: 24px;
+      }
+      .col {
+        width: 23%;
+      }
+      .contentContainer {
+        width: 80%;
+        height: 100%;
+        margin: 0 auto;
+      }
+      .background {
+        height: 100%;
+      }
+      .write {
+        width: 230px;
+        text-align: center;
+        margin-top: 50px;
+        border: 2px solid black;
+        border-radius: 10px;
+        font-size: 25px;
+      }
+      .write:hover {
+        background-color: goldenrod;
+        color: white;
+      }
+      .body {
+        width: 800px;
+        float: left;
+        font-family: Pretendard-Regular;
+        padding: 30px;
+      }
+      .body-title {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      .body-title > p {
+        font-size: 20px;
+      }
+      .body-img {
+        float: left;
+      }
+      .image {
+        width: 300px;
+        height: 300px;
+        background-size: contain;
+        background-position: center;
+        margin: 20px;
+        margin-top: 0px;
+      }
+
+      .body-btn {
+        margin-top: 30px;
+        text-align: center;
+      }
+      .body-btn > button {
+        width: 100px;
+      }
+      .list-btn {
+        background-color: black;
+        color: white;
+      }
+      .edit-btn {
+        background-color: rgb(3, 66, 95);
+        color: white;
+      }
+      .del-btn {
+        background-color: red;
+        color: white;
+      }
+      .body-btn > button:hover {
+        background-color: gray;
+      }
+      .body-title-head {
+        position: relative;
+        margin-bottom: 50px;
+      }
+      .underline {
+        width: 700px;
+        position: absolute;
+        top: -30%;
+        left: 0;
+        right: 0;
+        margin: auto;
+      }
+      .title-text {
+        margin: auto;
+        text-align: center;
+      }
+      .reply {
+        margin-top: 50px;
+      }
+      .reply-box {
+        text-align: center;
+        margin: auto;
+      }
+      .reply-name {
+        width: 150px;
+        margin-right: 450px;
+        margin-bottom: 10px;
+        border-style: solid;
+        border-color: white white gray;
+      }
+      .reply-name:focus {
+        outline: none;
+      }
+      .reply-text {
+        border-radius: 10px;
+        width: 500px;
+        height: 100px;
+        border: 2px solid gray;
+        vertical-align: middle;
+      }
+      .reply-text:focus {
+        outline: none;
+      }
+      .reply-btn {
+        margin-left: 10px;
+        background-color: black;
+        color: white;
+        border: 2px solid gray;
+        border-radius: 8px;
+        vertical-align: middle;
+      }
+      .reply-btn:hover {
+        background-color: goldenrod;
+      }
+      .reply-btn:active {
+        background-color: gray;
+      }
+      .reply-data {
+        width: 700px;
+        margin: auto;
+        padding: 10px;
+        margin-top: 30px;
+        position: static;
+        border-style: solid;
+        border-color: gray white white;
+      }
+      .reply-data > button {
+        border: 1px solid gray;
+        color: gray;
+      }
+      .reply-edit-btn:hover {
+        color: rgb(3, 66, 95);
+      }
+      .reply-del-btn:hover {
+        color: red;
+      }
+      .reply-data > button:active {
+        border: 1px solid black;
+      }
+      .body-write {
+        margin: auto;
+        width: 400px;
+      }
+      .write-er {
+        float: left;
+      }
+      .write-date-time {
+        float: right;
+      }
+    </style>
+    <script>
+        $(document).ready(function () {
+            listing();
+        });
+
+        function listing() {
+            fetch('/music').then((res) => res.json()).then((data) => {
+                let rows = data['result']
+                $('#cards-box').empty()
+                rows.forEach((a) => {
+                    let comment = a['comment']
+                    let title = a['title']
+                    let artist = a['artist']
+                    let image = a['image']
+                    let name = a['name']
+
+                    let temp_html = `<div class="col">
+                                        <div class="card h-100">
+                                            <img src="${image}"
+                                                class="card-img-top" onclick="location.href='/detail'">
+                                            <div class="card-body">
+                                                <h5 class="card-title">${title}</h5>
+                                                <p class="card-text">${artist}</p>
+                                                <p>🎵</p>
+                                                <p>${name}</p>
+                                                <p class="mycomment text-flow">${comment}</p>
+                                            </div>
+                                        </div>
+                                    </div>`
+                    $('#cards-box').append(temp_html)
+                })
+            })
+        }
+
+        function posting() {
+            let url = $('#url').val()
+            let comment = $('#comment').val()
+            let name = $('#name').val()
+
+            let formData = new FormData();
+            formData.append("url_give", url);
+            formData.append("comment_give", comment);
+            formData.append("name_give", name);
+
+            fetch('/music', { method: "POST", body: formData }).then((res) => res.json()).then((data) => {
+                alert(data['msg'])
+                window.location.reload()
+            })
+        }
+
+        function open_box() {
+            $('#post-box').show()
+        }
+        function close_box() {
+            $('#post-box').hide()
+        }
+        function newPage() {
+            window.location.href = 'detail1.html'
+        }
+
+    </script>
+  </head>
+
+  <body>
+    <div class="black-bg">
+      <div class="white-bg">
+        <h1 style="text-align: center; font-family: PyeongChangPeace-Bold">
+          '취향'은 언제든 변하죠!
+        </h1>
+  
+        <form action="#">
+          <div class="write-box">
+            <div class="write-box-inside">
+              <p>타이틀</p>
+              <form>
+                <input type="text" class="text-box" placeholder="제목을 입력해주세요" />
+              </form>
+            </div>
+            <div class="write-box-inside">
+              <p>지니뮤직URL</p>
+              <form>
+                <input type="text" class="text-box" placeholder="URL을 입력해주세요" />
+              </form>
+            </div>
+            <div class="write-box-inside">
+              <p>이미지URL</p>
+              <form>
+                <input type="text" class="text-box" id="urlBox" placeholder="URL을 입력해주세요" />
+              </form>
+            </div>
+            <div class="write-box-inside">
+              <p>작성자</p>
+              <form>
+                <input type="text" id="writerBox" class="text-box" placeholder="작성자 이름을 입력해주세요" />
+              </form>
+            </div>
+            <div class="write-box-inside">
+              <p>코멘트</p>
+              <form>
+                <input type="text" id="commentBox" class="text-box" style="height: 200px"
+                  placeholder="취향에 대한 코멘트를 남겨주세요" />
+              </form>
+            </div>
+            <div style="clear: both"></div>
+          </div>
+          <div style="text-align: center">
+            <button type="submit" class="write-btn send-btn" id="send" onclick="posting()">
+              수정완료
+            </button>
+            <button type="button" class="write-btn close-btn" id="close">
+              취소
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="contentContainer">
+      <div class="headerWrap">
+        <div class="memberHeader">
+          <img src="/static/src/img/logo_image.png" class="logo" alt="">
+          <p>음악</p>
+          <div class="memberBtn">
+            <button>회원가입</button>
+            <button>로그인</button>
+          </div>
+        </div>
+      </div>
+      <div class="background">
+        <div class="left-navbar">
+          <div class="left-navbar-menu">
+            <p>category</p>
+          </div>
+          <div class="left-navbar-content">
+            <div class="left-navbar-content">
+              <div class="category"><a href="#" id="category-1">
+                  <img src="/static/src/img/circle.png" class="circle1" alt="">
+                  <div>영화 🎬</div>
+                </a>
+              </div>
+              <div class="category"><a href="#" id="category-2">
+                  <img src="/static/src/img/circle.png" class="circle2" alt="">
+                  <div>음악 🎧</div>
+                </a>
+              </div>
+              <div class="category"><a href="#" id="category-3">
+                  <img src="/static/src/img/circle.png" class="circle3" alt="">
+                  <div>애니 📺</div>
+                </a>
+              </div>
+              <div class="category"><a href="#" id="category-4">
+                  <img src="/static/src/img/circle.png" class="circle4" alt="">
+                  <div>운동 ⚽</div>
+                </a>
+              </div>
+              <div class="category"><a href="#" id="category-5">
+                  <img src="/static/src/img/circle.png" class="circle5" alt="">
+                  <div>책 📚</div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="body">
+          <div class="body-title">
+            <div class="body-title-head">
+              <h1 class="title-text">뉴진스의 하입보이요</h1>
+              <img src="/static/src/img/underline_black.png" class="underline" alt="">
+           </div>
+           <div class="body-write">
+           <div class="write-er">
+            <p>📝신샘</p>
+          </div>
+          <div class="write-date-time">
+            <p>📅2023.03.28 21:30</p>
+          </div>
+        </div>
+        <div style="float: none; clear: both;"></div>
+          </div>
+            <div class="body-detail">
+                <div class="body-img">
+                    <img src="https://img1.daumcdn.net/thumb/R1280x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/epXm/image/WTEOnfO6X44JawwreKjDtHTO7EI.jfif" class="image"alt="">
+                </div>
+                <div class="body-text">
+                    <p>(1,2,3,4)
+                      Baby, got me looking so crazy
+                      빠져버리는 daydream
+                      Got me feeling you
+                      너도 말해줄래
+                      
+                      누가 내게 뭐라든
+                      남들과는 달라 넌
+                      Maybe you could be the one
+                      
+                      날 믿어봐 한번
+                      I’m not looking for just fun
+                      Maybe I could be the one
+                      
+                      Oh baby
+                      예민하대 나 lately
+                      너 없이는 매일 매일이 yeah
+                      재미없어 어쩌지
+                      
+                      I just want you
+                      Call my phone right now
+                      I just wanna hear you’re mine
+                      
+                      ‘Cause I know what you like boy
+                      You’re my chemical hype boy
+                      내 지난날들은
+                      눈 뜨면 잊는 꿈
+                      Hype boy 너만 원해
+                      Hype boy 내가 전해
+                      
+                      And we can go high
+                      말해봐 yeah
+                      느껴봐 mm mm
+                      Take him to the sky
+                      You know I hype you boy
+                      
+                      눈을 감아
+                      말해봐 yeah
+                      느껴봐 mm mm
+                      Take him to the sky
+                      You know I hype you boy
+                      
+                      잠에 들려고 잠에 들려 해도
+                      네 생각에 또 새벽 세 시 uh-oh
+                      알려줄 거야 they can’t have you no more
+                      봐봐 여기 내 이름 써있다고
+                      누가 내게 뭐라든
+                      남들과는 달라 넌
+                      Maybe you could be the one
+                      
+                      날 믿어봐 한번
+                      I’m not looking for just fun
+                      Maybe I could be the one
+                      
+                      Oh baby
+                      예민하대 나 lately
+                      너 없이는 매일 매일이 yeah
+                      재미없어 어쩌지
+                      
+                      I just want you
+                      Call my phone right now
+                      I just wanna hear you’re mine
+                      
+                      ‘Cause I know what you like boy
+                      You’re my chemical hype boy
+                      내 지난날들은
+                      눈 뜨면 잊는 꿈
+                      Hype boy 너만 원해
+                      Hype boy 내가 전해
+                      
+                      And we can go high
+                      말해봐 yeah
+                      느껴봐 mm mm
+                      Take him to the sky
+                      You know I hype you boy
+                      
+                      눈을 감아
+                      말해봐 yeah
+                      느껴봐 mm mm
+                      Take him to the sky
+                      You know I hype you boy</p>
+                </div>
+            </div>
+            <div style="float:none; clear:both;"></div>
+            <div class="body-btn">
+                <button class="list-btn">목록</button>
+                <button class="edit-btn">수정</button>
+                <button class="del-btn">삭제</button>
+            </div>
+            <div class="reply">
+              <div class="reply-box">
+                <input type="text" class="reply-name" placeholder="작성자"><br>
+                <input type="text" class="reply-text" placeholder="댓글을 남겨주세요!">
+                <button class="reply-btn">댓글 남기기<br>💬</button>
+              </div>
+              <div class="reply-data">
+                <p style="font-weight: bolder;">신샘 💬</p>
+                <p>취향존중 해드릴게요!</p>
+                <p style="color: gray;">(2023.03.28)</p>
+                <button class="reply-edit-btn">수정</button>
+                <button class="reply-del-btn">삭제</button>
+              </div>
+              <div class="reply-data">
+                <p style="font-weight: bolder;">신샘 💬</p>
+                <p>취향존중 해드릴게요!</p>
+                <p style="color: gray;">(2023.03.28)</p>
+                <button class="reply-edit-btn">수정</button>
+                <button class="reply-del-btn">삭제</button>
+              </div>
+              <div class="reply-data">
+                <p style="font-weight: bolder;">신샘 💬</p>
+                <p>취향존중 해드릴게요!</p>
+                <p style="color: gray;">(2023.03.28)</p>
+                <button class="reply-edit-btn">수정</button>
+                <button class="reply-del-btn">삭제</button>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      $('.edit-btn').on('click', function () {
+        $('.black-bg').addClass('show-modal');
+      });
+      $('#close').on('click', function () {
+        $('.black-bg').removeClass('show-modal');
+      });
+
+      $('#category-1').hover(function () {
+      $('.circle1').addClass('circle-show');
+    }, function () {
+      $('.circle1').removeClass('circle-show')
+    });
+
+    $('#category-2').hover(function () {
+      $('.circle2').addClass('circle-show');
+    }, function () {
+      $('.circle2').removeClass('circle-show')
+    });
+
+    $('#category-3').hover(function () {
+      $('.circle3').addClass('circle-show');
+    }, function () {
+      $('.circle3').removeClass('circle-show')
+    });
+
+    $('#category-4').hover(function () {
+      $('.circle4').addClass('circle-show');
+    }, function () {
+      $('.circle4').removeClass('circle-show')
+    });
+
+    $('#category-5').hover(function () {
+      $('.circle5').addClass('circle-show');
+    }, function () {
+      $('.circle5').removeClass('circle-show')
+    });
+    </script>
+  </body>
+</html>
