@@ -92,10 +92,10 @@ def insert_posts(category):
 
     db.posts.insert_one(doc)
 
-    return jsonify({'msg':'저장완료!'})
+    return jsonify({'msg':'등록완료!'})
 
 # 게시글 수정
-@app.route("/posts/<category>/<p_id>", methods=["PUT"] )
+@app.route("/posts/<p_id>", methods=["PUT"] )
 def modify_posts(p_id):
     return jsonify({'msg':'수정완료!'})
 
@@ -132,7 +132,7 @@ def insert_comments(p_id):
     }
     db.comments.insert_one(doc)
 
-    return jsonify({'msg':'저장완료!'})
+    return jsonify({'msg':'등록완료!'})
 
 # 댓글 수정
 @app.route("/posts/comments/<r_id>", methods=["PUT"])

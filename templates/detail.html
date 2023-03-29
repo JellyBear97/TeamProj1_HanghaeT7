@@ -446,7 +446,7 @@
       });
 
       // console.log(id);
-      function posting() {
+      function postingcomment() {
 
         let writer = $('#writer').val();
         let comment = $('#comment').val();
@@ -530,14 +530,43 @@
             });   
 
       }
-          // 게시글 수정 부분
-    function getmodifyData(){
-      $('#cateBox').attr('value', image);
-      $('#detailImg').attr('src', image);
-      $('#detailImg').attr('src', image);
-      $('#detailImg').attr('src', image);
-      $('#detailImg').attr('src', image);
-    }
+      
+      // 게시글 수정 모달 정보 집어넣기
+      function getmodifyData(){
+        $('#cateBox').attr('value','music');
+        $('#titleBox').attr('value', 'example');
+        $('#urlBox').attr('value', 'example');
+        $('#writerBox').attr('value', 'example');
+        $('#commentBox').attr('value', 'example');
+      }
+
+      // 게시글 수정
+      function modifypost(){
+
+        let url = $('#urlBox').val();
+        let comment = $('#commentBox').val();
+        let writer = $('#writerBox').val();
+        let category = $('#cateBox').val();
+        let title = $('#titleBox').val();
+
+        alert(url+" "+comment+" "+writer+" "+category+" "+title+" "+id+" ")
+        return;
+
+        let formData = new FormData();
+        formData.append('url_give', url);
+        formData.append('comment_give', comment);
+        formData.append('nickname_give', writer);
+        formData.append('category_give', category);
+        formData.append('title_give', title);
+
+      fetch(`/posts/${id}`, { method: 'PUT', body: formData })
+        .then((res) => res.json())
+        .then((data) => {
+          alert(data['msg']);
+          window.location.reload();
+        });
+
+      }
 
       //게시글 삭제
       function deletepost(){
@@ -648,7 +677,7 @@
           <div style="clear: both"></div>
         </div>
         <div style="text-align: center">
-          <button type="submit" class="write-btn send-btn" id="send" onclick="posting()">
+          <button type="submit" class="write-btn send-btn" id="send" onclick="modifypost()">
             수정완료
           </button>
           <button type="button" class="write-btn close-btn" id="close">
@@ -745,7 +774,7 @@
           <div class="reply-box">
             <input type="text" class="reply-name" id="writer" placeholder="작성자"><br>
             <input type="text" class="reply-text" id="comment"placeholder="댓글을 남겨주세요!">
-            <button class="reply-btn" onclick="posting()">댓글 남기기<br>💬</button>
+            <button class="reply-btn" onclick="postingcomment()">댓글 남기기<br>💬</button>
           </div>
           <!-- ===댓글수정========= -->
           <div class="reply-edit">
