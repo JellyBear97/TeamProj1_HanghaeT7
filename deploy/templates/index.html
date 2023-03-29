@@ -1,365 +1,284 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" type="text/css" />
+  <title>Category</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
-    
+  <style>
 
-    <title>스파르타 피디아</title>
+  </style>
+  <script>
+    function posting() {
+      let url = $('#urlBox').val();
+      let comment = $('#commentBox').val();
+      let writer = $('#writerBox').val();
+      let category = $('#cateBox').val();
+      let title = $('#titleBox').val();
 
-    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+      let formData = new FormData();
+      formData.append('url_give', url);
+      formData.append('comment_give', comment);
+      formData.append('nickname_give', writer);
+      formData.append('category_give', category);
+      formData.append('title_give', title);
 
-    <style>
-    @font-face {
-      font-family: 'PyeongChangPeace-Bold';
-      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/PyeongChangPeace-Bold.woff2')
-        format('woff2');
-      font-weight: 700;
-      font-style: normal;
-    }
-    @font-face {
-    font-family: 'Pretendard-Regular';
-    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-    }
-
-    .headerWrap {
-      height: 100px;
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      margin-bottom: 10px;
-      border-bottom: 1px solid black;
-      font-family: 'PyeongChangPeace-Bold';
-    }
-    .headerWrap > img {
-      width: 100px;
-      height: 100px;
-    }
-    .memberHeader {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      width: 90%;
-      height: 100px;
-      padding-left: 30px;
-    }
-    .memberHeader > p {
-      font-size: 35px;
-      margin-left: 20px;
-    }
-    .memberBtn > button {
-      border: none;
-      background-color: transparent;
-      font-size: 20px;
-      font-family: 'Pretendard-Regular'
-    }
-    .memberBtn > button:hover {
-      color: goldenrod;
-    }
-    .memberBtn > button:active {
-      color: goldenrod;
-      text-shadow: -2px 0px black, 0px 2px black, 2px 0px black, 0px -2px black;
-    }
-
-    .left-navbar-content > div > a:link {
-      color: black;
-    }
-    .left-navbar-content > div > a:visited {
-      color: black;
-    }
-    .left-navbar-content > div > a:hover {
-      color: goldenrod;
-    }
-    .left-navbar-content > div > a:active {
-      color: goldenrod;
-      text-shadow: -2px 0px black, 0px 2px black, 2px 0px black, 0px -2px black;
-    }
-    .left-navbar-menu {
-      width: 230px;
-      border-radius: 10px;
-      background-color: black;
-      color: white;
-      text-align: center;
-      font-size: 40px;
-    }
-
-    .left-navbar-content {
-      text-align: center;
-      font-size: 42px;
-    }
-    .left-navbar-content > div > a {
-      text-decoration: none;
-      text-decoration-color: none;
-    }
-
-    .header-title {
-      padding: 20px;
-      text-align: center;
-      font-family: PyeongChangPeace-Bold;
-      font-size: 70px;
-    }
-
-    .left-navbar {
-      font-family: PyeongChangPeace-Bold;
-      float: left;
-      margin: 15px 50px 0px 10px;
-      /* border-right: 1px solid black; */
-      padding-right: 10px;
-      padding-top: 20px;
-      /* height: 1000px; */
-    }
-    .col {
-      width: 23%;
-    }
-    .contentContainer {
-      width: 80%;
-      height: 100%;
-      margin: 0 auto;
-    }
-    .background {
-      height: 100%;
-    }
-    .write {
-        width: 230px;
-        text-align: center;
-        margin-top: 50px;
-        border: 2px solid black;
-        border-radius: 10px;
-        font-size: 25px;
-    
-    }
-    .write:hover {
-        background-color: goldenrod;
-        color: white;
-    }
-    .body {
-        font-family: Pretendard-Regular;
-    }
-    .black-bg {
-        width : 100%;
-        height : 100%;
-        position : fixed;
-        background : rgba(0,0,0,0.5);
-        z-index : 5;
-        padding: 30px;
-        visibility: hidden;
-        opacity: 1;
-        /* transition: all 1s; */
-    }
-    .show-modal {
-        visibility: visible;
-        opacity: 1;
-    }
-    .white-bg {
-        margin: auto;
-        width: 800px;
-        background: white;
-        border-radius: 5px;
-        padding: 30px;
-    } 
-
-    .write-box {
-        padding: 20px;
-        text-align: center;
-        font-family: Pretendard-Regular;
-    }
-
-    .write-box-inside {
-        line-height: 1px;
-        margin-bottom: 20px;
-        position: relative;
-    }
-    .write-box-inside > p {
-        position: relative;
-        left: 15%;
-        text-align: left;
-    }
-
-    .write-btn {
-        width: 180px;
-        height: 40px;
-        border: none;
-        font-size: 24px;
-        font-family: PyeongChangPeace-Bold;
-    }
-    .send-btn {
-        background-color: goldenrod;
-        
-    }
-    .close-btn {
-        background-color: black;
-        color: white;
-    }
-
-    .text-box {
-        width: 500px;
-        padding: 5px;
-    }
-
-    .text-flow {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-    </style>
-    <script>
-        $(document).ready(function () {
-            listing();
+      fetch(`/posts/${category}`, { method: 'POST', body: formData })
+        .then((res) => res.json())
+        .then((data) => {
+          alert(data['msg']);
+          window.location.reload();
         });
+    }
 
-        function listing() {
-            fetch('/music').then((res) => res.json()).then((data) => {
-                let rows = data['result']
-                $('#cards-box').empty()
-                rows.forEach((a) => {
-                    let comment = a['comment']
-                    let title = a['title']
-                    let artist = a['artist']
-                    let image = a['image']
-                    let name = a['name']
+    $(document).ready(function () {
+      $('#cards-box').empty();
+    });
 
-                    let temp_html = `<div class="col">
-                                        <div class="card h-100">
-                                            <img src="${image}"
-                                                class="card-img-top" onclick="location.href='/detail'">
-                                            <div class="card-body">
-                                                <h5 class="card-title">${title}</h5>
-                                                <p class="card-text">${artist}</p>
-                                                <p>🎵</p>
-                                                <p>${name}</p>
-                                                <p class="mycomment text-flow">${comment}</p>
-                                            </div>
-                                        </div>
-                                    </div>`
-                    $('#cards-box').append(temp_html)
-                })
-            })
-        }
+    function listing(e) {
+      let category = $(e).attr('id');
+      fetch(`/posts/${category}`)
+        .then((res) => res.json())
+        .then((data) => {
+          $('.body-home').empty()
+          $('#cards-box').empty();
+          let rows = data['result'];
+          rowFilter = rows.filter((value) => value['category'] === category);
+          rowFilter.forEach((a) => {
+            let title = a['title'];
+            let desc = a['comment'];
+            let image = a['image'];
+            let comment = a['comment'];
+            let writer = a['user_id'];
+            let catgegory = a['category'];
+            let p_id = a['_id'];
+            let reg_date = a['reg_date'];
 
-        function posting() {
-            let url = $('#url').val()
-            let comment = $('#comment').val()
-            let name = $('#name').val()
+            let jsDate = new Intl.DateTimeFormat('kr').format(
+              new Date(reg_date)
+            );
 
-            let formData = new FormData();
-            formData.append("url_give", url);
-            formData.append("comment_give", comment);
-            formData.append("name_give", name);
+            let temp_html = `<div class="col">
+                      <div class="card h-100">
+                        <img
+                          src="${image}"
+                          class="card-img-top cursor"
+                          onclick="newPage(this)"
+                          id="${p_id}"
+                        />
+                        <div class="card-body">
+                          <h5 class="card-title">${title}</h5>
+                          <p class="card-text text-flow">${desc}</p>
+                          <p>${writer}</p>
+                          <p class="mycomment text-flow">${comment}</p>
+                          <p style="color: gray;">(${jsDate})</p>
+                        </div>
+                      </div>
+                    </div>`;
 
-            fetch('/music', { method: "POST", body: formData }).then((res) => res.json()).then((data) => {
-                alert(data['msg'])
-                window.location.reload()
-            })
-        }
+            $('#cards-box').append(temp_html);
+          });
+        });
+    }
 
-        function open_box() {
-            $('#post-box').show()
-        }
-        function close_box() {
-            $('#post-box').hide()
-        }
-        function newPage() {
-            window.location.href = 'page1.html'
-        }
-    </script>
+    function deletepost(e) {
+      let p_id = $(e).attr('class');
+
+      fetch(`/posts/${p_id}`, { method: 'DELETE' })
+        .then((res) => res.json())
+        .then((data) => {
+          alert(data['msg']);
+          window.location.reload();
+        });
+    }
+
+    function newPage(e) {
+      let p_id = $(e).attr('id');
+      fetch(`/detail/move/${p_id}`);
+      window.location.href = `/posts/move/${p_id}`;
+    }
+  </script>
 </head>
 
 <body>
-    <div class="black-bg">
-        <div class="white-bg">
-            <h1 style="text-align: center; font-family: PyeongChangPeace-Bold;">'취향'을 공유하세요!</h4>
-            
-            
-                <div class="write-box">
-                    <div class="write-box-inside">
-                        <p>지니뮤직URL</p>
-                        <form>
-                            <input type="text" id="url" class="text-box" placeholder="URL을 입력해주세요">
-                        </form>
-                    </div>
-                    <div class="write-box-inside">
-                        <p>이미지URL</p>
-                        <form>
-                            <input type="text" class="text-box" placeholder="URL을 입력해주세요">
-                        </form>
-                    </div>
-                    <div class="write-box-inside">
-                        <p>작성자</p>
-                        <form>
-                            <input type="text" id="name" class="text-box" placeholder="작성자 이름을 입력해주세요">
-                        </form>
-                    </div>
-                    <div class="write-box-inside">
-                        <p>코멘트</p>
-                        <form>
-                            <input type="text" id="comment" class="text-box" style="height: 200px;" placeholder="취향에 대한 코멘트를 남겨주세요">
-                        </form>
-                    </div>
-                    <div style="clear: both"></div>
-                </div>
-                <div style="text-align: center;">
-                    <button type="submit" class="write-btn send-btn" id="send" onclick="posting()">전송</button>
-                    <button type="button" class="write-btn close-btn" id="close">닫기</button>
-                </div>
+  <!-- 취향 공유하기 모달창 -->
+  <div class="black-bg">
+    <div class="white-bg">
+      <h1 style="text-align: center; font-family: PyeongChangPeace-Bold">
+        '취향'을 공유하세요!
+      </h1>
+
+      <form action="#">
+        <div class="write-box">
+          <div class="write-box-inside">
+            <p>카테고리</p>
+            <form>
+              <select id="cateBox" size="1">
+                <option value="movie">영화</option>
+                <option value="music">음악</option>
+                <option value="ani">애니</option>
+                <option value="health">운동</option>
+                <option value="book">책</option>
+              </select>
+            </form>
+          </div>
+          <div class="write-box-inside">
+            <p>타이틀</p>
+            <form>
+              <input type="text" class="text-box" placeholder="타이틀을 입력해주세요" id="titleBox" />
+            </form>
+          </div>
+          <div class="write-box-inside">
+            <p>URL</p>
+            <form>
+              <input type="text" class="text-box" id="urlBox" placeholder="URL을 입력해주세요" />
+            </form>
+          </div>
+          <div class="write-box-inside">
+            <p>작성자</p>
+            <form>
+              <input type="text" id="writerBox" class="text-box" placeholder="작성자 이름을 입력해주세요" />
+            </form>
+          </div>
+          <div class="write-box-inside">
+            <p>코멘트</p>
+            <form>
+              <input type="text" id="commentBox" class="text-box" style="height: 200px"
+                placeholder="취향에 대한 코멘트를 남겨주세요" />
+            </form>
+          </div>
+          <div style="clear: both"></div>
         </div>
-    </div> 
-    
-    <div class="contentContainer">
-      <div class="headerWrap">
-        <img src="../images/logo.png" alt="" class="logo" />
-        <div class="memberHeader">
-          <p>음악</p>
-          <div class="memberBtn">
-            <button>회원가입</button>
-            <button>로그인</button>
+        <div style="text-align: center">
+          <button type="submit" class="write-btn send-btn" id="send" onclick="posting()">
+            전송
+          </button>
+          <button type="button" class="write-btn close-btn" id="close">
+            닫기
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+<!-- header 부분 -->
+  <div class="contentContainer">
+    <div class="headerWrap">
+      <div class="memberHeader">
+        <a onclick="window.location.href='/'">
+          <img src="/static/src/img/logo_image.png" class="logo" alt="">
+        </a>
+        <p id="changeLogo">음악</p>
+        <div class="memberBtn">
+          <button>회원가입</button>
+          <button>로그인</button>
+        </div>
+      </div>
+    </div>
+    <div class="background">
+  <!-- 왼쪽 내브바 부분 -->
+      <div class="left-navbar">
+        <div class="left-navbar-menu">
+          <p>category</p>
+        </div>
+        <div class="left-navbar-content">
+          <div class="category" id="category-1"><a id="movie" onclick="listing(this)">
+              <img src="/static/src/img/circle.png" class="circle1" alt="">
+              <div>영화 🎬</div>
+            </a>
+          </div>
+          <div class="category" id="category-2"><a id="music" onclick="listing(this)">
+              <img src="/static/src/img/circle.png" class="circle2" alt="">
+              <div>음악 🎧</div>
+            </a>
+          </div>
+          <div class="category" id="category-3"><a id="ani" onclick="listing(this)">
+              <img src="/static/src/img/circle.png" class="circle3" alt="">
+              <div>애니 📺</div>
+            </a>
+          </div>
+          <div class="category" id="category-4"><a id="health" onclick="listing(this)">
+              <img src="/static/src/img/circle.png" class="circle4" alt="">
+              <div>운동 ⚽</div>
+            </a>
+          </div>
+          <div class="category" id="category-5"><a id="book" onclick="listing(this)">
+              <img src="/static/src/img/circle.png" class="circle5" alt="">
+              <div>책 📚</div>
+            </a>
+          </div>
+        </div>
+        <button class="write">내 취향 공유하기</button>
+      </div>
+
+      <div class="body-home">
+        <img src="/static/src/img/logo_image.png"  class="body-home-img" alt="">
+      </div>
+
+      <div class="body">
+        <div class="mycards">
+          <div class="row row-cols-1 row-cols-md-4 g-4" id="cards-box">
+            <div class="col">
+              <div class="card h-100">
+                <img src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
+                  class="card-img-top cursor" onclick="newPage()" />
+                <div class="card-body">
+                  <h5 class="card-title">노래 제목이 들어갑니다</h5>
+                  <p class="card-text">여기에 아티스트가 들어갑니다</p>
+                  <p>작성자</p>
+                  <p class="mycomment">나의 한줄 평을 씁니다</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="background">
-        <div class="left-navbar">
-          <div class="left-navbar-menu">
-            <p>Menu</p>
-          </div>
-          <div class="left-navbar-content">
-            <div><a href="#">영화 🎬</a></div>
-            <div><a href="#">음악 🎧</a></div>
-            <div><a href="#">애니 📺</a></div>
-            <div><a href="#">운동 ⚽</a></div>
-            <div><a href="#">책 📚</a></div>
-          </div>
-          <button class="write">
-            내 취향 공유하기
-        </button>
-        </div>
-
-    <div class="mycards">
-        <div class="row row-cols-1 row-cols-md-4 g-4" id="cards-box">
-            
-        </div>
     </div>
+  </div>
+  <script>
+    $('.write').on('click', function () {
+      $('.black-bg').addClass('show-modal');
+    });
+    $('#close').on('click', function () {
+      $('.black-bg').removeClass('show-modal');
+    });
 
-    <script>
-        
-        $('.write').on('click', function() {
-            $('.black-bg').addClass('show-modal')
-        })
-        $('#close').on('click', function() {
-            $('.black-bg').removeClass('show-modal')
-        })
+    $('#category-1').hover(function () {
+      $('.circle1').addClass('circle-show');
+    }, function () {
+      $('.circle1').removeClass('circle-show')
+    });
 
-    </script>
+    $('#category-2').hover(function () {
+      $('.circle2').addClass('circle-show');
+    }, function () {
+      $('.circle2').removeClass('circle-show')
+    });
 
+    $('#category-3').hover(function () {
+      $('.circle3').addClass('circle-show');
+    }, function () {
+      $('.circle3').removeClass('circle-show')
+    });
+
+    $('#category-4').hover(function () {
+      $('.circle4').addClass('circle-show');
+    }, function () {
+      $('.circle4').removeClass('circle-show')
+    });
+
+    $('#category-5').hover(function () {
+      $('.circle5').addClass('circle-show');
+    }, function () {
+      $('.circle5').removeClass('circle-show')
+    });
+
+  </script>
 </body>
 
 </html>
