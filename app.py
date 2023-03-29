@@ -97,6 +97,22 @@ def insert_posts(category):
 # 게시글 수정
 @app.route("/posts/<p_id>", methods=["PUT"] )
 def modify_posts(p_id):
+
+    title_receive = request.form['title_give']
+    comment_receive = request.form['comment_give']
+    url_receive = request.form['url_give']
+    category_receive = request.form['category_give']
+    name_receive = request.form['nickname_give']
+    mod_date = datetime.datetime.utcnow()
+
+    db.posts.update_one({'_id':ObjectId(p_id)},
+                        {'$set':{'title': title_receive,
+                                 'comment':comment_receive,
+                                 'mod_date':mod_date,
+                                 'category':category_receive,
+                                 'user_id':name_receive,
+                                 'image':url_receive
+                        }})
     return jsonify({'msg':'수정완료!'})
 
 # 게시글 삭제
