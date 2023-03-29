@@ -19,7 +19,9 @@
     let id = `{{ p_id }}`;
       console.log(id);
       $(document).ready(function () {
-        getData();
+        getData();  
+        $('#reply-edited-btn').hide()
+        console.log(reply-edited-btn)  
       });
 
       // console.log(id);
@@ -86,7 +88,7 @@
           fetch(`/posts/${id}/comments`)
           .then((res) => res.json())
           .then((data) => {
-            console.log(data);
+            console.log(data);         
             $('#replyBox').empty();
             let rows = data['result'];
             rows.forEach((a) => {
@@ -99,9 +101,9 @@
                                       <input id="replyName" value="${user_id}💬" style="font-weight: bolder;" disabled/> 
                                       <input id="replyComment" value="${comment}" disabled/>
                                       <p style="color: gray;">(${reg_date})</p>
-                                      <button onclick="modifycomment(this)" class="reply-edit-btn">수정</button>
-                                      <button onclick="deletecomment('${r_id}')" class="reply-del-btn">삭제</button>
-                                      <button id="${r_id}" onclick="modifyReply(this)" class="reply-edited-btn">수정완료</button>
+                                      <div id="reply-edit-btn"><button onclick="modifycomment(this)" class="reply-edit-btn">수정</button></div>
+                                      <div id="reply-del-btn"><button onclick="deletecomment('${r_id}')" class="reply-del-btn">삭제</button></div>
+                                      <div id="reply-edited-btn"><button id="${r_id}" onclick="modifyReply(this)" class="reply-edited-btn">수정완료</button></div>
                                   </div>`;
               $('#replyBox').append(temp_html);
             });
@@ -165,6 +167,8 @@
 
       //댓글 수정 가능상태로 변경
       function modifycomment(e) {
+        $('#reply-edit-btn').empty()
+        $('#reply-edited-btn').show()
         $('#replyName').removeAttr('disabled');
         $('#replyComment').removeAttr('disabled');
       }
@@ -427,12 +431,7 @@
     });
     // $('#category-5').on('click', function () {
     //   $('.circle5').addClass('circle-show');
-    // });
-
-    // $('.reply-edit-btn').on('click', function () {
-    //   $('.reply-edited-btn').addClass('show')
-    // })
-    
+    // });    
  
   </script>
 
