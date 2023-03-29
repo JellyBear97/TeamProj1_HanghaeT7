@@ -20,8 +20,8 @@ def home():
     return render_template('index.html')
 
 # 카테고리별 조회
-@app.route("/posts/<category>", methods=["GET"])
-def list_category(category):
+@app.route("/posts/data/<category>", methods=["GET"])
+def get_Data(category):
     results = []
     all_posts = list(db.posts.find({'category':category}))
     for post in all_posts:
@@ -29,10 +29,35 @@ def list_category(category):
         results.append(post)
     return jsonify({'result':results})  
 
+# 영화 목록 이동
+@app.route('/posts/movie')
+def list_movie():
+    return render_template('main.html', category = 'movie')
+
+# 음악 목록 이동
+@app.route('/posts/music')
+def list_music():
+    return render_template('main.html', category = 'music')
+
+# 애니 목록 이동
+@app.route('/posts/ani')
+def list_ani():
+    return render_template('main.html', category = 'ani')
+
+# 운동 목록 이동
+@app.route('/posts/health')
+def list_health():
+    return render_template('main.html', category = 'health')
+
+# 책 목록 이동
+@app.route('/posts/book')
+def list_book():
+    return render_template('main.html', category = 'book')
+
 # 게시글 상세조회 이동
-@app.route("/posts/move/<p_id>", methods=["GET"])
-def move_posts(p_id):
-    return render_template("detail.html", p_id = p_id)
+@app.route("/posts/move/<category>/<p_id>", methods=["GET"])
+def move_posts(category, p_id):
+    return render_template("detail.html", p_id = p_id, category = category)
 
 # 게시글 상세조회 가져오기
 @app.route("/posts/detail/<p_id>", methods=["GET"])

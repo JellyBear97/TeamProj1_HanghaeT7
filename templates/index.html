@@ -41,8 +41,14 @@
       $('#cards-box').empty();
     });
 
-    function listing(e) {
+    function moving(e){
       let category = $(e).attr('id');
+
+      window.location.href='/posts/'+category;
+    }
+
+    function listing() {
+      //let category = $(e).attr('id');
       fetch(`/posts/${category}`)
         .then((res) => res.json())
         .then((data) => {
@@ -173,11 +179,11 @@
         <a onclick="window.location.href='/'">
           <img src="/static/src/img/logo_image.png" class="logo" alt="">
         </a>
-        <p id="changeLogo">음악</p>
-        <div class="memberBtn">
+        <p id="changeLogo">{{category}}</p>
+        <!-- <div class="memberBtn">
           <button>회원가입</button>
           <button>로그인</button>
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="background">
@@ -187,27 +193,27 @@
           <p>category</p>
         </div>
         <div class="left-navbar-content">
-          <div class="category" id="category-1"><a id="movie" onclick="listing(this)">
+          <div class="category" id="category-1"><a id="movie" onclick="moving(this)">
               <img src="/static/src/img/circle.png" class="circle1" alt="">
               <div>영화 🎬</div>
             </a>
           </div>
-          <div class="category" id="category-2"><a id="music" onclick="listing(this)">
+          <div class="category" id="category-2"><a id="music" onclick="moving(this)">
               <img src="/static/src/img/circle.png" class="circle2" alt="">
               <div>음악 🎧</div>
             </a>
           </div>
-          <div class="category" id="category-3"><a id="ani" onclick="listing(this)">
+          <div class="category" id="category-3"><a id="ani" onclick="moving(this)">
               <img src="/static/src/img/circle.png" class="circle3" alt="">
               <div>애니 📺</div>
             </a>
           </div>
-          <div class="category" id="category-4"><a id="health" onclick="listing(this)">
+          <div class="category" id="category-4"><a id="health" onclick="moving(this)">
               <img src="/static/src/img/circle.png" class="circle4" alt="">
               <div>운동 ⚽</div>
             </a>
           </div>
-          <div class="category" id="category-5"><a id="book" onclick="listing(this)">
+          <div class="category" id="category-5"><a id="book" onclick="moving(this)">
               <img src="/static/src/img/circle.png" class="circle5" alt="">
               <div>책 📚</div>
             </a>

@@ -9,6 +9,10 @@
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" type="text/css" />
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+/>
   <title>Detail</title>
 
   <style>
@@ -57,11 +61,32 @@
             let image = a['image'];
             let comment = a['comment'];
             let writer = a['user_id'];
-            let catgegory = a['category'];
+            let category = a['category'];
             let reg_date = a['reg_date'];
             let url = a['url'];
 
             let jsDate= new Intl.DateTimeFormat('kr').format(new Date(reg_date))
+            
+            var cate = ""
+
+            switch(category){
+              case 'movie':
+                cate = '영화';
+                break;
+              case 'music':
+                cate = '음악';
+                break;
+              case 'health':
+                cate = '운동';
+                break;
+              case 'ani':
+                cate = '애니';
+                break;
+              case 'book':
+                cate = '책';
+                break;
+            }
+            $('#changeLogo').text(cate);
 
             $('#detailImg').attr('src', image);
 
@@ -214,6 +239,25 @@
       history.back();
     }
 
+    function moving(e){
+      let category = $(e).attr('id');
+
+      window.location.href='/posts/'+category;
+    }
+
+    var count = 0;
+    function countPlus(){
+      count++;
+      document.querySelector(".like_count").innerHTML="좋아요 "+count +"개";
+    }
+
+    function addLike(){
+    const pushHeartBtn = document.querySelector(".heart-btn");
+            pushHeartBtn.innerHTML ='<i class="fas fa-heart fa-2x"></i>';
+            pushHeartBtn.style.color ='red'; 
+            pushHeartBtn.addEventListener("click",countPlus());
+      }
+
   </script>
 </head>
 
@@ -284,7 +328,7 @@
           <a onclick="window.location.href='/'">
             <img src="/static/src/img/logo_image.png" class="logo" alt="">
           </a>
-        <p>음악</p>
+        <p id="changeLogo"></p>
         <div class="memberBtn">
           <button>회원가입</button>
           <button>로그인</button>
@@ -297,27 +341,27 @@
           <p>category</p>
         </div>
         <div class="left-navbar-content">
-          <div class="category" id="category-1"><a id="movie" onclick="window.location.href='/'">
+          <div class="category" id="category-1"><a id="movie" onclick="moving(this)">
             <img src="/static/src/img/circle.png" class="circle1" alt="">
             <div>영화 🎬</div>
           </a>
         </div>
-        <div class="category" id="category-2"><a id="music" onclick="window.location.href='/'">
+        <div class="category" id="category-2"><a id="music" onclick="moving(this)">
             <img src="/static/src/img/circle.png" class="circle2" alt="">
             <div>음악 🎧</div>
           </a>
         </div>
-        <div class="category" id="category-3"><a id="ani" onclick="window.location.href='/'">
+        <div class="category" id="category-3"><a id="ani" onclick="moving(this)">
             <img src="/static/src/img/circle.png" class="circle3" alt="">
             <div>애니 📺</div>
           </a>
         </div>
-        <div class="category" id="category-4"><a id="health" onclick="window.location.href='/'">
+        <div class="category" id="category-4"><a id="health" onclick="moving(this)">
             <img src="/static/src/img/circle.png" class="circle4" alt="">
             <div>운동 ⚽</div>
           </a>
         </div>
-        <div class="category" id="category-5"><a id="book" onclick="window.location.href='/'">
+        <div class="category" id="category-5"><a id="book" onclick="moving(this)">
             <img src="/static/src/img/circle.png" class="circle5" alt="">
             <div>책 📚</div>
           </a>
@@ -357,6 +401,15 @@
           </div>
         </div>
         <div style="float:none; clear:both;"></div>
+        <!-- =====좋아요버튼과 개수============= -->
+        <div class="heart">
+          <button class="heart-btn" onclick="addLike()">
+            <i class="far fa-heart fa-2x"></i>
+          </button>
+          <div class="like_count">좋아요 0개</div>
+        </div>
+        <!-- ======================= -->
+        <div style="float:none; clear:both;"></div>
         <div class="body-btn">
           <button class="list-btn" onclick="back()">목록</button>
           <button class="edit-btn">수정</button>
@@ -389,49 +442,30 @@
     }, function () {
       $('.circle1').removeClass('circle-show')
     });
-    // $('#category-1').on('click', function () {
-    //   $('.circle1').addClass('circle-show');
-    // });
 
     $('#category-2').hover(function () {
       $('.circle2').addClass('circle-show');
     }, function () {
       $('.circle2').removeClass('circle-show')
     });
-    // $('#category-2').on('click', function () {
-    //   $('.circle2').addClass('circle-show');
-    // });
 
     $('#category-3').hover(function () {
       $('.circle3').addClass('circle-show');
     }, function () {
       $('.circle3').removeClass('circle-show')
     });
-    // $('#category-3').on('click', function () {
-    //   $('.circle3').addClass('circle-show');
-    // });
 
     $('#category-4').hover(function () {
       $('.circle4').addClass('circle-show');
     }, function () {
       $('.circle4').removeClass('circle-show')
     });
-    // $('#category-4').on('click', function () {
-    //   $('.circle4').addClass('circle-show');
-    // });
 
     $('#category-5').hover(function () {
       $('.circle5').addClass('circle-show');
     }, function () {
       $('.circle5').removeClass('circle-show')
     });
-    // $('#category-5').on('click', function () {
-    //   $('.circle5').addClass('circle-show');
-    // });
-
-    // $('.reply-edit-btn').on('click', function () {
-    //   $('.reply-edited-btn').addClass('show')
-    // })
     
  
   </script>
