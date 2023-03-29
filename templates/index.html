@@ -11,268 +11,14 @@
       crossorigin="anonymous"
     />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <title>Detail</title>
+    <link
+      href="{{ url_for('static', filename='css/style.css') }}"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <title>Category</title>
 
-    <style>
-      @font-face {
-        font-family: 'PyeongChangPeace-Bold';
-        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/PyeongChangPeace-Bold.woff2')
-          format('woff2');
-        font-weight: 700;
-        font-style: normal;
-      }
-
-      @font-face {
-        font-family: 'Pretendard-Regular';
-        src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff')
-          format('woff');
-        font-weight: 400;
-        font-style: normal;
-      }
-
-      body {
-        box-sizing: border-box;
-      }
-
-      .logo {
-        width: 150px;
-      }
-
-      .headerWrap {
-        height: 100px;
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        margin-bottom: 10px;
-        border-bottom: 1px solid black;
-      }
-
-      .memberHeader {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        width: 90%;
-        height: 100px;
-      }
-
-      .memberHeader > p {
-        font-size: 35px;
-        margin-right: 700px;
-        font-family: 'PyeongChangPeace-Bold';
-      }
-
-      .memberBtn > button {
-        border: none;
-        background-color: transparent;
-        font-size: 20px;
-        font-family: 'Pretendard-Regular';
-      }
-
-      .memberBtn > button:hover {
-        color: goldenrod;
-      }
-
-      .memberBtn > button:active {
-        color: goldenrod;
-        text-shadow: -2px 0px black, 0px 2px black, 2px 0px black,
-          0px -2px black;
-      }
-
-      .category > a:link {
-        color: black;
-      }
-
-      .category > a:visited {
-        color: black;
-      }
-
-      .category > a:active {
-        color: gray;
-      }
-
-      .left-navbar-menu {
-        width: 250px;
-        background-color: black;
-        color: white;
-        text-align: center;
-        font-size: 40px;
-      }
-
-      .left-navbar-content {
-        text-align: center;
-        font-size: 42px;
-      }
-
-      .left-navbar-content > div > a {
-        text-decoration: none;
-        text-decoration-color: none;
-      }
-
-      .header-title {
-        padding: 20px;
-        text-align: center;
-        font-family: PyeongChangPeace-Bold;
-        font-size: 70px;
-      }
-
-      .left-navbar {
-        font-family: PyeongChangPeace-Bold;
-        float: left;
-        margin: 15px 50px 0px 10px;
-        padding-right: 10px;
-        padding-top: 20px;
-      }
-
-      .col {
-        width: 23%;
-      }
-
-      .contentContainer {
-        width: 80%;
-        height: 100%;
-        margin: 0 auto;
-      }
-
-      .background {
-        height: 100%;
-      }
-
-      .text-flow {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      .write {
-        width: 230px;
-        text-align: center;
-        margin-top: 50px;
-        border: 2px solid black;
-        border-radius: 10px;
-        font-size: 25px;
-      }
-
-      .write:hover {
-        background-color: goldenrod;
-        color: white;
-      }
-
-      .body {
-        font-family: Pretendard-Regular;
-      }
-
-      .black-bg {
-        width: 100%;
-        height: 100%;
-        position: fixed;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 5;
-        padding: 20px;
-        visibility: hidden;
-      }
-
-      .show-modal {
-        visibility: visible;
-      }
-
-      .white-bg {
-        margin: 0 auto;
-        width: 800px;
-        background: white;
-        border-radius: 5px;
-        padding: 20px;
-      }
-
-      .write-box {
-        padding: 30px;
-        margin-left: 100px;
-        margin-right: auto;
-        font-family: Pretendard-Regular;
-      }
-
-      .write-box-inside {
-        line-height: 1px;
-        margin-bottom: 20px;
-        position: relative;
-      }
-
-      .write-btn {
-        width: 180px;
-        height: 40px;
-        border: none;
-        font-size: 24px;
-        font-family: PyeongChangPeace-Bold;
-      }
-
-      .send-btn {
-        background-color: goldenrod;
-      }
-
-      .close-btn {
-        background-color: black;
-        color: white;
-      }
-
-      .category {
-        position: relative;
-      }
-
-      .circle1 {
-        position: absolute;
-        width: 150px;
-        left: 40px;
-        top: -10px;
-        opacity: 1;
-        visibility: hidden;
-      }
-
-      .circle2 {
-        position: absolute;
-        width: 150px;
-        left: 40px;
-        top: -10px;
-        opacity: 1;
-        visibility: hidden;
-      }
-
-      .circle3 {
-        position: absolute;
-        width: 150px;
-        left: 40px;
-        top: -10px;
-        opacity: 1;
-        visibility: hidden;
-      }
-
-      .circle4 {
-        position: absolute;
-        width: 150px;
-        left: 40px;
-        top: -10px;
-        opacity: 1;
-        visibility: hidden;
-      }
-
-      .circle5 {
-        position: absolute;
-        width: 150px;
-        left: 40px;
-        top: -10px;
-        opacity: 1;
-        visibility: hidden;
-      }
-
-      .circle-show {
-        opacity: 1;
-        visibility: visible;
-      }
-
-      .text-box {
-        width: 500px;
-        padding: 5px;
-      }
-    </style>
+    <style></style>
     <script>
       function posting() {
         let url = $('#urlBox').val();
@@ -295,17 +41,23 @@
             window.location.reload();
           });
       }
+
       $(document).ready(function () {
-        listing();
+        $('#cards-box').empty();
       });
 
-      function listing(e) {
+      function moving(e) {
         let category = $(e).attr('id');
-        let koreaCate = $(`#${category}Title`).text();
-        $('#categoryTitle').text(`${koreaCate}`);
+
+        window.location.href = '/posts/' + category;
+      }
+
+      function listing() {
+        //let category = $(e).attr('id');
         fetch(`/posts/${category}`)
           .then((res) => res.json())
           .then((data) => {
+            $('.body-home').empty();
             $('#cards-box').empty();
             let rows = data['result'];
             rowFilter = rows.filter((value) => value['category'] === category);
@@ -327,13 +79,13 @@
                       <div class="card h-100">
                         <img
                           src="${image}"
-                          class="${category}"
+                          class="card-img-top cursor"
                           onclick="newPage(this)"
                           id="${p_id}"
                         />
                         <div class="card-body">
                           <h5 class="card-title">${title}</h5>
-                          <p class="card-text">${desc}</p>
+                          <p class="card-text text-flow">${desc}</p>
                           <p>${writer}</p>
                           <p class="mycomment text-flow">${comment}</p>
                           <p style="color: gray;">(${jsDate})</p>
@@ -345,6 +97,7 @@
             });
           });
       }
+
       function deletepost(e) {
         let p_id = $(e).attr('class');
 
@@ -358,14 +111,14 @@
 
       function newPage(e) {
         let p_id = $(e).attr('id');
-        let category = $(e).attr('class');
         fetch(`/detail/move/${p_id}`);
-        window.location.href = `/detail/move/${p_id}`;
+        window.location.href = `/posts/move/${p_id}`;
       }
     </script>
   </head>
 
   <body>
+    <!-- 취향 공유하기 모달창 -->
     <div class="black-bg">
       <div class="white-bg">
         <h1 style="text-align: center; font-family: PyeongChangPeace-Bold">
@@ -449,57 +202,69 @@
         </form>
       </div>
     </div>
-
+    <!-- header 부분 -->
     <div class="contentContainer">
       <div class="headerWrap">
         <div class="memberHeader">
-          <img src="/static/src/img/logo_image.png" class="logo" alt="" />
-          <p id="categoryTitle">음악</p>
-          <div class="memberBtn">
-            <button>회원가입</button>
-            <button>로그인</button>
-          </div>
+          <a onclick="window.location.href='/'">
+            <img src="/static/src/img/logo_image.png" class="logo" alt="" />
+          </a>
+          <p id="changeLogo">{{category}}</p>
+          <!-- <div class="memberBtn">
+          <button>회원가입</button>
+          <button>로그인</button>
+        </div> -->
         </div>
       </div>
       <div class="background">
+        <!-- 왼쪽 내브바 부분 -->
         <div class="left-navbar">
           <div class="left-navbar-menu">
             <p>category</p>
           </div>
           <div class="left-navbar-content">
             <div class="category" id="category-1">
-              <a id="movie" onclick="listing(this)">
+              <a id="movie" onclick="moving(this)">
                 <img src="/static/src/img/circle.png" class="circle1" alt="" />
-                <div id="movieTitle">영화 🎬</div>
+                <div>영화 🎬</div>
               </a>
             </div>
             <div class="category" id="category-2">
-              <a id="music" onclick="listing(this)">
+              <a id="music" onclick="moving(this)">
                 <img src="/static/src/img/circle.png" class="circle2" alt="" />
-                <div id="musicTitle">음악 🎧</div>
+                <div>음악 🎧</div>
               </a>
             </div>
             <div class="category" id="category-3">
-              <a id="ani" onclick="listing(this)">
+              <a id="ani" onclick="moving(this)">
                 <img src="/static/src/img/circle.png" class="circle3" alt="" />
-                <div id="aniTitle">애니 📺</div>
+                <div>애니 📺</div>
               </a>
             </div>
             <div class="category" id="category-4">
-              <a id="health" onclick="listing(this)">
+              <a id="health" onclick="moving(this)">
                 <img src="/static/src/img/circle.png" class="circle4" alt="" />
-                <div id="healthTitle">운동 ⚽</div>
+                <div>운동 ⚽</div>
               </a>
             </div>
             <div class="category" id="category-5">
-              <a id="book" onclick="listing(this)">
+              <a id="book" onclick="moving(this)">
                 <img src="/static/src/img/circle.png" class="circle5" alt="" />
-                <div id="bookTitle">책 📚</div>
+                <div>책 📚</div>
               </a>
             </div>
           </div>
           <button class="write">내 취향 공유하기</button>
         </div>
+
+        <div class="body-home">
+          <img
+            src="/static/src/img/logo_image.png"
+            class="body-home-img"
+            alt=""
+          />
+        </div>
+
         <div class="body">
           <div class="mycards">
             <div class="row row-cols-1 row-cols-md-4 g-4" id="cards-box">
@@ -507,7 +272,7 @@
                 <div class="card h-100">
                   <img
                     src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
-                    class="card-img-top"
+                    class="card-img-top cursor"
                     onclick="newPage()"
                   />
                   <div class="card-body">
@@ -515,7 +280,6 @@
                     <p class="card-text">여기에 아티스트가 들어갑니다</p>
                     <p>작성자</p>
                     <p class="mycomment">나의 한줄 평을 씁니다</p>
-                    <button onclick="deletepost(this)">삭제</button>
                   </div>
                 </div>
               </div>
@@ -530,6 +294,7 @@
       });
       $('#close').on('click', function () {
         $('.black-bg').removeClass('show-modal');
+        window.location.reload();
       });
 
       $('#category-1').hover(

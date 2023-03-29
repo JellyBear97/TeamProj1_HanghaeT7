@@ -1,13 +1,15 @@
 @font-face {
   font-family: 'PyeongChangPeace-Bold';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/PyeongChangPeace-Bold.woff2') format('woff2');
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/PyeongChangPeace-Bold.woff2')
+    format('woff2');
   font-weight: 700;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Pretendard-Regular';
-  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff')
+    format('woff');
   font-weight: 400;
   font-style: normal;
 }
@@ -39,7 +41,7 @@ body {
   height: 100px;
 }
 
-.memberHeader>p {
+.memberHeader > p {
   font-size: 35px;
   margin-right: 700px;
   font-family: 'PyeongChangPeace-Bold';
@@ -58,7 +60,7 @@ body {
   font-size: 42px;
 }
 
-.left-navbar-content>div>a {
+.left-navbar-content > div > a {
   text-decoration: none;
   text-decoration-color: none;
 }
@@ -245,30 +247,30 @@ body {
   margin: auto;
 }
 
-.memberBtn>button {
+.memberBtn > button {
   border: none;
   background-color: transparent;
   font-size: 20px;
   font-family: 'Pretendard-Regular';
 }
 
-.memberBtn>button:hover {
+.memberBtn > button:hover {
   color: goldenrod;
 }
 
-.memberBtn>button:active {
+.memberBtn > button:active {
   color: goldenrod;
 }
 
-.category>a>div:link {
+.category > a > div:link {
   color: black;
 }
 
-.category>a:visited {
+.category > a:visited {
   color: black;
 }
 
-.category>a>div:active {
+.category > a > div:active {
   color: gray;
 }
 
@@ -424,7 +426,7 @@ body {
   margin-bottom: 30px;
 }
 
-.body-title>p {
+.body-title > p {
   font-size: 20px;
 }
 
@@ -446,7 +448,7 @@ body {
   text-align: center;
 }
 
-.body-btn>button {
+.body-btn > button {
   width: 100px;
 }
 
@@ -465,7 +467,7 @@ body {
   color: white;
 }
 
-.body-btn>button:hover {
+.body-btn > button:hover {
   background-color: gray;
 }
 
@@ -558,11 +560,27 @@ body {
 .reply-cancle--btn:hover {
   color: red;
 }
-.reply-data>div>button {
+.reply-data > div > button {
   border: 1px solid gray;
   color: gray;
   float: left;
   margin-left: 5px;
+}
+.reply-data > input {
+  border: none;
+  background-color: transparent;
+  color: gray;
+  font-weight: bold;
+  font-size: 15px;
+}
+.reply-data > textarea {
+  resize: none;
+  border: none;
+  width: 700px;
+  margin-top: 10px;
+}
+.reply-data > textarea:focus {
+  outline: none;
 }
 
 .reply-edit-btn:hover {
@@ -577,7 +595,7 @@ body {
   color: red;
 }
 
-.reply-data>div>button:active {
+.reply-data > div > button:active {
   border: 1px solid black;
 }
 

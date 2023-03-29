@@ -11,8 +11,7 @@ from bson.objectid import ObjectId
 
 ca = certifi.where()
 
-# client = MongoClient('mongodb://spart:test@ac-ywf5hos-shard-00-00.vcctwzu.mongodb.net:27017,ac-ywf5hos-shard-00-01.vcctwzu.mongodb.net:27017,ac-ywf5hos-shard-00-02.vcctwzu.mongodb.net:27017/?ssl=true&replicaSet=atlas-1f9jmh-shard-0&authSource=admin&retryWrites=true&w=majority',tlsCAFile=ca)
-client = MongoClient('mongodb+srv://raccoonboy0803:aydlalsk12@raccoonboy.9hdmenx.mongodb.net/?retryWrites=true&w=majority')
+client = MongoClient('mongodb://spart:test@ac-ywf5hos-shard-00-00.vcctwzu.mongodb.net:27017,ac-ywf5hos-shard-00-01.vcctwzu.mongodb.net:27017,ac-ywf5hos-shard-00-02.vcctwzu.mongodb.net:27017/?ssl=true&replicaSet=atlas-1f9jmh-shard-0&authSource=admin&retryWrites=true&w=majority',tlsCAFile=ca)
 db = client.diary
 
 # 메인 페이지
@@ -21,8 +20,8 @@ def home():
     return render_template('index.html')
 
 # 카테고리별 조회
-@app.route("/posts/<category>", methods=["GET"])
-def list_category(category):
+@app.route("/posts/data/<category>", methods=["GET"])
+def get_Data(category):
     results = []
     all_posts = list(db.posts.find({'category':category}))
     for post in all_posts:
@@ -30,10 +29,35 @@ def list_category(category):
         results.append(post)
     return jsonify({'result':results})  
 
+# 영화 목록 이동
+@app.route('/posts/movie')
+def list_movie():
+    return render_template('main.html', category = 'movie')
+
+# 음악 목록 이동
+@app.route('/posts/music')
+def list_music():
+    return render_template('main.html', category = 'music')
+
+# 애니 목록 이동
+@app.route('/posts/ani')
+def list_ani():
+    return render_template('main.html', category = 'ani')
+
+# 운동 목록 이동
+@app.route('/posts/health')
+def list_health():
+    return render_template('main.html', category = 'health')
+
+# 책 목록 이동
+@app.route('/posts/book')
+def list_book():
+    return render_template('main.html', category = 'book')
+
 # 게시글 상세조회 이동
-@app.route("/detail/move/<p_id>", methods=["GET"])
-def move_posts(p_id):
-    return render_template("detail.html", p_id = p_id)
+@app.route("/posts/move/<category>/<p_id>", methods=["GET"])
+def move_posts(category, p_id):
+    return render_template("detail.html", p_id = p_id, category = category)
 
 # 게시글 상세조회 가져오기
 @app.route("/posts/detail/<p_id>", methods=["GET"])
@@ -46,10 +70,8 @@ def view_posts(p_id):
         'mod_date' : findone['mod_date'],
         'category' : findone['category'],
         'user_id' : findone['user_id'],
-        'image':findone['image'],  
-        'category':findone['category'],
-    
-        
+        'image':findone['image'],
+        'like':findone['like'] 
          }     
     return jsonify({'result':doc}) 
 
@@ -92,7 +114,7 @@ def insert_posts(category):
         'user_id' : name_receive,
         'image':ogimage, #이미지 썸네일로 사용,
         'artist':music_artist,
-        'url':url_receive
+        'like':0
     }
 
     db.posts.insert_one(doc)
@@ -110,13 +132,32 @@ def modify_posts(p_id):
     name_receive = request.form['nickname_give']
     mod_date = datetime.datetime.utcnow()
 
+    headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
+    data = requests.get(url_receive,headers=headers)
+
+    soup = BeautifulSoup(data.text, 'html.parser')
+
+    music_artist = ''
+
+    if(category_receive == "book"):
+         # ogtitle = soup.select_one('meta[property="og:title"]')['content'] 직접 적으면 필요X
+        ogdesc = soup.select_one('meta[property="og:description"]')['content']
+        ogimage = soup.select_one('meta[property="og:image"]')['content']  
+    elif(category_receive == "music"):
+        title_receive = soup.select_one('#body-content > div.search_song > div.search_result_detail > div > table > tbody > tr > td.info > a.title.ellipsis')['title'].strip()
+        music_artist = soup.select_one('#body-content > div.search_song > div.search_result_detail > div > table > tbody > tr > td.info > a.artist.ellipsis').text.strip()
+        ogimage = soup.select_one('#body-content > div.search_song > div.search_result_detail > div > table > tbody > tr > td:nth-child(3) > a > img')['src']
+    else:
+        ogimage = url_receive
+
     db.posts.update_one({'_id':ObjectId(p_id)},
                         {'$set':{'title': title_receive,
                                  'comment':comment_receive,
                                  'mod_date':mod_date,
                                  'category':category_receive,
                                  'user_id':name_receive,
-                                 'image':url_receive
+                                 'image':ogimage,
+                                 'artist':music_artist
                         }})
     return jsonify({'msg':'수정완료!'})
 
@@ -125,6 +166,15 @@ def modify_posts(p_id):
 def delete_posts(p_id):        
     db.posts.delete_one({'_id':ObjectId(p_id)})
     return jsonify({'msg':'삭제완료!'}) 
+
+# 게시글 좋아요
+@app.route("/posts/like/<p_id>", methods=["PUT"])
+def like_posts(p_id):   
+    like_receive = request.form['like_give']
+
+    db.posts.update_one({'_id':ObjectId(p_id)},
+                        {'$set':{'like': like_receive}})
+    return jsonify({'msg':'좋아요 완료!'}) 
 
 # 게시글에 해당하는 댓글 목록 조회
 @app.route("/posts/<p_id>/comments", methods=["GET"])

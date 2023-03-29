@@ -11,467 +11,16 @@
       crossorigin="anonymous"
     />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <title>index</title>
-
-    <style>
-      @font-face {
-        font-family: 'PyeongChangPeace-Bold';
-        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/PyeongChangPeace-Bold.woff2')
-          format('woff2');
-        font-weight: 700;
-        font-style: normal;
-      }
-
-      @font-face {
-        font-family: 'Pretendard-Regular';
-        src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff')
-          format('woff');
-        font-weight: 400;
-        font-style: normal;
-      }
-
-      body {
-        box-sizing: border-box;
-      }
-
-      .logo {
-        width: 150px;
-      }
-
-      .headerWrap {
-        height: 99px;
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        margin-bottom: 10px;
-        border-bottom: 1px solid black;
-        font-family: 'PyeongChangPeace-Bold';
-      }
-
-      .memberHeader {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        width: 90%;
-        height: 100px;
-      }
-
-      .memberHeader > p {
-        font-size: 35px;
-        margin-right: 700px;
-      }
-
-      .memberBtn > button {
-        border: none;
-        background-color: transparent;
-        font-size: 20px;
-        font-family: 'Pretendard-Regular';
-      }
-
-      .memberBtn > button:hover {
-        color: goldenrod;
-      }
-
-      .memberBtn > button:active {
-        color: goldenrod;
-      }
-
-      .category > a:link {
-        color: black;
-      }
-
-      .category > a:visited {
-        color: black;
-      }
-
-      .category > a:active {
-        color: gray;
-      }
-
-      .left-navbar-menu {
-        width: 250px;
-        background-color: black;
-        color: white;
-        text-align: center;
-        font-size: 40px;
-      }
-
-      .left-navbar-content {
-        text-align: center;
-        font-size: 42px;
-      }
-
-      .left-navbar-content > div > a {
-        text-decoration: none;
-        text-decoration-color: none;
-      }
-
-      .black-bg {
-        width: 100%;
-        height: 100%;
-        position: fixed;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 5;
-        padding: 30px;
-        visibility: hidden;
-        opacity: 1;
-      }
-
-      .show-modal {
-        visibility: visible;
-        opacity: 1;
-      }
-
-      .white-bg {
-        margin: 0 auto;
-        width: 800px;
-        background: white;
-        border-radius: 5px;
-        padding: 30px;
-      }
-
-      .write-box {
-        padding: 20px;
-        margin-left: 100px;
-        font-family: Pretendard-Regular;
-      }
-
-      .write-box-inside {
-        line-height: 1px;
-        margin-bottom: 20px;
-        position: relative;
-      }
-
-      .write-btn {
-        width: 180px;
-        height: 40px;
-        border: none;
-        font-size: 24px;
-        font-family: PyeongChangPeace-Bold;
-      }
-
-      .send-btn {
-        background-color: goldenrod;
-      }
-
-      .close-btn {
-        background-color: black;
-        color: white;
-      }
-
-      .category {
-        position: relative;
-      }
-
-      .circle1 {
-        position: absolute;
-        width: 150px;
-        left: 40px;
-        top: -10px;
-        opacity: 1;
-        visibility: hidden;
-      }
-
-      .circle2 {
-        position: absolute;
-        width: 150px;
-        left: 40px;
-        top: -10px;
-        opacity: 1;
-        visibility: hidden;
-      }
-
-      .circle3 {
-        position: absolute;
-        width: 150px;
-        left: 40px;
-        top: -10px;
-        opacity: 1;
-        visibility: hidden;
-      }
-
-      .circle4 {
-        position: absolute;
-        width: 150px;
-        left: 40px;
-        top: -10px;
-        opacity: 1;
-        visibility: hidden;
-      }
-
-      .circle5 {
-        position: absolute;
-        width: 150px;
-        left: 40px;
-        top: -10px;
-        opacity: 1;
-        visibility: hidden;
-      }
-
-      .circle-show {
-        opacity: 1;
-        visibility: visible;
-      }
-
-      .text-box {
-        width: 500px;
-        padding: 5px;
-      }
-
-      .header-title {
-        padding: 20px;
-        text-align: center;
-        font-family: PyeongChangPeace-Bold;
-        font-size: 70px;
-      }
-
-      .left-navbar {
-        font-family: PyeongChangPeace-Bold;
-        float: left;
-        margin: 0px 50px 0px 10px;
-        padding-right: 10px;
-        padding-top: 24px;
-      }
-
-      .col {
-        width: 23%;
-      }
-
-      .contentContainer {
-        width: 80%;
-        height: 100%;
-        margin: 0 auto;
-      }
-
-      .background {
-        height: 100%;
-      }
-
-      .write {
-        width: 230px;
-        text-align: center;
-        margin-top: 50px;
-        border: 2px solid black;
-        border-radius: 10px;
-        font-size: 25px;
-      }
-
-      .write:hover {
-        background-color: goldenrod;
-        color: white;
-      }
-
-      .body {
-        width: 800px;
-        float: left;
-        font-family: Pretendard-Regular;
-        padding: 30px;
-      }
-
-      .body-title {
-        text-align: center;
-        margin-bottom: 30px;
-      }
-
-      .body-title > p {
-        font-size: 20px;
-      }
-
-      .body-img {
-        float: left;
-      }
-
-      .image {
-        width: 300px;
-        height: 300px;
-        background-size: contain;
-        background-position: center;
-        margin: 20px;
-        margin-top: 0px;
-      }
-
-      .body-btn {
-        margin-top: 30px;
-        text-align: center;
-      }
-
-      .body-btn > button {
-        width: 100px;
-      }
-
-      .list-btn {
-        background-color: black;
-        color: white;
-      }
-
-      .edit-btn {
-        background-color: rgb(3, 66, 95);
-        color: white;
-      }
-
-      .del-btn {
-        background-color: red;
-        color: white;
-      }
-
-      .body-btn > button:hover {
-        background-color: gray;
-      }
-
-      .body-title-head {
-        position: relative;
-        margin-bottom: 50px;
-      }
-
-      .underline {
-        width: 700px;
-        position: absolute;
-        top: -30%;
-        left: 0;
-        right: 0;
-        margin: auto;
-      }
-
-      .title-text {
-        margin: auto;
-        text-align: center;
-      }
-
-      .reply {
-        margin-top: 50px;
-      }
-
-      .reply-box {
-        text-align: center;
-        margin: auto;
-      }
-
-      .reply-name {
-        width: 150px;
-        margin-right: 450px;
-        margin-bottom: 10px;
-        border-style: solid;
-        border-color: white white gray;
-      }
-      .reply-edit {
-        margin-top: 30px;
-        text-align: center;
-        margin: auto;
-      }
-      .reply-name:focus {
-        outline: none;
-      }
-
-      .reply-text {
-        border-radius: 10px;
-        width: 500px;
-        height: 100px;
-        border: 2px solid gray;
-        vertical-align: middle;
-      }
-
-      .reply-text:focus {
-        outline: none;
-      }
-
-      .reply-btn {
-        margin-left: 10px;
-        background-color: black;
-        color: white;
-        border: 2px solid gray;
-        border-radius: 8px;
-        vertical-align: middle;
-      }
-
-      .reply-btn:hover {
-        background-color: goldenrod;
-      }
-
-      .reply-btn:active {
-        background-color: gray;
-      }
-
-      .reply-data {
-        width: 700px;
-        margin: auto;
-        padding: 10px;
-        margin-top: 30px;
-        position: static;
-        border-style: solid;
-        border-color: gray white white;
-        height: 100%;
-      }
-      .reply-edit > button {
-        margin-left: 6px;
-        border: 1px solid gray;
-        color: gray;
-      }
-      .reply-edit--btn:hover {
-        color: rgb(3, 66, 95);
-      }
-      .reply-cancle--btn:hover {
-        color: red;
-      }
-      .reply-data > button {
-        border: 1px solid gray;
-        color: gray;
-      }
-
-      .reply-edit-btn:hover {
-        color: rgb(3, 66, 95);
-      }
-
-      .reply-del-btn:hover {
-        color: red;
-      }
-
-      .reply-data > button:active {
-        border: 1px solid black;
-      }
-
-      .body-write {
-        margin: auto;
-        width: 400px;
-      }
-
-      .write-er {
-        float: left;
-      }
-
-      .write-date-time {
-        float: right;
-      }
-
-      #reply > input {
-        border: none;
-        background-color: transparent;
-      }
-      textarea {
-        resize: none;
-      }
-      #reply > textarea {
-        border: none;
-        box-sizing: content-box;
-        background-color: transparent;
-        resize: none;
-        width: 700px;
-        min-height: 20px;
-        height: 100%;
-      }
-      #reply > textarea:focus {
-        outline: none;
-      }
-      #reply > input:focus {
-        outline: none;
-      }
-      a {
-        color: black;
-      }
-      .NoScroll {
-        overflow: hidden;
-      }
-    </style>
+    <link
+      href="{{ url_for('static', filename='css/style.css') }}"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+    />
+    <title>Detail</title>
     <script>
       let id = `{{ p_id }}`;
 
@@ -510,20 +59,36 @@
             let desc = a['comment'];
             let image = a['image'];
             let comment = a['comment'];
-            let user_id = a['user_id'];
+            let writer = a['user_id'];
             let category = a['category'];
             let reg_date = a['reg_date'];
             let url = a['url'];
-
-            function detailTitle() {
-              let koreaCate = $(`.${category}Title`).text();
-              $('#categoryTitle').text(`${koreaCate}`);
-            }
-            detailTitle();
+            var like = a['like'];
 
             let jsDate = new Intl.DateTimeFormat('kr').format(
               new Date(reg_date)
             );
+
+            var cate = '';
+
+            switch (category) {
+              case 'movie':
+                cate = '영화';
+                break;
+              case 'music':
+                cate = '음악';
+                break;
+              case 'health':
+                cate = '운동';
+                break;
+              case 'ani':
+                cate = '애니';
+                break;
+              case 'book':
+                cate = '책';
+                break;
+            }
+            $('#changeLogo').text(cate);
 
             $('#detailImg').attr('src', image);
 
@@ -542,14 +107,22 @@
 
             let detail_comment = `<p>${comment}</p>`;
             $('.body-text').append(detail_comment);
+
+            let tmp_html = `<div class="heart">
+                              <button class="heart-btn" onclick="addLike(${like})">
+                                <i class="far fa-heart fa-2x"></i>
+                              </button>
+                              <div class="like_count">좋아요 ${like}개</div>
+                            </div>`;
+            $('.tmp').append(tmp_html);
           });
 
         //댓글 부분
         fetch(`/posts/${id}/comments`)
           .then((res) => res.json())
           .then((data) => {
+            console.log(data);
             $('#replyBox').empty();
-
             let rows = data['result'];
             rows.forEach((a) => {
               let r_id = a['_id'];
@@ -557,19 +130,18 @@
               let comment = a['comment'];
               let reg_date = a['reg_date'];
 
-              let temp_html = `<div class="reply-data" id="reply">
-                                      <input id="replyName${r_id}" value="${user_id}" style="font-weight: bolder;" disabled/>
+              let temp_html = `<div class="reply-data" id="reply${r_id}">
+                                      <input id="replyName${r_id}" value="${user_id}" style="font-weight: bolder;" disabled/> 
                                       <textarea readonly id="replyComment${r_id}"> ${comment} </textarea>
                                       <p style="color: gray;">(${reg_date})</p>
                                       <button class="${r_id}" onclick="modifycomment(this)" class="reply-edit-btn">수정</button>
-                                      <button id="${r_id}" onclick="modifyReply(this)" class="reply-edit-btn">수정완료</button>
                                       <button onclick="deletecomment('${r_id}')" class="reply-del-btn">삭제</button>
+                                      <button id="${r_id}" onclick="modifyReply(this)" class="reply-edit-btn">수정완료</button>
                                   </div>`;
               $('#replyBox').append(temp_html);
             });
           });
       }
-
       // 게시글 수정 모달 정보 집어넣기
       function getmodifyData() {
         fetch(`/posts/detail/${id}`)
@@ -589,7 +161,6 @@
             $('#commentBox').attr('value', comment);
           });
       }
-
       // 게시글 수정
       function modifypost() {
         let url = $('#urlBox').val();
@@ -674,6 +245,51 @@
       function close_box() {
         $('#post-box').hide();
       }
+
+      function back() {
+        history.back();
+      }
+
+      function moving(e) {
+        let category = $(e).attr('id');
+
+        window.location.href = '/posts/' + category;
+      }
+
+      //게시글 좋아요 부분
+
+      function countPlus(likeCnt) {
+        likeCnt++;
+        document.querySelector('.like_count').innerHTML =
+          '좋아요 ' + likeCnt + '개';
+
+        //게시글 좋아요 업데이트 호출
+        updateLike(likeCnt);
+      }
+
+      function addLike(likeCnt) {
+        const pushHeartBtn = document.querySelector('.heart-btn');
+        pushHeartBtn.innerHTML = '<i class="fas fa-heart fa-2x"></i>';
+        pushHeartBtn.style.color = 'red';
+        pushHeartBtn.addEventListener('click', countPlus(likeCnt));
+      }
+
+      //게시글 좋아요 업데이트
+      function updateLike(count) {
+        let formData = new FormData();
+        formData.append('like_give', count);
+
+        fetch(`/posts/like/` + id, {
+          method: 'PUT',
+          body: formData,
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            alert(data['msg']);
+
+            window.location.reload();
+          });
+      }
     </script>
   </head>
 
@@ -717,7 +333,6 @@
                   type="text"
                   id="urlBox"
                   class="text-box"
-                  id="urlBox"
                   placeholder="URL을 입력해주세요"
                 />
               </form>
@@ -767,8 +382,10 @@
     <div class="contentContainer">
       <div class="headerWrap">
         <div class="memberHeader">
-          <img src="/static/src/img/logo_image.png" class="logo" alt="" />
-          <p id="categoryTitle"></p>
+          <a onclick="window.location.href='/'">
+            <img src="/static/src/img/logo_image.png" class="logo" alt="" />
+          </a>
+          <p id="changeLogo"></p>
           <div class="memberBtn">
             <button>회원가입</button>
             <button>로그인</button>
@@ -782,49 +399,38 @@
           </div>
           <div class="left-navbar-content">
             <div class="category" id="category-1">
-              <a
-                id="movie"
-                class="movieTitle"
-                onclick="window.location.href='/'"
-              >
+              <a id="movie" onclick="moving(this)">
                 <img src="/static/src/img/circle.png" class="circle1" alt="" />
                 <div>영화 🎬</div>
               </a>
             </div>
             <div class="category" id="category-2">
-              <a
-                id="music"
-                class="musicTitle"
-                onclick="window.location.href='/'"
-              >
+              <a id="music" onclick="moving(this)">
                 <img src="/static/src/img/circle.png" class="circle2" alt="" />
                 <div>음악 🎧</div>
               </a>
             </div>
             <div class="category" id="category-3">
-              <a id="ani" class="aniTitle" onclick="window.location.href='/'">
+              <a id="ani" onclick="moving(this)">
                 <img src="/static/src/img/circle.png" class="circle3" alt="" />
                 <div>애니 📺</div>
               </a>
             </div>
             <div class="category" id="category-4">
-              <a
-                id="health"
-                class="healthTitle"
-                onclick="window.location.href='/'"
-              >
+              <a id="health" onclick="moving(this)">
                 <img src="/static/src/img/circle.png" class="circle4" alt="" />
                 <div>운동 ⚽</div>
               </a>
             </div>
             <div class="category" id="category-5">
-              <a id="book" class="bookTitle" href="#" onclick="">
+              <a id="book" onclick="moving(this)">
                 <img src="/static/src/img/circle.png" class="circle5" alt="" />
                 <div>책 📚</div>
               </a>
             </div>
           </div>
         </div>
+        <!-- 상세페이지 폼 -->
         <div class="body">
           <div class="body-title">
             <div class="body-title-head">
@@ -861,11 +467,12 @@
               </p>
             </div>
           </div>
+          <div class="tmp" style="float: none; clear: both"></div>
+          <!-- =====좋아요버튼과 개수============= -->
+          <!-- ======================= -->
           <div style="float: none; clear: both"></div>
           <div class="body-btn">
-            <button class="list-btn" onclick="window.location.href='/'">
-              목록
-            </button>
+            <button class="list-btn" onclick="back()">목록</button>
             <button class="edit-btn">수정</button>
             <button class="del-btn" onclick="deletepost()">삭제</button>
           </div>
@@ -878,12 +485,12 @@
                 id="writer"
                 placeholder="작성자"
               /><br />
-              <textarea
+              <input
                 type="text"
                 class="reply-text"
                 id="comment"
                 placeholder="댓글을 남겨주세요!"
-              ></textarea>
+              />
               <button class="reply-btn" onclick="postingcomment()">
                 댓글 남기기<br />💬
               </button>
