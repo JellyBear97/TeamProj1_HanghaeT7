@@ -61,6 +61,11 @@
             let reg_date = a['reg_date'];
             let url = a['url'];
             var like = a['like'];
+            var view = a['view'];
+
+            ++view;
+
+            updateView(view); // 조회수 업데이트
             
             let jsDate= new Intl.DateTimeFormat('kr').format(new Date(reg_date))
             
@@ -97,6 +102,7 @@
                                 </div>
                                 <div class="write-date-time">
                                   <p>📅${jsDate}</p>
+                                  <p>조회수 : ${view}</p>
                                 </div>`
             $('.body-write').append(detail_writer);
 
@@ -284,6 +290,22 @@
             window.location.reload();
           });
       }
+
+              //게시글 조회수 업데이트
+              function updateView(count) {
+
+              let formData = new FormData();
+              formData.append('view_give', count);
+
+              fetch(`/posts/view/`+id, {
+                method: 'PUT',
+                body: formData,
+              })
+                .then((res) => res.json())
+                .then((data) => {
+                  consloe.log(data)
+                });
+              }
 
   </script>
 </head>

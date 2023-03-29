@@ -71,7 +71,8 @@ def view_posts(p_id):
         'category' : findone['category'],
         'user_id' : findone['user_id'],
         'image':findone['image'],
-        'like':findone['like']  
+        'like':findone['like'],
+        'view':findone['view']  
          }     
     return jsonify({'result':doc}) 
 
@@ -114,7 +115,8 @@ def insert_posts(category):
         'user_id' : name_receive,
         'image':ogimage, #이미지 썸네일로 사용,
         'artist':music_artist,
-        'like':0
+        'like':0,
+        'view':0
     }
 
     db.posts.insert_one(doc)
@@ -174,6 +176,15 @@ def like_posts(p_id):
 
     db.posts.update_one({'_id':ObjectId(p_id)},
                         {'$set':{'like': like_receive}})
+    return jsonify({'msg':'좋아요 완료!'}) 
+
+# 게시글 조회수+1
+@app.route("/posts/view/<p_id>", methods=["PUT"])
+def viewCnt_posts(p_id):   
+    view_receive = request.form['view_give']
+
+    db.posts.update_one({'_id':ObjectId(p_id)},
+                        {'$set':{'view': view_receive}})
     return jsonify({'msg':'좋아요 완료!'}) 
 
 # 게시글에 해당하는 댓글 목록 조회
