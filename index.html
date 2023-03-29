@@ -147,6 +147,34 @@
       </div>
     </div>
   </div>
+    <!-- 로그인 모달창 -->
+    <div class="sign-in-black-bg">
+      <div class="sign-in-bg">
+        <h1 style="font-family:'PyeongChangPeace-Bold'; text-align: center;">로그인</h1>
+        <div class="sign-in-box">
+          <div class="sign-in-inside">
+            <p>아이디</p>
+            <form>
+              <input type="text" placeholder="ID" id="sign-in-id-Box" />
+            </form>
+          </div>
+          <div class="sign-in-inside">
+            <p>비밀번호</p>
+            <form>
+              <input type="password" placeholder="PW" id="sign-in-pw-Box" />
+            </form>
+          </div>
+        </div>
+        <div style="text-align: center">
+          <button type="submit" class="sign-in-btn send-btn" id="sign-in-send" onclick="">
+            로그인
+          </button>
+          <button type="button" class="sign-in-x-btn close-btn" id="in-close">
+            닫기
+          </button>
+        </div>
+      </div>
+    </div>
 
   <!-- 취향 공유하기 모달창 -->
   <div class="black-bg">
@@ -214,7 +242,8 @@
         <p id=""changeLogo>{{category}}</p>
         <div class="memberBtn">
           <button id="sign-up">회원가입</button>
-          <button>로그인</button>
+          <button id="sign-in">로그인</button>
+          <button id="logout">로그아웃</button>
         </div>
       </div>
     </div>
@@ -304,6 +333,26 @@
       }
       if ($('#sign-pw-Box').val().length < 6) {
         alert('비밀번호를 6자 이상 입력해주세요')
+        e.preventDefault()
+      }
+    })
+
+// ==================로그인=========================
+    $('#sign-in').on('click', function () {
+      $('.sign-in-black-bg').addClass('show-modal');
+    });
+    $('.sign-in-x-btn').on('click', function () {
+      $('.sign-in-black-bg').removeClass('show-modal');
+      window.location.reload();
+    });
+
+    $('#sign-in-send').on('click', function (e) {
+      if ($('#sign-in-id-Box').val() === '') {
+        alert('아이디를 입력해주세요')
+        e.preventDefault()
+      }
+      if ($('#sign-in-pw-Box').val() === '') {
+        alert('비밀번호를 입력해주세요')
         e.preventDefault()
       }
     })
