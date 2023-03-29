@@ -9,6 +9,10 @@
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" type="text/css" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+  />
   <title>Detail</title>
 
   <style>
@@ -216,6 +220,18 @@
       history.back();
     }
 
+    function addLike(){
+    const pushHeartBtn = document.querySelector(".heart-btn");
+            pushHeartBtn.innerHTML ='<i class="fas fa-heart fa-2x"></i>';
+            pushHeartBtn.style.color ='red'; 
+            pushHeartBtn.addEventListener("click",countPlus);
+      }
+    var count = 3802;
+    function countPlus(){
+      count++;
+      document.querySelector(".like_count").innerHTML="좋아요 "+count +"개";
+    }
+
   </script>
 </head>
 
@@ -358,6 +374,15 @@
             </p>
           </div>
         </div>
+        <div style="float:none; clear:both;"></div>
+        <!-- =====좋아요버튼과 개수============= -->
+        <div class="heart">
+          <button class="heart-btn" onclick="addLike()">
+            <i class="far fa-heart fa-2x"></i>
+          </button>
+          <div class="like_count">좋아요 3802개</div>
+        </div>
+        <!-- ======================= -->
         <div style="float:none; clear:both;"></div>
         <div class="body-btn">
           <button class="list-btn" onclick="back()">목록</button>
