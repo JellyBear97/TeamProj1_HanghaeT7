@@ -21,12 +21,21 @@
         font-weight: 700;
         font-style: normal;
       }
+
       @font-face {
         font-family: 'Pretendard-Regular';
         src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff')
           format('woff');
         font-weight: 400;
         font-style: normal;
+      }
+
+      body {
+        box-sizing: border-box;
+      }
+
+      .logo {
+        width: 150px;
       }
 
       .headerWrap {
@@ -36,12 +45,8 @@
         flex-direction: row;
         margin-bottom: 10px;
         border-bottom: 1px solid black;
-        font-family: 'PyeongChangPeace-Bold';
       }
-      .headerWrap > img {
-        width: 100px;
-        height: 100px;
-      }
+
       .memberHeader {
         display: flex;
         flex-direction: row;
@@ -49,53 +54,56 @@
         align-items: center;
         width: 90%;
         height: 100px;
-        padding-left: 30px;
       }
+
       .memberHeader > p {
         font-size: 35px;
-        margin-left: 20px;
+        margin-right: 700px;
+        font-family: 'PyeongChangPeace-Bold';
       }
+
       .memberBtn > button {
         border: none;
         background-color: transparent;
         font-size: 20px;
+        font-family: 'Pretendard-Regular';
       }
+
       .memberBtn > button:hover {
         color: goldenrod;
       }
+
       .memberBtn > button:active {
         color: goldenrod;
         text-shadow: -2px 0px black, 0px 2px black, 2px 0px black,
           0px -2px black;
       }
 
-      .left-navbar-content > div > a:link {
+      .category > a:link {
         color: black;
       }
-      .left-navbar-content > div > a:visited {
+
+      .category > a:visited {
         color: black;
       }
-      .left-navbar-content > div > a:hover {
-        color: goldenrod;
+
+      .category > a:active {
+        color: gray;
       }
-      .left-navbar-content > div > a:active {
-        color: goldenrod;
-        text-shadow: -2px 0px black, 0px 2px black, 2px 0px black,
-          0px -2px black;
-      }
+
       .left-navbar-menu {
-        width: 230px;
-        border-radius: 10px;
+        width: 250px;
         background-color: black;
         color: white;
         text-align: center;
-        font-size: 50px;
+        font-size: 40px;
       }
 
       .left-navbar-content {
         text-align: center;
         font-size: 42px;
       }
+
       .left-navbar-content > div > a {
         text-decoration: none;
         text-decoration-color: none;
@@ -115,17 +123,27 @@
         padding-right: 10px;
         padding-top: 20px;
       }
+
       .col {
         width: 23%;
       }
+
       .contentContainer {
         width: 80%;
         height: 100%;
         margin: 0 auto;
       }
+
       .background {
         height: 100%;
       }
+
+      .text-flow {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
       .write {
         width: 230px;
         text-align: center;
@@ -134,41 +152,42 @@
         border-radius: 10px;
         font-size: 25px;
       }
+
       .write:hover {
         background-color: goldenrod;
         color: white;
       }
+
       .body {
         font-family: Pretendard-Regular;
       }
+
       .black-bg {
         width: 100%;
         height: 100%;
         position: fixed;
         background: rgba(0, 0, 0, 0.5);
         z-index: 5;
-        padding: 30px;
+        padding: 20px;
         visibility: hidden;
-        opacity: 1;
-        /* transition: all 1s; */
       }
+
       .show-modal {
         visibility: visible;
-        opacity: 1;
       }
+
       .white-bg {
         margin: 0 auto;
         width: 800px;
         background: white;
         border-radius: 5px;
-        padding: 30px;
+        padding: 20px;
       }
 
       .write-box {
-        padding: 50px;
-        margin-left: 50px;
+        padding: 30px;
+        margin-left: 100px;
         margin-right: auto;
-
         font-family: Pretendard-Regular;
       }
 
@@ -185,12 +204,68 @@
         font-size: 24px;
         font-family: PyeongChangPeace-Bold;
       }
+
       .send-btn {
         background-color: goldenrod;
       }
+
       .close-btn {
         background-color: black;
         color: white;
+      }
+
+      .category {
+        position: relative;
+      }
+
+      .circle1 {
+        position: absolute;
+        width: 150px;
+        left: 40px;
+        top: -10px;
+        opacity: 1;
+        visibility: hidden;
+      }
+
+      .circle2 {
+        position: absolute;
+        width: 150px;
+        left: 40px;
+        top: -10px;
+        opacity: 1;
+        visibility: hidden;
+      }
+
+      .circle3 {
+        position: absolute;
+        width: 150px;
+        left: 40px;
+        top: -10px;
+        opacity: 1;
+        visibility: hidden;
+      }
+
+      .circle4 {
+        position: absolute;
+        width: 150px;
+        left: 40px;
+        top: -10px;
+        opacity: 1;
+        visibility: hidden;
+      }
+
+      .circle5 {
+        position: absolute;
+        width: 150px;
+        left: 40px;
+        top: -10px;
+        opacity: 1;
+        visibility: hidden;
+      }
+
+      .circle-show {
+        opacity: 1;
+        visibility: visible;
       }
 
       .text-box {
@@ -225,11 +300,6 @@
       });
       function listing(e) {
         let category = $(e).attr('id');
-        let cateTitle = $(e).text();
-        // sliceText = cateTitle.substring(0, cateTitle.length - 3);
-
-        $('#cetetitle').text(cateTitle);
-
         fetch(`/posts/${category}`)
           .then((res) => res.json())
           .then((data) => {
@@ -241,9 +311,14 @@
               let desc = a['comment'];
               let image = a['image'];
               let comment = a['comment'];
-              let writer = a['nickname'];
+              let writer = a['user_id'];
               let catgegory = a['category'];
               let p_id = a['_id'];
+              let reg_date = a['reg_date'];
+
+              let jsDate = new Intl.DateTimeFormat('kr').format(
+                new Date(reg_date)
+              );
 
               let temp_html = `<div class="col">
                       <div class="card h-100">
@@ -257,8 +332,8 @@
                           <h5 class="card-title">${title}</h5>
                           <p class="card-text">${desc}</p>
                           <p>${writer}</p>
-                          <p class="mycomment">${comment}</p>
-                          <button class="${p_id}" onclick="deletepost(this)">삭제</button>
+                          <p class="mycomment text-flow">${comment}</p>
+                          <p style="color: gray;">(${jsDate})</p>
                         </div>
                       </div>
                     </div>`;
@@ -281,7 +356,7 @@
       function newPage(e) {
         let p_id = $(e).attr('id');
         fetch(`/detail/move/${p_id}`);
-        window.location.href = `/posts/move/${p_id}`;
+        window.location.href = `/detail/move/${p_id}`;
       }
     </script>
   </head>
@@ -374,7 +449,8 @@
     <div class="contentContainer">
       <div class="headerWrap">
         <div class="memberHeader">
-          <p id="cetetitle">음악</p>
+          <img src="/static/src/img/logo_image.png" class="logo" alt="" />
+          <p>음악</p>
           <div class="memberBtn">
             <button>회원가입</button>
             <button>로그인</button>
@@ -384,21 +460,38 @@
       <div class="background">
         <div class="left-navbar">
           <div class="left-navbar-menu">
-            <p>Menu</p>
+            <p>category</p>
           </div>
           <div class="left-navbar-content">
-            <div>
-              <a id="movie" onclick="listing(this)">영화 🎬</a>
+            <div class="category" id="category-1">
+              <a id="movie" onclick="listing(this)">
+                <img src="/static/src/img/circle.png" class="circle1" alt="" />
+                <div>영화 🎬</div>
+              </a>
             </div>
-            <div>
-              <a id="music" onclick="listing(this)">음악 🎧</a>
+            <div class="category" id="category-2">
+              <a id="music" onclick="listing(this)">
+                <img src="/static/src/img/circle.png" class="circle2" alt="" />
+                <div>음악 🎧</div>
+              </a>
             </div>
-            <div><a id="ani" onclick="listing(this)">애니 📺</a></div>
-            <div>
-              <a id="health" onclick="listing(this)">운동 ⚽</a>
+            <div class="category" id="category-3">
+              <a id="ani" onclick="listing(this)">
+                <img src="/static/src/img/circle.png" class="circle3" alt="" />
+                <div>애니 📺</div>
+              </a>
             </div>
-            <div>
-              <a id="book" onclick="listing(this)">책 📚</a>
+            <div class="category" id="category-4">
+              <a id="health" onclick="listing(this)">
+                <img src="/static/src/img/circle.png" class="circle4" alt="" />
+                <div>운동 ⚽</div>
+              </a>
+            </div>
+            <div class="category" id="category-5">
+              <a id="book" onclick="listing(this)">
+                <img src="/static/src/img/circle.png" class="circle5" alt="" />
+                <div>책 📚</div>
+              </a>
             </div>
           </div>
           <button class="write">내 취향 공유하기</button>
@@ -434,6 +527,51 @@
       $('#close').on('click', function () {
         $('.black-bg').removeClass('show-modal');
       });
+
+      $('#category-1').hover(
+        function () {
+          $('.circle1').addClass('circle-show');
+        },
+        function () {
+          $('.circle1').removeClass('circle-show');
+        }
+      );
+
+      $('#category-2').hover(
+        function () {
+          $('.circle2').addClass('circle-show');
+        },
+        function () {
+          $('.circle2').removeClass('circle-show');
+        }
+      );
+
+      $('#category-3').hover(
+        function () {
+          $('.circle3').addClass('circle-show');
+        },
+        function () {
+          $('.circle3').removeClass('circle-show');
+        }
+      );
+
+      $('#category-4').hover(
+        function () {
+          $('.circle4').addClass('circle-show');
+        },
+        function () {
+          $('.circle4').removeClass('circle-show');
+        }
+      );
+
+      $('#category-5').hover(
+        function () {
+          $('.circle5').addClass('circle-show');
+        },
+        function () {
+          $('.circle5').removeClass('circle-show');
+        }
+      );
     </script>
   </body>
 </html>

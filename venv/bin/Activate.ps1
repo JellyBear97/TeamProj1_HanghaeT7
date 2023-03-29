@@ -1,6 +1,10 @@
 <#
 .Synopsis
+<<<<<<< HEAD
 Activate a Python virtual environment for the current PowerShell session.
+=======
+Activate a Python virtual environment for the current Powershell session.
+>>>>>>> c160edca4ffc7efe18c2dcd02e4b294a6e2f6679
 
 .Description
 Pushes the python executable for a virtual environment to the front of the
@@ -37,6 +41,7 @@ Activates the Python virtual environment that contains the Activate.ps1 script,
 and prefixes the current prompt with the specified string (surrounded in
 parentheses) while the virtual environment is active.
 
+<<<<<<< HEAD
 .Notes
 On Windows, it may be required to enable this Activate.ps1 script by setting the
 execution policy for the user. You can do this by issuing the following PowerShell
@@ -46,6 +51,8 @@ PS C:\> Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 
 For more information on Execution Policies: 
 https://go.microsoft.com/fwlink/?LinkID=135170
+=======
+>>>>>>> c160edca4ffc7efe18c2dcd02e4b294a6e2f6679
 
 #>
 Param(
@@ -96,11 +103,14 @@ function global:deactivate ([switch]$NonDestructive) {
         Remove-Item -Path env:VIRTUAL_ENV
     }
 
+<<<<<<< HEAD
     # Just remove VIRTUAL_ENV_PROMPT altogether.
     if (Test-Path -Path Env:VIRTUAL_ENV_PROMPT) {
         Remove-Item -Path env:VIRTUAL_ENV_PROMPT
     }
 
+=======
+>>>>>>> c160edca4ffc7efe18c2dcd02e4b294a6e2f6679
     # Just remove the _PYTHON_VENV_PROMPT_PREFIX altogether:
     if (Get-Variable -Name "_PYTHON_VENV_PROMPT_PREFIX" -ErrorAction SilentlyContinue) {
         Remove-Variable -Name _PYTHON_VENV_PROMPT_PREFIX -Scope Global -Force
@@ -151,7 +161,11 @@ function Get-PyVenvConfig(
                 $val = $keyval[1]
 
                 # Remove extraneous quotations around a string value.
+<<<<<<< HEAD
                 if ("'""".Contains($val.Substring(0, 1))) {
+=======
+                if ("'""".Contains($val.Substring(0,1))) {
+>>>>>>> c160edca4ffc7efe18c2dcd02e4b294a6e2f6679
                     $val = $val.Substring(1, $val.Length - 2)
                 }
 
@@ -179,8 +193,12 @@ Write-Verbose "VenvExecDir Name: '$($VenvExecDir.Name)"
 # VenvExecDir if specified on the command line.
 if ($VenvDir) {
     Write-Verbose "VenvDir given as parameter, using '$VenvDir' to determine values"
+<<<<<<< HEAD
 }
 else {
+=======
+} else {
+>>>>>>> c160edca4ffc7efe18c2dcd02e4b294a6e2f6679
     Write-Verbose "VenvDir not given as a parameter, using parent directory name as VenvDir."
     $VenvDir = $VenvExecDir.Parent.FullName.TrimEnd("\\/")
     Write-Verbose "VenvDir=$VenvDir"
@@ -194,15 +212,23 @@ $pyvenvCfg = Get-PyVenvConfig -ConfigDir $VenvDir
 # just use the name of the virtual environment folder.
 if ($Prompt) {
     Write-Verbose "Prompt specified as argument, using '$Prompt'"
+<<<<<<< HEAD
 }
 else {
+=======
+} else {
+>>>>>>> c160edca4ffc7efe18c2dcd02e4b294a6e2f6679
     Write-Verbose "Prompt not specified as argument to script, checking pyvenv.cfg value"
     if ($pyvenvCfg -and $pyvenvCfg['prompt']) {
         Write-Verbose "  Setting based on value in pyvenv.cfg='$($pyvenvCfg['prompt'])'"
         $Prompt = $pyvenvCfg['prompt'];
     }
     else {
+<<<<<<< HEAD
         Write-Verbose "  Setting prompt based on parent's directory's name. (Is the directory name passed to venv module when creating the virtual environment)"
+=======
+        Write-Verbose "  Setting prompt based on parent's directory's name. (Is the directory name passed to venv module when creating the virutal environment)"
+>>>>>>> c160edca4ffc7efe18c2dcd02e4b294a6e2f6679
         Write-Verbose "  Got leaf-name of $VenvDir='$(Split-Path -Path $venvDir -Leaf)'"
         $Prompt = Split-Path -Path $venvDir -Leaf
     }
@@ -233,7 +259,10 @@ if (-not $Env:VIRTUAL_ENV_DISABLE_PROMPT) {
         Write-Host -NoNewline -ForegroundColor Green "($_PYTHON_VENV_PROMPT_PREFIX) "
         _OLD_VIRTUAL_PROMPT
     }
+<<<<<<< HEAD
     $env:VIRTUAL_ENV_PROMPT = $Prompt
+=======
+>>>>>>> c160edca4ffc7efe18c2dcd02e4b294a6e2f6679
 }
 
 # Clear PYTHONHOME

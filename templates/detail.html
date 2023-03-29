@@ -354,7 +354,11 @@
         border-style: solid;
         border-color: white white gray;
       }
-
+      .reply-edit {
+        margin-top: 30px;
+        text-align: center;
+        margin: auto;
+      }
       .reply-name:focus {
         outline: none;
       }
@@ -397,7 +401,17 @@
         border-style: solid;
         border-color: gray white white;
       }
-
+      .reply-edit > button {
+        margin-left: 6px;
+        border: 1px solid gray;
+        color: gray;
+      }
+      .reply-edit--btn:hover {
+        color: rgb(3, 66, 95);
+      }
+      .reply-cancle--btn:hover {
+        color: red;
+      }
       .reply-data > button {
         border: 1px solid gray;
         color: gray;
@@ -427,6 +441,15 @@
       .write-date-time {
         float: right;
       }
+      #replyComment,
+      #replyName {
+        border: none;
+        background-color: transparent;
+      }
+      #replyComment:focus,
+      #replyName:focus {
+        outline: none;
+      }
     </style>
     <script>
       let id = `{{ p_id }}`;
@@ -436,8 +459,26 @@
       });
 
       // console.log(id);
+      function postingcomment() {
+        let writer = $('#writer').val();
+        let comment = $('#comment').val();
 
+        let formData = new FormData();
+
+        formData.append('name_give', writer);
+        formData.append('comment_give', comment);
+
+        fetch(`/posts/${id}/comments`, { method: 'POST', body: formData })
+          .then((res) => res.json())
+          .then((data) => {
+            alert(data['msg']);
+            window.location.reload();
+          });
+      }
+
+      //게시글, 댓글 가져오기
       function getData() {
+        //게시글 부분
         fetch(`/posts/detail/${id}`)
           .then((res) => res.json())
           .then((data) => {
@@ -449,8 +490,14 @@
             let desc = a['comment'];
             let image = a['image'];
             let comment = a['comment'];
-            let writer = a['nickname'];
-            let catgegory = a['category'];
+            let user_id = a['user_id'];
+            let category = a['category'];
+            let reg_date = a['reg_date'];
+            let url = a['url'];
+
+            let jsDate = new Intl.DateTimeFormat('kr').format(
+              new Date(reg_date)
+            );
 
             $('#detailImg').attr('src', image);
 
@@ -463,12 +510,133 @@
                                  <p>📝${writer}</p>
                                 </div>
                                 <div class="write-date-time">
-                                  <p>📅2023.03.28 21:30</p>
+                                  <p>📅${jsDate}</p>
                                 </div>`;
             $('.body-write').append(detail_writer);
 
             let detail_comment = `<p>${comment}</p>`;
             $('.body-text').append(detail_comment);
+          });
+
+        //댓글 부분
+        fetch(`/posts/${id}/comments`)
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            $('#replyBox').empty();
+            let rows = data['result'];
+            rows.forEach((a) => {
+              let r_id = a['_id'];
+              let user_id = a['user_id'];
+              let comment = a['comment'];
+              let reg_date = a['reg_date'];
+
+              let temp_html = `<div class="reply-data" id="reply${r_id}">
+                                      <input id="replyName" value="${user_id}💬" style="font-weight: bolder;" disabled/> 
+                                      <input id="replyComment" value="${comment}" disabled/>
+                                      <p style="color: gray;">(${reg_date})</p>
+                                      <button onclick="modifycomment(this)" class="reply-edit-btn">수정</button>
+                                      <button id="${r_id}" onclick="modifyReply(this)" class="reply-edit-btn">수정완료</button>
+                                      <button onclick="deletecomment('${r_id}')" class="reply-del-btn">삭제</button>
+                                  </div>`;
+              $('#replyBox').append(temp_html);
+            });
+          });
+      }
+
+      // 게시글 수정 모달 정보 집어넣기
+      function getmodifyData() {
+        fetch(`/posts/detail/${id}`)
+          .then((res) => res.json())
+          .then((data) => {
+            let row = data['result'];
+            let category = row['category'];
+            let title = row['title'];
+            let comment = row['comment'];
+            let user_id = row['user_id'];
+            let url = row['image'];
+
+            $('#cateBox').val(category).prop('selected', true);
+            $('#titleBox').attr('value', title);
+            $('#urlBox').attr('value', url);
+            $('#writerBox').attr('value', user_id);
+            $('#commentBox').attr('value', comment);
+          });
+      }
+
+      // 게시글 수정
+      function modifypost() {
+        let url = $('#urlBox').val();
+        let comment = $('#commentBox').val();
+        let writer = $('#writerBox').val();
+        let category = $('#cateBox').val();
+        let title = $('#titleBox').val();
+
+        let formData = new FormData();
+        formData.append('url_give', url);
+        formData.append('comment_give', comment);
+        formData.append('nickname_give', writer);
+        formData.append('category_give', category);
+        formData.append('title_give', title);
+
+        fetch(`/posts/${id}`, { method: 'PUT', body: formData })
+          .then((res) => res.json())
+          .then((data) => {
+            alert(data['msg']);
+            window.location.reload();
+          });
+      }
+
+      //게시글 삭제
+      function deletepost() {
+        fetch(`/posts/${id}`, {
+          method: 'DELETE',
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            alert(data['msg']);
+
+            // ⭐️ 페이지 재로딩
+            window.location.href = '/';
+          });
+      }
+
+      //댓글 수정 가능상태로 변경
+      function modifycomment(e) {
+        $('#replyName').removeAttr('disabled');
+        $('#replyComment').removeAttr('disabled');
+      }
+      //댓글 수정완료
+      function modifyReply(e) {
+        let r_id = $(e).attr('id');
+        let name = $('#replyName').val();
+        let comment = $('#replyComment').val();
+
+        let formData = new FormData();
+        formData.append('name_give', name);
+        formData.append('comment_give', comment);
+        fetch(`/posts/comments/${r_id}`, {
+          method: 'PUT',
+          body: formData,
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            alert(data['msg']);
+
+            window.location.reload();
+          });
+      }
+
+      //댓글 삭제
+      function deletecomment(r_id) {
+        fetch(`/posts/comments/${r_id}`, {
+          method: 'DELETE',
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            alert(data['msg']);
+
+            window.location.reload();
           });
       }
 
@@ -482,6 +650,7 @@
   </head>
 
   <body>
+    <!-- 수정 모달 폼 시작 -->
     <div class="black-bg">
       <div class="white-bg">
         <h1 style="text-align: center; font-family: PyeongChangPeace-Bold">
@@ -491,30 +660,34 @@
         <form action="#">
           <div class="write-box">
             <div class="write-box-inside">
+              <p>카테고리</p>
+              <form>
+                <select id="cateBox" size="1">
+                  <option value="movie">영화</option>
+                  <option value="music">음악</option>
+                  <option value="ani">애니</option>
+                  <option value="health">운동</option>
+                  <option value="book">책</option>
+                </select>
+              </form>
+            </div>
+            <div class="write-box-inside">
               <p>타이틀</p>
               <form>
                 <input
                   type="text"
+                  id="titleBox"
                   class="text-box"
                   placeholder="제목을 입력해주세요"
                 />
               </form>
             </div>
             <div class="write-box-inside">
-              <p>지니뮤직URL</p>
+              <p>URL</p>
               <form>
                 <input
                   type="text"
-                  class="text-box"
-                  placeholder="URL을 입력해주세요"
-                />
-              </form>
-            </div>
-            <div class="write-box-inside">
-              <p>이미지URL</p>
-              <form>
-                <input
-                  type="text"
+                  id="urlBox"
                   class="text-box"
                   id="urlBox"
                   placeholder="URL을 입력해주세요"
@@ -551,7 +724,7 @@
               type="submit"
               class="write-btn send-btn"
               id="send"
-              onclick="posting()"
+              onclick="modifypost()"
             >
               수정완료
             </button>
@@ -562,7 +735,7 @@
         </form>
       </div>
     </div>
-
+    <!-- 수정 모달 폼 끝 -->
     <div class="contentContainer">
       <div class="headerWrap">
         <div class="memberHeader">
@@ -644,27 +817,7 @@
             <div class="body-text">
               <p>
                 (1,2,3,4) Baby, got me looking so crazy 빠져버리는 daydream Got
-                me feeling you 너도 말해줄래 누가 내게 뭐라든 남들과는 달라 넌
-                Maybe you could be the one 날 믿어봐 한번 I’m not looking for
-                just fun Maybe I could be the one Oh baby 예민하대 나 lately 너
-                없이는 매일 매일이 yeah 재미없어 어쩌지 I just want you Call my
-                phone right now I just wanna hear you’re mine ‘Cause I know what
-                you like boy You’re my chemical hype boy 내 지난날들은 눈 뜨면
-                잊는 꿈 Hype boy 너만 원해 Hype boy 내가 전해 And we can go high
-                말해봐 yeah 느껴봐 mm mm Take him to the sky You know I hype you
-                boy 눈을 감아 말해봐 yeah 느껴봐 mm mm Take him to the sky You
-                know I hype you boy 잠에 들려고 잠에 들려 해도 네 생각에 또 새벽
-                세 시 uh-oh 알려줄 거야 they can’t have you no more 봐봐 여기 내
-                이름 써있다고 누가 내게 뭐라든 남들과는 달라 넌 Maybe you could
-                be the one 날 믿어봐 한번 I’m not looking for just fun Maybe I
-                could be the one Oh baby 예민하대 나 lately 너 없이는 매일
-                매일이 yeah 재미없어 어쩌지 I just want you Call my phone right
-                now I just wanna hear you’re mine ‘Cause I know what you like
-                boy You’re my chemical hype boy 내 지난날들은 눈 뜨면 잊는 꿈
-                Hype boy 너만 원해 Hype boy 내가 전해 And we can go high 말해봐
-                yeah 느껴봐 mm mm Take him to the sky You know I hype you boy
-                눈을 감아 말해봐 yeah 느껴봐 mm mm Take him to the sky You know
-                I hype you boy
+                me feeling you 너도 말해줄래
               </p>
             </div>
           </div>
@@ -674,43 +827,29 @@
               목록
             </button>
             <button class="edit-btn">수정</button>
-            <button class="del-btn">삭제</button>
+            <button class="del-btn" onclick="deletepost()">삭제</button>
           </div>
           <div class="reply">
+            <!-- ===댓글작성===================== -->
             <div class="reply-box">
               <input
                 type="text"
                 class="reply-name"
+                id="writer"
                 placeholder="작성자"
               /><br />
               <input
                 type="text"
                 class="reply-text"
+                id="comment"
                 placeholder="댓글을 남겨주세요!"
               />
-              <button class="reply-btn">댓글 남기기<br />💬</button>
+              <button class="reply-btn" onclick="postingcomment()">
+                댓글 남기기<br />💬
+              </button>
             </div>
-            <div class="reply-data">
-              <p style="font-weight: bolder">신샘 💬</p>
-              <p>취향존중 해드릴게요!</p>
-              <p style="color: gray">(2023.03.28)</p>
-              <button class="reply-edit-btn">수정</button>
-              <button class="reply-del-btn">삭제</button>
-            </div>
-            <div class="reply-data">
-              <p style="font-weight: bolder">신샘 💬</p>
-              <p>취향존중 해드릴게요!</p>
-              <p style="color: gray">(2023.03.28)</p>
-              <button class="reply-edit-btn">수정</button>
-              <button class="reply-del-btn">삭제</button>
-            </div>
-            <div class="reply-data">
-              <p style="font-weight: bolder">신샘 💬</p>
-              <p>취향존중 해드릴게요!</p>
-              <p style="color: gray">(2023.03.28)</p>
-              <button class="reply-edit-btn">수정</button>
-              <button class="reply-del-btn">삭제</button>
-            </div>
+            <!-- ===댓글============= -->
+            <div id="replyBox"></div>
           </div>
         </div>
       </div>
@@ -718,6 +857,7 @@
     <script>
       $('.edit-btn').on('click', function () {
         $('.black-bg').addClass('show-modal');
+        getmodifyData();
       });
       $('#close').on('click', function () {
         $('.black-bg').removeClass('show-modal');
