@@ -15,6 +15,9 @@
 
   </style>
   <script>
+
+    let category = `{{category}}`;
+
     function posting() {
       let url = $('#urlBox').val();
       let comment = $('#commentBox').val();
@@ -39,17 +42,35 @@
 
     $(document).ready(function () {
       $('#cards-box').empty();
+      getcategoryName();
+      getData();
     });
 
-    function moving(e){
-      let category = $(e).attr('id');
+    function getcategoryName(){
+      var cate = ""
 
-      window.location.href='/posts/'+category;
+      switch(category){
+        case 'movie':
+          cate = '영화';
+          break;
+        case 'music':
+          cate = '음악';
+          break;
+        case 'health':
+          cate = '운동';
+          break;
+        case 'ani':
+          cate = '애니';
+          break;
+        case 'book':
+          cate = '책';
+          break;
+      }
+      $('#changeLogo').text(cate);
     }
 
-    function listing(e) {
-      let category = $(e).attr('id');
-      fetch(`/posts/${category}`)
+    function getData() {
+      fetch(`/posts/data/`+category)
         .then((res) => res.json())
         .then((data) => {
           $('.body-home').empty()
@@ -79,6 +100,7 @@
                           id="${p_id}"
                         />
                         <div class="card-body">
+                          <input type="hidden" id="ç" value="${category}">
                           <h5 class="card-title">${title}</h5>
                           <p class="card-text text-flow">${desc}</p>
                           <p>${writer}</p>
@@ -106,48 +128,20 @@
 
     function newPage(e) {
       let p_id = $(e).attr('id');
-      fetch(`/detail/move/${p_id}`);
-      window.location.href = `/posts/move/${p_id}`;
+      let catergory = $('#ctVal').val();
+      fetch(`/detail/move/${category}/${p_id}`);
+      window.location.href = `/posts/move/${category}/${p_id}`;
+    }
+
+    function moving(e){
+      let category = $(e).attr('id');
+
+      window.location.href='/posts/'+category;
     }
   </script>
 </head>
 
 <body>
-  <!-- 회원가입 모달창 -->
-  <div class="sign-up-black-bg">
-    <div class="sign-up-bg">
-      <h1 style="font-family:'PyeongChangPeace-Bold'; text-align: center;">환영합니다!</h1>
-      <div class="sign-up-box">
-        <div class="sign-up-inside">
-          <p>닉네임</p>
-          <form>
-            <input type="text" placeholder="6글자 미만" id="sign-ni-Box" />
-          </form>
-        </div>
-        <div class="sign-up-inside">
-          <p>아이디</p>
-          <form>
-            <input type="text" placeholder="6글자 이상" id="sign-id-Box" />
-          </form>
-        </div>
-        <div class="sign-up-inside">
-          <p>비밀번호</p>
-          <form>
-            <input type="password" placeholder="6글자 이상" id="sign-pw-Box" />
-          </form>
-        </div>
-      </div>
-      <div style="text-align: center">
-        <button type="submit" class="sign-up-btn send-btn" id="sign-up-send" onclick="">
-          완료
-        </button>
-        <button type="button" class="sign-x-btn close-btn" id="close">
-          닫기
-        </button>
-      </div>
-    </div>
-  </div>
-
   <!-- 취향 공유하기 모달창 -->
   <div class="black-bg">
     <div class="white-bg">
@@ -155,97 +149,100 @@
         '취향'을 공유하세요!
       </h1>
 
-      <div class="write-box">
-        <div class="write-box-inside">
-          <p>카테고리</p>
-          <form>
-            <select id="cateBox" size="1">
-              <option value="movie">영화</option>
-              <option value="music">음악</option>
-              <option value="ani">애니</option>
-              <option value="health">운동</option>
-              <option value="book">책</option>
-            </select>
-          </form>
+      <form action="#">
+        <div class="write-box">
+          <div class="write-box-inside">
+            <p>카테고리</p>
+            <form>
+              <select id="cateBox" size="1">
+                <option value="movie">영화</option>
+                <option value="music">음악</option>
+                <option value="ani">애니</option>
+                <option value="health">운동</option>
+                <option value="book">책</option>
+              </select>
+            </form>
+          </div>
+          <div class="write-box-inside">
+            <p>타이틀</p>
+            <form>
+              <input type="text" class="text-box" placeholder="타이틀을 입력해주세요" id="titleBox" />
+            </form>
+          </div>
+          <div class="write-box-inside">
+            <p>URL</p>
+            <form>
+              <input type="text" class="text-box" id="urlBox" placeholder="URL을 입력해주세요" />
+            </form>
+          </div>
+          <div class="write-box-inside">
+            <p>작성자</p>
+            <form>
+              <input type="text" id="writerBox" class="text-box" placeholder="작성자 이름을 입력해주세요" />
+            </form>
+          </div>
+          <div class="write-box-inside">
+            <p>코멘트</p>
+            <form>
+              <input type="text" id="commentBox" class="text-box" style="height: 200px"
+                placeholder="취향에 대한 코멘트를 남겨주세요" />
+            </form>
+          </div>
+          <div style="clear: both"></div>
         </div>
-        <div class="write-box-inside">
-          <p>타이틀</p>
-          <form>
-            <input type="text" class="text-box" placeholder="타이틀을 입력해주세요" id="titleBox" />
-          </form>
+        <div style="text-align: center">
+          <button type="submit" class="write-btn send-btn" id="send" onclick="posting()">
+            전송
+          </button>
+          <button type="button" class="write-btn close-btn" id="close">
+            닫기
+          </button>
         </div>
-        <div class="write-box-inside">
-          <p>URL</p>
-          <form>
-            <input type="text" class="text-box" id="urlBox" placeholder="URL을 입력해주세요" />
-          </form>
-        </div>
-        <div class="write-box-inside">
-          <p>작성자</p>
-          <form>
-            <input type="text" id="writerBox" class="text-box" placeholder="작성자 이름을 입력해주세요" />
-          </form>
-        </div>
-        <div class="write-box-inside">
-          <p>코멘트</p>
-          <form>
-            <input type="text" id="commentBox" class="text-box" style="height: 200px" placeholder="취향에 대한 코멘트를 남겨주세요" />
-          </form>
-        </div>
-        <div style="clear: both"></div>
-      </div>
-      <div style="text-align: center">
-        <button type="submit" class="write-btn send-btn" id="send" onclick="posting()">
-          전송
-        </button>
-        <button type="button" class="write-btn close-btn" id="close">
-          닫기
-        </button>
-      </div>
+      </form>
     </div>
   </div>
-  <!-- header 부분 -->
+<!-- header 부분 -->
   <div class="contentContainer">
     <div class="headerWrap">
       <div class="memberHeader">
         <a onclick="window.location.href='/'">
           <img src="/static/src/img/logo_image.png" class="logo" alt="">
         </a>
-        <p>음악</p>
+        <p id="changeLogo"></p>
         <div class="memberBtn">
-          <button id="sign-up">회원가입</button>
+          <button>회원가입</button>
           <button>로그인</button>
         </div>
       </div>
     </div>
     <div class="background">
-      <!-- 왼쪽 내브바 부분 -->
+  <!-- 왼쪽 내브바 부분 -->
       <div class="left-navbar">
         <div class="left-navbar-menu">
           <p>category</p>
         </div>
         <div class="left-navbar-content">
-          <div class="category" id="category-1"><a id="movie" onclick="listing(this)">
+          <div class="category" id="category-1"><a id="movie" onclick="moving(this)">
               <img src="/static/src/img/circle.png" class="circle1" alt="">
               <div>영화 🎬</div>
             </a>
           </div>
-          <div class="category" id="category-2"><a id="music" onclick="listing(this)">
+          <div class="category" id="category-2"><a id="music" onclick="moving(this)">
               <img src="/static/src/img/circle.png" class="circle2" alt="">
               <div>음악 🎧</div>
             </a>
           </div>
-          <div class="category" id="category-3"><a id="ani" onclick="listing(this)">
+          <div class="category" id="category-3"><a id="ani" onclick="moving(this)">
               <img src="/static/src/img/circle.png" class="circle3" alt="">
               <div>애니 📺</div>
             </a>
           </div>
-          <div class="category" id="category-4"><a id="health" onclick="listing(this)">
+          <div class="category" id="category-4"><a id="health" onclick="moving(this)">
               <img src="/static/src/img/circle.png" class="circle4" alt="">
               <div>운동 ⚽</div>
             </a>
           </div>
-          <div class="category" id="category-5"><a id="book" onclick="listing(this)">
+          <div class="category" id="category-5"><a id="book" onclick="moving(this)">
               <img src="/static/src/img/circle.png" class="circle5" alt="">
               <div>책 📚</div>
             </a>
@@ -255,7 +252,7 @@
       </div>
 
       <div class="body-home">
-        <img src="/static/src/img/logo_image.png" class="body-home-img" alt="">
+        <img src="/static/src/img/logo_image.png"  class="body-home-img" alt="">
       </div>
 
       <div class="body">
@@ -279,41 +276,11 @@
     </div>
   </div>
   <script>
-
-// =============회원가입==============
-    $('#sign-up').on('click', function () {
-      $('.sign-up-black-bg').addClass('show-modal');
-    });
-    $('.sign-x-btn').on('click', function () {
-      $('.sign-up-black-bg').removeClass('show-modal');
-      window.location.reload();
-    });
-
-    $('#sign-up-send').on('click', function (e) {
-      if ($('#sign-ni-Box').val() === '') {
-        alert('닉네임을 입력해주세요')
-        e.preventDefault()
-      }
-      if ($('#sign-id-Box').val() === '') {
-        alert('아이디를 입력해주세요')
-        e.preventDefault()
-      }
-      if ($('#sign-pw-Box').val() === '') {
-        alert('비밀번호를 입력해주세요')
-        e.preventDefault()
-      }
-      if ($('#sign-pw-Box').val().length < 6) {
-        alert('비밀번호를 6자 이상 입력해주세요')
-        e.preventDefault()
-      }
-    })
-// 취향공유=========================
     $('.write').on('click', function () {
       $('.black-bg').addClass('show-modal');
     });
     $('#close').on('click', function () {
       $('.black-bg').removeClass('show-modal');
-      window.location.reload();
     });
 
     $('#category-1').hover(function () {

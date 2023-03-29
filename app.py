@@ -20,8 +20,8 @@ def home():
     return render_template('index.html')
 
 # 카테고리별 조회
-@app.route("/posts/<category>", methods=["GET"])
-def list_category(category):
+@app.route("/posts/data/<category>", methods=["GET"])
+def get_Data(category):
     results = []
     all_posts = list(db.posts.find({'category':category}))
     for post in all_posts:
@@ -29,10 +29,35 @@ def list_category(category):
         results.append(post)
     return jsonify({'result':results})  
 
+# 영화 목록 이동
+@app.route('/posts/movie')
+def list_movie():
+    return render_template('main.html', category = 'movie')
+
+# 음악 목록 이동
+@app.route('/posts/music')
+def list_music():
+    return render_template('main.html', category = 'music')
+
+# 애니 목록 이동
+@app.route('/posts/ani')
+def list_ani():
+    return render_template('main.html', category = 'ani')
+
+# 운동 목록 이동
+@app.route('/posts/health')
+def list_health():
+    return render_template('main.html', category = 'health')
+
+# 책 목록 이동
+@app.route('/posts/book')
+def list_book():
+    return render_template('main.html', category = 'book')
+
 # 게시글 상세조회 이동
-@app.route("/posts/move/<p_id>", methods=["GET"])
-def move_posts(p_id):
-    return render_template("detail.html", p_id = p_id)
+@app.route("/posts/move/<category>/<p_id>", methods=["GET"])
+def move_posts(category, p_id):
+    return render_template("detail.html", p_id = p_id, category = category)
 
 # 게시글 상세조회 가져오기
 @app.route("/posts/detail/<p_id>", methods=["GET"])
@@ -45,7 +70,8 @@ def view_posts(p_id):
         'mod_date' : findone['mod_date'],
         'category' : findone['category'],
         'user_id' : findone['user_id'],
-        'image':findone['image']   
+        'image':findone['image'],
+        'like':findone['like']  
          }     
     return jsonify({'result':doc}) 
 
@@ -87,7 +113,8 @@ def insert_posts(category):
         'category' : category_receive,
         'user_id' : name_receive,
         'image':ogimage, #이미지 썸네일로 사용,
-        'artist':music_artist
+        'artist':music_artist,
+        'like':0
     }
 
     db.posts.insert_one(doc)
@@ -139,6 +166,15 @@ def modify_posts(p_id):
 def delete_posts(p_id):        
     db.posts.delete_one({'_id':ObjectId(p_id)})
     return jsonify({'msg':'삭제완료!'}) 
+
+# 게시글 좋아요
+@app.route("/posts/like/<p_id>", methods=["PUT"])
+def like_posts(p_id):   
+    like_receive = request.form['like_give']
+
+    db.posts.update_one({'_id':ObjectId(p_id)},
+                        {'$set':{'like': like_receive}})
+    return jsonify({'msg':'좋아요 완료!'}) 
 
 # 게시글에 해당하는 댓글 목록 조회
 @app.route("/posts/<p_id>/comments", methods=["GET"])
