@@ -125,9 +125,35 @@ body {
   padding: 20px;
   visibility: hidden;
 }
-
+.sign-up-black-bg {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 5;
+  padding: 20px;
+  visibility: hidden;
+}
 .show-modal {
   visibility: visible;
+}
+
+.sign-up-bg {
+  width: 500px;
+  margin: 0 auto;
+  border-radius: 5px;
+  background-color: white;
+  padding: 40px;
+}
+.sign-up-box {
+  margin-top: 30px;
+  margin-left: 115px;
+  margin-bottom: 30px;
+}
+.sign-up-inside {
+  margin-top: 20px;
+  line-height: 1px;
+  font-family: 'Pretendard-Regular';
 }
 
 .white-bg {
@@ -571,6 +597,9 @@ body {
 
 .reply-edited-btn:hover {
   color: black;
+}
+.reply-editedFin-btn:hover {
+  color: green;
 }
 
 .reply-del-btn:hover {
