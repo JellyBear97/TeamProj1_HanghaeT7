@@ -400,6 +400,7 @@
         position: static;
         border-style: solid;
         border-color: gray white white;
+        height: 100%;
       }
       .reply-edit > button {
         margin-left: 6px;
@@ -441,24 +442,43 @@
       .write-date-time {
         float: right;
       }
-      #replyComment,
-      #replyName {
+
+      #reply > input {
         border: none;
         background-color: transparent;
       }
-      #replyComment:focus,
-      #replyName:focus {
+      textarea {
+        resize: none;
+      }
+      #reply > textarea {
+        border: none;
+        box-sizing: content-box;
+        background-color: transparent;
+        resize: none;
+        width: 700px;
+        min-height: 20px;
+        height: 100%;
+      }
+      #reply > textarea:focus {
         outline: none;
+      }
+      #reply > input:focus {
+        outline: none;
+      }
+      a {
+        color: black;
+      }
+      .NoScroll {
+        overflow: hidden;
       }
     </style>
     <script>
       let id = `{{ p_id }}`;
-      console.log(id);
+
       $(document).ready(function () {
         getData();
       });
 
-      // console.log(id);
       function postingcomment() {
         let writer = $('#writer').val();
         let comment = $('#comment').val();
@@ -495,6 +515,12 @@
             let reg_date = a['reg_date'];
             let url = a['url'];
 
+            function detailTitle() {
+              let koreaCate = $(`.${category}Title`).text();
+              $('#categoryTitle').text(`${koreaCate}`);
+            }
+            detailTitle();
+
             let jsDate = new Intl.DateTimeFormat('kr').format(
               new Date(reg_date)
             );
@@ -522,8 +548,8 @@
         fetch(`/posts/${id}/comments`)
           .then((res) => res.json())
           .then((data) => {
-            console.log(data);
             $('#replyBox').empty();
+
             let rows = data['result'];
             rows.forEach((a) => {
               let r_id = a['_id'];
@@ -531,11 +557,11 @@
               let comment = a['comment'];
               let reg_date = a['reg_date'];
 
-              let temp_html = `<div class="reply-data" id="reply${r_id}">
-                                      <input id="replyName" value="${user_id}💬" style="font-weight: bolder;" disabled/> 
-                                      <input id="replyComment" value="${comment}" disabled/>
+              let temp_html = `<div class="reply-data" id="reply">
+                                      <input id="replyName${r_id}" value="${user_id}" style="font-weight: bolder;" disabled/>
+                                      <textarea readonly id="replyComment${r_id}"> ${comment} </textarea>
                                       <p style="color: gray;">(${reg_date})</p>
-                                      <button onclick="modifycomment(this)" class="reply-edit-btn">수정</button>
+                                      <button class="${r_id}" onclick="modifycomment(this)" class="reply-edit-btn">수정</button>
                                       <button id="${r_id}" onclick="modifyReply(this)" class="reply-edit-btn">수정완료</button>
                                       <button onclick="deletecomment('${r_id}')" class="reply-del-btn">삭제</button>
                                   </div>`;
@@ -603,14 +629,17 @@
 
       //댓글 수정 가능상태로 변경
       function modifycomment(e) {
-        $('#replyName').removeAttr('disabled');
-        $('#replyComment').removeAttr('disabled');
+        let r_id = $(e).attr('class');
+        $(`#replyName${r_id}`).removeAttr('disabled');
+        $(`#replyComment${r_id}`).removeAttr('readonly');
+        $(`#replyName${r_id}`).focus();
+        $(`#replyComment${r_id}`).focus();
       }
       //댓글 수정완료
       function modifyReply(e) {
         let r_id = $(e).attr('id');
-        let name = $('#replyName').val();
-        let comment = $('#replyComment').val();
+        let name = $(`#replyName${r_id}`).val();
+        let comment = $(`#replyComment${r_id}`).val();
 
         let formData = new FormData();
         formData.append('name_give', name);
@@ -622,7 +651,6 @@
           .then((res) => res.json())
           .then((data) => {
             alert(data['msg']);
-
             window.location.reload();
           });
       }
@@ -740,7 +768,7 @@
       <div class="headerWrap">
         <div class="memberHeader">
           <img src="/static/src/img/logo_image.png" class="logo" alt="" />
-          <p>음악</p>
+          <p id="categoryTitle"></p>
           <div class="memberBtn">
             <button>회원가입</button>
             <button>로그인</button>
@@ -754,31 +782,43 @@
           </div>
           <div class="left-navbar-content">
             <div class="category" id="category-1">
-              <a id="movie" onclick="window.location.href='/'">
+              <a
+                id="movie"
+                class="movieTitle"
+                onclick="window.location.href='/'"
+              >
                 <img src="/static/src/img/circle.png" class="circle1" alt="" />
                 <div>영화 🎬</div>
               </a>
             </div>
             <div class="category" id="category-2">
-              <a id="music" onclick="window.location.href='/'">
+              <a
+                id="music"
+                class="musicTitle"
+                onclick="window.location.href='/'"
+              >
                 <img src="/static/src/img/circle.png" class="circle2" alt="" />
                 <div>음악 🎧</div>
               </a>
             </div>
             <div class="category" id="category-3">
-              <a id="ani" onclick="window.location.href='/'">
+              <a id="ani" class="aniTitle" onclick="window.location.href='/'">
                 <img src="/static/src/img/circle.png" class="circle3" alt="" />
                 <div>애니 📺</div>
               </a>
             </div>
             <div class="category" id="category-4">
-              <a id="health" onclick="window.location.href='/'">
+              <a
+                id="health"
+                class="healthTitle"
+                onclick="window.location.href='/'"
+              >
                 <img src="/static/src/img/circle.png" class="circle4" alt="" />
                 <div>운동 ⚽</div>
               </a>
             </div>
             <div class="category" id="category-5">
-              <a id="book" onclick="window.location.href='/'">
+              <a id="book" class="bookTitle" href="#" onclick="">
                 <img src="/static/src/img/circle.png" class="circle5" alt="" />
                 <div>책 📚</div>
               </a>
@@ -838,12 +878,12 @@
                 id="writer"
                 placeholder="작성자"
               /><br />
-              <input
+              <textarea
                 type="text"
                 class="reply-text"
                 id="comment"
                 placeholder="댓글을 남겨주세요!"
-              />
+              ></textarea>
               <button class="reply-btn" onclick="postingcomment()">
                 댓글 남기기<br />💬
               </button>

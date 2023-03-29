@@ -298,8 +298,11 @@
       $(document).ready(function () {
         listing();
       });
+
       function listing(e) {
         let category = $(e).attr('id');
+        let koreaCate = $(`#${category}Title`).text();
+        $('#categoryTitle').text(`${koreaCate}`);
         fetch(`/posts/${category}`)
           .then((res) => res.json())
           .then((data) => {
@@ -324,7 +327,7 @@
                       <div class="card h-100">
                         <img
                           src="${image}"
-                          class="card-img-top"
+                          class="${category}"
                           onclick="newPage(this)"
                           id="${p_id}"
                         />
@@ -355,6 +358,7 @@
 
       function newPage(e) {
         let p_id = $(e).attr('id');
+        let category = $(e).attr('class');
         fetch(`/detail/move/${p_id}`);
         window.location.href = `/detail/move/${p_id}`;
       }
@@ -450,7 +454,7 @@
       <div class="headerWrap">
         <div class="memberHeader">
           <img src="/static/src/img/logo_image.png" class="logo" alt="" />
-          <p>음악</p>
+          <p id="categoryTitle">음악</p>
           <div class="memberBtn">
             <button>회원가입</button>
             <button>로그인</button>
@@ -466,31 +470,31 @@
             <div class="category" id="category-1">
               <a id="movie" onclick="listing(this)">
                 <img src="/static/src/img/circle.png" class="circle1" alt="" />
-                <div>영화 🎬</div>
+                <div id="movieTitle">영화 🎬</div>
               </a>
             </div>
             <div class="category" id="category-2">
               <a id="music" onclick="listing(this)">
                 <img src="/static/src/img/circle.png" class="circle2" alt="" />
-                <div>음악 🎧</div>
+                <div id="musicTitle">음악 🎧</div>
               </a>
             </div>
             <div class="category" id="category-3">
               <a id="ani" onclick="listing(this)">
                 <img src="/static/src/img/circle.png" class="circle3" alt="" />
-                <div>애니 📺</div>
+                <div id="aniTitle">애니 📺</div>
               </a>
             </div>
             <div class="category" id="category-4">
               <a id="health" onclick="listing(this)">
                 <img src="/static/src/img/circle.png" class="circle4" alt="" />
-                <div>운동 ⚽</div>
+                <div id="healthTitle">운동 ⚽</div>
               </a>
             </div>
             <div class="category" id="category-5">
               <a id="book" onclick="listing(this)">
                 <img src="/static/src/img/circle.png" class="circle5" alt="" />
-                <div>책 📚</div>
+                <div id="bookTitle">책 📚</div>
               </a>
             </div>
           </div>
