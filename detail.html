@@ -58,15 +58,10 @@
           let image = a['image'];
           let comment = a['comment'];
           let writer = a['user_id'];
-          let catgegory = a['category'];
+          let category = a['category'];
           let reg_date = a['reg_date'];
           let url = a['url'];
           var like = a['like'];
-          var view = a['view'];
-
-          ++view;
-
-          updateView(view); // 조회수 업데이트
 
           let jsDate = new Intl.DateTimeFormat('kr').format(new Date(reg_date))
 
@@ -103,7 +98,6 @@
                                 </div>
                                 <div class="write-date-time">
                                   <p>📅${jsDate}</p>
-                                  <p>조회수 : ${view}</p>
                                 </div>`
           $('.body-write').append(detail_writer);
 
@@ -386,27 +380,27 @@
           <p>category</p>
         </div>
         <div class="left-navbar-content">
-          <div class="category" id="category-1"><a id="movie" onclick="window.location.href='/'">
+          <div class="category" id="category-1"><a id="movie" onclick="moving(this)">
               <img src="/static/src/img/circle.png" class="circle1" alt="">
               <div>영화 🎬</div>
             </a>
           </div>
-          <div class="category" id="category-2"><a id="music" onclick="window.location.href='/'">
+          <div class="category" id="category-2"><a id="music" onclick="moving(this)">
               <img src="/static/src/img/circle.png" class="circle2" alt="">
               <div>음악 🎧</div>
             </a>
           </div>
-          <div class="category" id="category-3"><a id="ani" onclick="window.location.href='/'">
+          <div class="category" id="category-3"><a id="ani" onclick="moving(this)">
               <img src="/static/src/img/circle.png" class="circle3" alt="">
               <div>애니 📺</div>
             </a>
           </div>
-          <div class="category" id="category-4"><a id="health" onclick="window.location.href='/'">
+          <div class="category" id="category-4"><a id="health" onclick="moving(this)">
               <img src="/static/src/img/circle.png" class="circle4" alt="">
               <div>운동 ⚽</div>
             </a>
           </div>
-          <div class="category" id="category-5"><a id="book" onclick="window.location.href='/'">
+          <div class="category" id="category-5"><a id="book" onclick="moving(this)">
               <img src="/static/src/img/circle.png" class="circle5" alt="">
               <div>책 📚</div>
             </a>

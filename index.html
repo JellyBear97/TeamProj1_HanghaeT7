@@ -62,7 +62,7 @@
             let image = a['image'];
             let comment = a['comment'];
             let writer = a['user_id'];
-            let catgegory = a['category'];
+            let category = a['category'];
             let p_id = a['_id'];
             let reg_date = a['reg_date'];
 
@@ -311,7 +311,7 @@
     $('.write').on('click', function () {
       $('.black-bg').addClass('show-modal');
     });
-    $('#close').on('click', function () {
+    $('.close-btn').on('click', function () {
       $('.black-bg').removeClass('show-modal');
       window.location.reload();
     });
