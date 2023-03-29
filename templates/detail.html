@@ -61,12 +61,7 @@
             let reg_date = a['reg_date'];
             let url = a['url'];
             var like = a['like'];
-            var view = a['view'];
 
-            ++view;
-
-            updateView(view); // 조회수 업데이트
-            
             let jsDate= new Intl.DateTimeFormat('kr').format(new Date(reg_date))
             
             var cate = ""
@@ -102,7 +97,6 @@
                                 </div>
                                 <div class="write-date-time">
                                   <p>📅${jsDate}</p>
-                                  <p>조회수 : ${view}</p>
                                 </div>`
             $('.body-write').append(detail_writer);
 
@@ -478,6 +472,7 @@
     });
     $('#close').on('click', function () {
       $('.black-bg').removeClass('show-modal');
+      window.location.reload();
     });
 
     $('#category-1').hover(function () {
