@@ -480,6 +480,10 @@
             let comment = a['comment'];
             let writer = a['user_id'];
             let catgegory = a['category'];
+            let reg_date = a['reg_date'];
+
+            let jsDate= new Intl.DateTimeFormat('kr').format(new Date(reg_date))
+
 
             $('#detailImg').attr('src', image);
 
@@ -492,7 +496,7 @@
                                  <p>📝${writer}</p>
                                 </div>
                                 <div class="write-date-time">
-                                  <p>📅2023.03.28 21:30</p>
+                                  <p>📅${jsDate}</p>
                                 </div>`
             $('.body-write').append(detail_writer);
 
