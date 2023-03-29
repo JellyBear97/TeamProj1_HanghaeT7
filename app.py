@@ -59,7 +59,7 @@ def insert_posts(category):
     category_receive = category
     name_receive = request.form['nickname_give']
     reg_date = datetime.datetime.utcnow()
-    mod_date = datetime.datetime.utcnow()
+    mod_date = ''
     
     headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
     data = requests.get(url_receive,headers=headers)
