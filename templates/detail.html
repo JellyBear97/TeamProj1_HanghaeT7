@@ -16,9 +16,11 @@
       rel="stylesheet"
       type="text/css"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+    />
     <title>Detail</title>
-
-    <style></style>
     <script>
       let id = `{{ p_id }}`;
       console.log(id);
@@ -59,13 +61,35 @@
             let image = a['image'];
             let comment = a['comment'];
             let writer = a['user_id'];
-            let catgegory = a['category'];
+            let category = a['category'];
             let reg_date = a['reg_date'];
             let url = a['url'];
+            var like = a['like'];
 
             let jsDate = new Intl.DateTimeFormat('kr').format(
               new Date(reg_date)
             );
+
+            var cate = '';
+
+            switch (category) {
+              case 'movie':
+                cate = '영화';
+                break;
+              case 'music':
+                cate = '음악';
+                break;
+              case 'health':
+                cate = '운동';
+                break;
+              case 'ani':
+                cate = '애니';
+                break;
+              case 'book':
+                cate = '책';
+                break;
+            }
+            $('#changeLogo').text(cate);
 
             $('#detailImg').attr('src', image);
 
@@ -84,6 +108,14 @@
 
             let detail_comment = `<p>${comment}</p>`;
             $('.body-text').append(detail_comment);
+
+            let tmp_html = `<div class="heart">
+                              <button class="heart-btn" onclick="addLike(${like})">
+                                <i class="far fa-heart fa-2x"></i>
+                              </button>
+                              <div class="like_count">좋아요 ${like}개</div>
+                            </div>`;
+            $('.tmp').append(tmp_html);
           });
 
         //댓글 부분
@@ -100,12 +132,13 @@
               let reg_date = a['reg_date'];
 
               let temp_html = `<div class="reply-data" id="reply${r_id}">
-                                      <input id="replyName" value="${user_id}💬" style="font-weight: bolder;" disabled/> 
-                                      <input id="replyComment" value="${comment}" disabled/>
+                                      <input id="replyName${r_id}" value="${user_id}" style="font-weight: bolder;" disabled/> 
+                                      <input id="replyComment${r_id}" value="${comment}" disabled/>
                                       <p style="color: gray;">(${reg_date})</p>
-                                      <button onclick="modifycomment(this)" class="reply-edit-btn">수정</button>
-                                      <button onclick="deletecomment('${r_id}')" class="reply-del-btn">삭제</button>
-                                      <button id="${r_id}" onclick="modifyReply(this)" class="reply-edited-btn">수정완료</button>
+                                      <div id="reply-edit-btn${r_id}"><button id="${r_id}" onclick="modifycomment(this)" >수정</button></div>
+                                      <div id="reply-del-btn"><button onclick="deletecomment('${r_id}')" class="reply-del-btn${r_id}">삭제</button></div>
+                                      <div id="reply-edited-btn${r_id}" style="display: none"><button id="${r_id}" onclick="modifyReply(this)" class="reply-edited-btn">수정완료</button></div>
+                                      <div id="reply-editFin-btn${r_id}"><button onclick="replyRe()" style="display: none" class="reply-editedFin-btn">취소</button></div>
                                   </div>`;
               $('#replyBox').append(temp_html);
             });
@@ -169,14 +202,23 @@
 
       //댓글 수정 가능상태로 변경
       function modifycomment(e) {
-        $('#replyName').removeAttr('disabled');
-        $('#replyComment').removeAttr('disabled');
+        let id = $(e).attr('id');
+        $(`#reply-edit-btn${id}`).empty();
+        $(`#reply-edited-btn${id}`).show();
+        $(`#replyName${id}`).removeAttr('disabled');
+        $(`#replyComment${id}`).removeAttr('disabled');
+        $(`#replyName${id}`).focus();
+        $(`#replyComment${id}`).focus();
+
+        let editFin = `<button onclick="replyRe()" class="reply-editedFin-btn">취소</button>`;
+        $(`#reply-editFin-btn${id}`).append(editFin);
       }
+
       //댓글 수정완료
       function modifyReply(e) {
         let r_id = $(e).attr('id');
-        let name = $('#replyName').val();
-        let comment = $('#replyComment').val();
+        let name = $(`#replyName${r_id}`).val();
+        let comment = $(`#replyComment${r_id}`).val();
 
         let formData = new FormData();
         formData.append('name_give', name);
@@ -215,6 +257,51 @@
 
       function back() {
         history.back();
+      }
+
+      function moving(e) {
+        let category = $(e).attr('id');
+
+        window.location.href = '/posts/' + category;
+      }
+
+      //게시글 좋아요 부분
+
+      function countPlus(likeCnt) {
+        likeCnt++;
+        document.querySelector('.like_count').innerHTML =
+          '좋아요 ' + likeCnt + '개';
+
+        //게시글 좋아요 업데이트 호출
+        updateLike(likeCnt);
+      }
+
+      function addLike(likeCnt) {
+        const pushHeartBtn = document.querySelector('.heart-btn');
+        pushHeartBtn.innerHTML = '<i class="fas fa-heart fa-2x"></i>';
+        pushHeartBtn.style.color = 'red';
+        pushHeartBtn.addEventListener('click', countPlus(likeCnt));
+      }
+
+      //게시글 좋아요 업데이트
+      function updateLike(count) {
+        let formData = new FormData();
+        formData.append('like_give', count);
+
+        fetch(`/posts/like/` + id, {
+          method: 'PUT',
+          body: formData,
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            alert(data['msg']);
+
+            window.location.reload();
+          });
+      }
+
+      function replyRe() {
+        window.location.reload();
       }
     </script>
   </head>
@@ -293,7 +380,7 @@
               type="submit"
               class="write-btn send-btn"
               id="send"
-              onclick="modifyposting()"
+              onclick="modifypost()"
             >
               수정완료
             </button>
@@ -311,7 +398,7 @@
           <a onclick="window.location.href='/'">
             <img src="/static/src/img/logo_image.png" class="logo" alt="" />
           </a>
-          <p>음악</p>
+          <p id="changeLogo"></p>
           <div class="memberBtn">
             <button>회원가입</button>
             <button>로그인</button>
@@ -325,31 +412,31 @@
           </div>
           <div class="left-navbar-content">
             <div class="category" id="category-1">
-              <a id="movie" onclick="window.location.href='/'">
+              <a id="movie" onclick="moving(this)">
                 <img src="/static/src/img/circle.png" class="circle1" alt="" />
                 <div>영화 🎬</div>
               </a>
             </div>
             <div class="category" id="category-2">
-              <a id="music" onclick="window.location.href='/'">
+              <a id="music" onclick="moving(this)">
                 <img src="/static/src/img/circle.png" class="circle2" alt="" />
                 <div>음악 🎧</div>
               </a>
             </div>
             <div class="category" id="category-3">
-              <a id="ani" onclick="window.location.href='/'">
+              <a id="ani" onclick="moving(this)">
                 <img src="/static/src/img/circle.png" class="circle3" alt="" />
                 <div>애니 📺</div>
               </a>
             </div>
             <div class="category" id="category-4">
-              <a id="health" onclick="window.location.href='/'">
+              <a id="health" onclick="moving(this)">
                 <img src="/static/src/img/circle.png" class="circle4" alt="" />
                 <div>운동 ⚽</div>
               </a>
             </div>
             <div class="category" id="category-5">
-              <a id="book" onclick="window.location.href='/'">
+              <a id="book" onclick="moving(this)">
                 <img src="/static/src/img/circle.png" class="circle5" alt="" />
                 <div>책 📚</div>
               </a>
@@ -393,6 +480,9 @@
               </p>
             </div>
           </div>
+          <div class="tmp" style="float: none; clear: both"></div>
+          <!-- =====좋아요버튼과 개수============= -->
+          <!-- ======================= -->
           <div style="float: none; clear: both"></div>
           <div class="body-btn">
             <button class="list-btn" onclick="back()">목록</button>
@@ -442,9 +532,6 @@
           $('.circle1').removeClass('circle-show');
         }
       );
-      // $('#category-1').on('click', function () {
-      //   $('.circle1').addClass('circle-show');
-      // });
 
       $('#category-2').hover(
         function () {
@@ -454,9 +541,6 @@
           $('.circle2').removeClass('circle-show');
         }
       );
-      // $('#category-2').on('click', function () {
-      //   $('.circle2').addClass('circle-show');
-      // });
 
       $('#category-3').hover(
         function () {
@@ -466,9 +550,6 @@
           $('.circle3').removeClass('circle-show');
         }
       );
-      // $('#category-3').on('click', function () {
-      //   $('.circle3').addClass('circle-show');
-      // });
 
       $('#category-4').hover(
         function () {
@@ -478,9 +559,6 @@
           $('.circle4').removeClass('circle-show');
         }
       );
-      // $('#category-4').on('click', function () {
-      //   $('.circle4').addClass('circle-show');
-      // });
 
       $('#category-5').hover(
         function () {
@@ -490,13 +568,6 @@
           $('.circle5').removeClass('circle-show');
         }
       );
-      // $('#category-5').on('click', function () {
-      //   $('.circle5').addClass('circle-show');
-      // });
-
-      // $('.reply-edit-btn').on('click', function () {
-      //   $('.reply-edited-btn').addClass('show')
-      // })
     </script>
 
     <script type="text/javascript">
