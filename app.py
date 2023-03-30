@@ -81,7 +81,8 @@ def view_posts(p_id):
         'category' : findone['category'],
         'user_id' : findone['user_id'],
         'image':findone['image'],
-        'like':findone['like']  
+        'like':findone['like'],
+        'url':findone['url']
          }     
     return jsonify({'result':doc}) 
 
@@ -124,7 +125,8 @@ def insert_posts(category):
         'user_id' : name_receive,
         'image':ogimage, #이미지 썸네일로 사용,
         'artist':music_artist,
-        'like':0
+        'like':0,
+        'url':url_receive
     }
 
     db.posts.insert_one(doc)
@@ -151,7 +153,7 @@ def modify_posts(p_id):
 
     if(category_receive == "book"):
          # ogtitle = soup.select_one('meta[property="og:title"]')['content'] 직접 적으면 필요X
-        ogdesc = soup.select_one('meta[property="og:description"]')['content']
+        # ogdesc = soup.select_one('meta[property="og:description"]')['content']
         ogimage = soup.select_one('meta[property="og:image"]')['content']  
     elif(category_receive == "music"):
         title_receive = soup.select_one('#body-content > div.search_song > div.search_result_detail > div > table > tbody > tr > td.info > a.title.ellipsis')['title'].strip()

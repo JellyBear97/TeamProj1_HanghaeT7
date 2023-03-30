@@ -94,7 +94,7 @@
 
           let detail_writer = `
                                 <div class="write-er">
-                                 <p>📝${writer}</p>
+                                 <p>🙂${writer}</p>
                                 </div>
                                 <div class="write-date-time">
                                   <p>📅${jsDate}</p>
@@ -150,13 +150,27 @@
           let comment = row['comment'];
           let user_id = row['user_id'];
           let url = row['image'];
+          let urlsite = row['url'];
 
           $('#cateBox').val(category).prop('selected', true);
-          $('#titleBox').attr('value', title);
-          $('#urlBox').attr('value', url);
-          $('#writerBox').attr('value', user_id);
-          $('#commentBox').attr('value', comment);
-        });
+            $('#titleBox').attr('value', title);
+            // $('#urlBox').attr('value', url);
+            console.log(urlsite);
+
+            console.log(category);
+            console.log(typeof category);
+            category == 'book' || category == 'music'
+              ? $('#urlBox').attr('value', urlsite)
+              : $('#urlBox').attr('value', url);
+            $('#writerBox').attr('value', user_id);
+            $('#commentBox').attr('value', comment);
+
+            // if (category === 'book' || category === 'music') {
+            //   $('#urlBox').attr('value', urlsite);
+            // } else {
+            //   $('#urlBox').attr('value', url);
+            // }
+          });
     }
     // 게시글 수정
     function modifypost() {
@@ -165,6 +179,7 @@
       let writer = $('#writerBox').val();
       let category = $('#cateBox').val();
       let title = $('#titleBox').val();
+      console.log(url);
 
       let formData = new FormData();
       formData.append('url_give', url);
@@ -211,8 +226,8 @@
     //댓글 수정완료
     function modifyReply(e) {
       let r_id = $(e).attr('id');
-      let name = $('#replyName').val();
-      let comment = $('#replyComment').val();
+      let name = $(`#replyName${r_id}`).val();
+        let comment = $(`#replyComment${r_id}`).val();
 
       let formData = new FormData();
       formData.append('name_give', name);

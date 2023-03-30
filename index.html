@@ -12,7 +12,8 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+  <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
   <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" type="text/css" />
   <title>Category</title>
 
@@ -46,10 +47,10 @@
       $('#cards-box').empty();
     });
 
-    function moving(e){
+    function moving(e) {
       let category = $(e).attr('id');
 
-      window.location.href='/posts/'+category;
+      window.location.href = '/posts/' + category;
     }
 
     function listing() {
@@ -116,46 +117,47 @@
     }
 
     function login() {
-                $.ajax({
-                    type: "POST",
-                    url: "/login",
-                    data: {id_give: $('#sign-in-id-Box').val(), pw_give: $('#sign-in-pw-Box').val()},
-                    success: function (response) {
-                        if (response['result'] == 'success') {
-                            // 로그인이 정상적으로 되면, 토큰을 받아옵니다.
-                            // 이 토큰을 mytoken이라는 키 값으로 쿠키에 저장합니다.
-                            $.cookie('mytoken', response['token']);
+      $.ajax({
+        type: "POST",
+        url: "/login",
+        data: { id_give: $('#sign-in-id-Box').val(), pw_give: $('#sign-in-pw-Box').val() },
+        success: function (response) {
+          if (response['result'] == 'success') {
+            // 로그인이 정상적으로 되면, 토큰을 받아옵니다.
+            // 이 토큰을 mytoken이라는 키 값으로 쿠키에 저장합니다.
+            $.cookie('mytoken', response['token']);
 
-                            alert('로그인 완료!')
-                            window.location.href = `/`
-                            
-                        } else {
-                            // 로그인이 안되면 에러메시지를 띄웁니다.
-                            alert(response['msg'])
-                        }
-                    }
-                })
-            }
+            alert('로그인 완료!')
+            window.location.href = `/`
 
-            function register() {
-                $.ajax({
-                    type: "POST",
-                    url: "/register",
-                    data: {
-                        id_give: $('#sign-id-Box').val(),
-                        pw_give: $('#sign-pw-Box').val(),
-                        nickname_give: $('#sign-ni-Box').val()
-                    },
-                    success: function (response) {
-                        if (response['result'] == 'success') {
-                            alert('회원가입이 완료되었습니다.')
-                            window.location.href = `/`
-                        } else {
-                            alert(response['msg'])
-                        }
-                    }
-                })
-            }
+          } else {
+            // 로그인이 안되면 에러메시지를 띄웁니다.
+            alert(response['msg'])
+          }
+        }
+      })
+    }
+
+    function register() {
+      $.ajax({
+        type: "POST",
+        url: "/register",
+        data: {
+          id_give: $('#sign-id-Box').val(),
+          pw_give: $('#sign-pw-Box').val(),
+          nickname_give: $('#sign-ni-Box').val()
+        },
+        success: function (response) {
+          if (response['result'] == 'success') {
+            alert('회원가입이 완료되었습니다.')
+            window.location.href = `/`
+          } else {
+            alert(response['msg'])
+          }
+        }
+      })
+    }
+
   </script>
 </head>
 
@@ -194,34 +196,34 @@
       </div>
     </div>
   </div>
-    <!-- 로그인 모달창 -->
-    <div class="sign-in-black-bg">
-      <div class="sign-in-bg">
-        <h1 style="font-family:'PyeongChangPeace-Bold'; text-align: center;">로그인</h1>
-        <div class="sign-in-box">
-          <div class="sign-in-inside">
-            <p>아이디</p>
-            <form>
-              <input type="text" placeholder="ID" id="sign-in-id-Box" />
-            </form>
-          </div>
-          <div class="sign-in-inside">
-            <p>비밀번호</p>
-            <form>
-              <input type="password" placeholder="PW" id="sign-in-pw-Box" />
-            </form>
-          </div>
+  <!-- 로그인 모달창 -->
+  <div class="sign-in-black-bg">
+    <div class="sign-in-bg">
+      <h1 style="font-family:'PyeongChangPeace-Bold'; text-align: center;">로그인</h1>
+      <div class="sign-in-box">
+        <div class="sign-in-inside">
+          <p>아이디</p>
+          <form>
+            <input type="text" placeholder="ID" id="sign-in-id-Box" />
+          </form>
         </div>
-        <div style="text-align: center">
-          <button type="submit" class="sign-in-btn send-btn" id="sign-in-send" onclick="login()">
-            로그인
-          </button>
-          <button type="button" class="sign-in-x-btn close-btn" id="in-close">
-            닫기
-          </button>
+        <div class="sign-in-inside">
+          <p>비밀번호</p>
+          <form>
+            <input type="password" placeholder="PW" id="sign-in-pw-Box" />
+          </form>
         </div>
       </div>
+      <div style="text-align: center">
+        <button type="submit" class="sign-in-btn send-btn" id="sign-in-send" onclick="login()">
+          로그인
+        </button>
+        <button type="button" class="sign-in-x-btn close-btn" id="in-close">
+          닫기
+        </button>
+      </div>
     </div>
+  </div>
 
   <!-- 취향 공유하기 모달창 -->
   <div class="black-bg">
@@ -286,7 +288,7 @@
         <a onclick="window.location.href='/'">
           <img src="/static/src/img/logo_image.png" class="logo" alt="">
         </a>
-        <p id=""changeLogo>{{category}}</p>
+        <p id="" changeLogo>{{category}}</p>
         <div class="memberBtn">
           <button id="sign-up">회원가입</button>
           <button id="sign-in">로그인</button>
@@ -355,7 +357,7 @@
   </div>
   <script>
 
-// =============회원가입==============
+    // =============회원가입==============
     $('#sign-up').on('click', function () {
       $('.sign-up-black-bg').addClass('show-modal');
     });
@@ -383,7 +385,7 @@
       }
     })
 
-// ==================로그인=========================
+    // ==================로그인=========================
     $('#sign-in').on('click', function () {
       $('.sign-in-black-bg').addClass('show-modal');
     });
@@ -402,7 +404,7 @@
         e.preventDefault()
       }
     })
-// 취향공유=========================
+    // 취향공유=========================
     $('.write').on('click', function () {
       $('.black-bg').addClass('show-modal');
     });
@@ -410,7 +412,7 @@
       $('.black-bg').removeClass('show-modal');
       window.location.reload();
     });
-// 카테고리 내비바===================
+    // 카테고리 내비바===================
     $('#category-1').hover(function () {
       $('.circle1').addClass('circle-show');
     }, function () {
