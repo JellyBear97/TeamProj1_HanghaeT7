@@ -15,6 +15,9 @@
 
   </style>
   <script>
+
+    let category = `{{category}}`;
+
     function posting() {
       let url = $('#urlBox').val();
       let comment = $('#commentBox').val();
@@ -39,17 +42,35 @@
 
     $(document).ready(function () {
       $('#cards-box').empty();
+      getcategoryName();
+      getData();
     });
 
-    function moving(e){
-      let category = $(e).attr('id');
+    function getcategoryName(){
+      var cate = ""
 
-      window.location.href='/posts/'+category;
+      switch(category){
+        case 'movie':
+          cate = '영화';
+          break;
+        case 'music':
+          cate = '음악';
+          break;
+        case 'health':
+          cate = '운동';
+          break;
+        case 'ani':
+          cate = '애니';
+          break;
+        case 'book':
+          cate = '책';
+          break;
+      }
+      $('#changeLogo').text(cate);
     }
 
-    function listing() {
-      //let category = $(e).attr('id');
-      fetch(`/posts/${category}`)
+    function getData() {
+      fetch(`/posts/data/`+category)
         .then((res) => res.json())
         .then((data) => {
           $('.body-home').empty()
@@ -79,6 +100,7 @@
                           id="${p_id}"
                         />
                         <div class="card-body">
+                          <input type="hidden" id="ç" value="${category}">
                           <h5 class="card-title">${title}</h5>
                           <p class="card-text text-flow">${desc}</p>
                           <p>${writer}</p>
@@ -106,48 +128,20 @@
 
     function newPage(e) {
       let p_id = $(e).attr('id');
-      fetch(`/detail/move/${p_id}`);
-      window.location.href = `/posts/move/${p_id}`;
+      let catergory = $('#ctVal').val();
+      fetch(`/detail/move/${category}/${p_id}`);
+      window.location.href = `/posts/move/${category}/${p_id}`;
+    }
+
+    function moving(e){
+      let category = $(e).attr('id');
+
+      window.location.href='/posts/'+category;
     }
   </script>
 </head>
 
 <body>
-  <!-- 회원가입 모달창 -->
-  <div class="sign-up-black-bg">
-    <div class="sign-up-bg">
-      <h1 style="font-family:'PyeongChangPeace-Bold'; text-align: center;">환영합니다!</h1>
-      <div class="sign-up-box">
-        <div class="sign-up-inside">
-          <p>닉네임</p>
-          <form>
-            <input type="text" placeholder="6글자 미만" id="sign-ni-Box" />
-          </form>
-        </div>
-        <div class="sign-up-inside">
-          <p>아이디</p>
-          <form>
-            <input type="text" placeholder="6글자 이상" id="sign-id-Box" />
-          </form>
-        </div>
-        <div class="sign-up-inside">
-          <p>비밀번호</p>
-          <form>
-            <input type="password" placeholder="6글자 이상" id="sign-pw-Box" />
-          </form>
-        </div>
-      </div>
-      <div style="text-align: center">
-        <button type="submit" class="sign-up-btn send-btn" id="sign-up-send" onclick="">
-          완료
-        </button>
-        <button type="button" class="sign-x-btn close-btn" id="close">
-          닫기
-        </button>
-      </div>
-    </div>
-  </div>
-
   <!-- 취향 공유하기 모달창 -->
   <div class="black-bg">
     <div class="white-bg">
@@ -214,10 +208,10 @@
         <a onclick="window.location.href='/'">
           <img src="/static/src/img/logo_image.png" class="logo" alt="">
         </a>
-        <p id="changeLogo">{{category}}</p>
+        <p id="changeLogo"></p>
         <div class="memberBtn">
-          <button id="sign-up">회원가입</button>
-          <button>로그인</button>
+          <!-- <button>회원가입</button>
+          <button>로그인</button> -->
         </div>
       </div>
     </div>
@@ -282,41 +276,11 @@
     </div>
   </div>
   <script>
-// =============회원가입==============
-$('#sign-up').on('click', function () {
-      $('.sign-up-black-bg').addClass('show-modal');
-    });
-    $('.sign-x-btn').on('click', function () {
-      $('.sign-up-black-bg').removeClass('show-modal');
-      window.location.reload();
-    });
-
-    $('#sign-up-send').on('click', function (e) {
-      if ($('#sign-ni-Box').val() === '') {
-        alert('닉네임을 입력해주세요')
-        e.preventDefault()
-      }
-      if ($('#sign-id-Box').val() === '') {
-        alert('아이디를 입력해주세요')
-        e.preventDefault()
-      }
-      if ($('#sign-pw-Box').val() === '') {
-        alert('비밀번호를 입력해주세요')
-        e.preventDefault()
-      }
-      if ($('#sign-pw-Box').val().length < 6) {
-        alert('비밀번호를 6자 이상 입력해주세요')
-        e.preventDefault()
-      }
-    })
-// 취향공유=========================
-
     $('.write').on('click', function () {
       $('.black-bg').addClass('show-modal');
     });
     $('#close').on('click', function () {
       $('.black-bg').removeClass('show-modal');
-      window.location.reload();
     });
 
     $('#category-1').hover(function () {
