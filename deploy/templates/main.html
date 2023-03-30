@@ -86,6 +86,7 @@
             let catgegory = a['category'];
             let p_id = a['_id'];
             let reg_date = a['reg_date'];
+            let artist = a['artist']
 
             let jsDate = new Intl.DateTimeFormat('kr').format(
               new Date(reg_date)
@@ -102,7 +103,7 @@
                         <div class="card-body">
                           <input type="hidden" id="ç" value="${category}">
                           <h5 class="card-title">${title}</h5>
-                          <p class="card-text text-flow">${desc}</p>
+                          <p class="card-text text-flow">${artist}</p>
                           <p>${writer}</p>
                           <p class="mycomment text-flow">${comment}</p>
                           <p style="color: gray;">(${jsDate})</p>
@@ -212,6 +213,7 @@
         <div class="memberBtn">
           <!-- <button>회원가입</button>
           <button>로그인</button> -->
+          <button id="logout">로그아웃</button>
         </div>
       </div>
     </div>
