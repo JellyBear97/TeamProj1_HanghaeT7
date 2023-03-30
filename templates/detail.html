@@ -132,7 +132,7 @@
               let reg_date = a['reg_date'];
 
               let temp_html = `<div class="reply-data" id="reply${r_id}">
-                                      <input id="replyName${r_id}" value="${user_id}" style="font-weight: bolder;" disabled/> 
+                                      <input id="replyName${r_id}" value="${user_id}" style="font-weight: bolder;" disabled/>
                                       <input id="replyComment${r_id}" value="${comment}" disabled/>
                                       <p style="color: gray;">(${reg_date})</p>
                                       <div id="reply-edit-btn${r_id}"><button id="${r_id}" onclick="modifycomment(this)" >수정</button></div>
@@ -155,12 +155,26 @@
             let comment = row['comment'];
             let user_id = row['user_id'];
             let url = row['image'];
+            let urlsite = row['url'];
 
             $('#cateBox').val(category).prop('selected', true);
             $('#titleBox').attr('value', title);
-            $('#urlBox').attr('value', url);
+            // $('#urlBox').attr('value', url);
+            console.log(urlsite);
+
+            console.log(category);
+            console.log(typeof category);
+            category == 'book' || category == 'music'
+              ? $('#urlBox').attr('value', urlsite)
+              : $('#urlBox').attr('value', url);
             $('#writerBox').attr('value', user_id);
             $('#commentBox').attr('value', comment);
+
+            // if (category === 'book' || category === 'music') {
+            //   $('#urlBox').attr('value', urlsite);
+            // } else {
+            //   $('#urlBox').attr('value', url);
+            // }
           });
       }
       // 게시글 수정
@@ -170,6 +184,7 @@
         let writer = $('#writerBox').val();
         let category = $('#cateBox').val();
         let title = $('#titleBox').val();
+        console.log(url);
 
         let formData = new FormData();
         formData.append('url_give', url);
